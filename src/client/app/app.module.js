@@ -8,10 +8,7 @@
     'app.auth',
     'app.user',
     'app.submit-work',
-    'app.create-account',
-    'app.manage',
-    'app.timeline',
-    'newrelic'
+    'app.manage'
   ]).config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode(false);
   }]);
