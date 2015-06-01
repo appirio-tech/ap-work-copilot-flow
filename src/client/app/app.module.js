@@ -7,7 +7,7 @@
     'app.getting-started',
     'app.auth',
     'app.user',
-    'app.submit-work',
+    'app.claim-project',
     'app.projects'
   ]).config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode(false);

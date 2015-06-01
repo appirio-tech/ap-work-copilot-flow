@@ -5,7 +5,7 @@
     .module('app.projects')
     .run(runApp);
 
-  runApp.$inject = ['routerHelper', 'ProjectsService', 'SubmitWorkService'];
+  runApp.$inject = ['routerHelper', 'ProjectsService', 'ClaimProjectService'];
   /* @ngInject */
   function runApp(routerHelper) {
     routerHelper.configureStates(getStates());
