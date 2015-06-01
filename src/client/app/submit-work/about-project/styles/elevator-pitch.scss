@@ -1,7 +1,0 @@
-@import "../../../core/styles/combined";
-
-.layout-main.submit-work .elevator-pitch {
-  > form {
-    @include main-restricted();
-  }
-}

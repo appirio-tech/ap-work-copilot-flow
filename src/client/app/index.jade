@@ -8,7 +8,6 @@
 - scripts.push('/src/client/app/core/resource/resource.api.service')
 - scripts.push('/src/client/app/core/resource/resource.data.provider')
 - scripts.push('/src/client/app/core/core.module')
-- scripts.push('/src/client/app/core/ng-enter.directive')
 - scripts.push('layout/scripts/layout.module')
 - scripts.push('/src/client/app/blocks/exception/exception-handler.provider')
 - scripts.push('/src/client/app/blocks/exception/exception')
@@ -71,8 +70,8 @@ include projects/projects-includes
 - desktopCSS   = desktopCSS.concat(desktopFiles)
 
 
-//- submit work
-include submit-work/includes
+//- claim project
+include claim-project/includes
 
 - scripts      = scripts.concat(jsFiles)
 - css          = css.concat(cssFiles)
@@ -105,7 +104,7 @@ html(ng-app='app')
       AutoConfigFakeServer.consume('/bower_components/work-api-schema/work-api-schema.json');
     // endRemoveIf(production)
 
-    title(ng-bind='title') Appiro Work Platform
+    title(ng-bind='title') ASP Copilot Flow
 
     meta(charset='utf-8')
 

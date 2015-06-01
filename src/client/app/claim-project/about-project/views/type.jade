@@ -1,0 +1,29 @@
+
+div(ng-show="vm.showChallengesAdded")
+  h3 Your Added Challenges
+  ul
+    li(ng-repeat = "challenge in vm.challenges") {{challenge.requestType}} {{challenge.description}}
+  a(ui-sref="claim-project.brief") Waiting for Customer Approval
+
+h2 Add Challenge Estimates
+
+form(name="challengeForm", ng-submit="vm.submit()")
+  div(ng-form="challengesForm", ng-repeat="challenge in vm.challenges", id="{{$index}}")
+    label Challenge Type
+    select(name = "Type", ng-model = "challenge.requestType", required)
+      option(value = "design") Design
+      option(value = "code") Code
+
+    label Challenge Risk
+    select(name = "Risk", ng-model = "challenge.risk", required)
+      option(value = "low") Low
+      option(value = "medium") Medium
+      option(value = "high") High
+
+    label Challenge Description
+    input(placeholder="Enter challenge description", ng-model = "challenge.description", required)
+
+    button(type="button", ng-click="vm.addChallenge($index, challenge)") Add
+    button(type="button", ng-click="vm.removeChallenge($index)") Remove
+  button(type="submit") Submit
+
