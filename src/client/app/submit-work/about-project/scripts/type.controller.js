@@ -5,37 +5,30 @@
     .module('app.submit-work')
     .controller('SubmitTypeController', SubmitTypeController);
 
-  SubmitTypeController.$inject = ['$scope', 'logger', 'SubmitWorkService', 'NavService'];
+  SubmitTypeController.$inject = ['$scope', '$state', 'logger', 'SubmitWorkService', 'NavService'];
 
-  function SubmitTypeController($scope, logger, SubmitWorkService, NavService) {
+  function SubmitTypeController($scope, $state, logger, SubmitWorkService, NavService) {
     var vm   = this;
-    vm.title = 'Type';
-    vm.work  = SubmitWorkService.work;
-    vm.setType;
+    vm.title = 'Add Challenges';
+    vm.challenges = [{id: 0, requestType: null, risk: null, description: null}];
+    vm.showChallengesAdded = false;
     vm.submit;
 
-    activate();
-
-    function activate() {
-      logger.log('Activated Type View');
-      vm.work = SubmitWorkService.work;
+    vm.addChallenge = function($index, challenge) {
+      var challengeId = $index + 1;
+      vm.challenges.push({id: challengeId, requestType: null, risk: null, description: null});
     }
 
-    vm.setType = function (e, type) {
-      e.target.focus();
-      vm.work.requestType = type;
-    }
-
-    $scope.$watch('typeForm', function(typeForm) {
-      if (typeForm) {
-        NavService.findState('type').form = typeForm;
+    vm.removeChallenge = function(index) {
+      if (vm.challenges.length > 1) {
+        vm.challenges.splice(index, 1);
       }
-    });
+  }
 
-    vm.submit = function () {
-      if ($scope.typeForm.$valid) {
-        NavService.setNextState();
-      }
+    vm.submit = function(form) {
+      console.log('challenges array', vm.challenges)
+      SubmitWorkService.challenges = vm.challenges;
+      vm.showChallengesAdded = true;
     };
   }
 })();

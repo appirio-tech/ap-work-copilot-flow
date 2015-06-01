@@ -6,26 +6,17 @@
     .module('app.submit-work')
     .controller('SubmitNameController', SubmitNameController);
 
-  SubmitNameController.$inject = ['$scope', 'SubmitWorkService', 'NavService'];
+  SubmitNameController.$inject = ['$scope', '$state', 'SubmitWorkService', 'NavService'];
 
-  function SubmitNameController($scope, SubmitWorkService, NavService) {
+  function SubmitNameController($scope, $state, SubmitWorkService, NavService) {
     var vm   = this;
-    vm.title = 'Name';
-    vm.work  = SubmitWorkService.work;
+    vm.title = 'Claim Project';
     vm.submit;
 
-    $scope.$watch('nameForm', function(nameForm) {
-      if (nameForm) {
-        NavService.findState('name').form = nameForm;
-      }
-    });
-
     vm.submit = function () {
-      if ($scope.nameForm.$valid) {
-        NavService.findState('name').visited = true;
-        NavService.setNextState();
-      }
+      $state.go('submit-work.type')
     };
 
   }
 })();
+

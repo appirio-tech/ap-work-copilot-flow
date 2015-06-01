@@ -54,7 +54,7 @@
         $state.go($rootScope.preAuthState);
       } else {
         // if all else fails go to the home screen
-        $state.go('view-work-multiple');
+        $state.go('view-projects');
       }
     }
   }

@@ -73,7 +73,7 @@ describe 'SubmitWorkController', ->
         scope.launch()
 
       it 'should set state to "launch-success"', ->
-        stateSpy.calledWith('view-work-multiple').should.ok
+        stateSpy.calledWith('view-projects').should.ok
 
     context 'when a form is invalid', ->
       beforeEach inject ->
