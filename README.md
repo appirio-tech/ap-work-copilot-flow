@@ -1,4 +1,4 @@
-# ap-work-copilot -- The "Copilot Flow"
+# ap-work-copilot-flow -- The "Copilot Flow"
 
 ## Prerequisites
 
