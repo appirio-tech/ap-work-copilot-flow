@@ -47,12 +47,6 @@
 - scripts.push('/src/client/app/getting-started/scripts/getting-started.route')
 - scripts.push('/src/client/app/getting-started/scripts/getting-started.controller')
 
-//- Create Account
-- css.push("create-account/styles/create-account")
-- scripts.push("/src/client/app/create-account/scripts/create-account.module")
-- scripts.push("/src/client/app/create-account/scripts/create-account.controller")
-- scripts.push("/src/client/app/create-account/scripts/create-account.route")
-
 //- Auth
 - scripts.push("/src/client/app/auth/scripts/auth.module")
 - scripts.push("/src/client/app/auth/scripts/auth.routes")
@@ -68,17 +62,14 @@
 //- work request
 - scripts.push("/src/client/app/work-request/work-request.module")
 
-//- manage
-include manage/manage-includes
+//- projects
+include projects/projects-includes
 
 - scripts      = scripts.concat(jsFiles)
 - css          = css.concat(cssFiles)
 - landscapeCSS = landscapeCSS.concat(landscapeFiles)
 - desktopCSS   = desktopCSS.concat(desktopFiles)
 
-//- features
-- scripts.push("/src/client/app/feature/feature.module")
-- scripts.push("/src/client/app/feature/feature.service")
 
 //- submit work
 include submit-work/includes

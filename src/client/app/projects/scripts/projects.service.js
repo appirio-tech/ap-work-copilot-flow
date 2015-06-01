@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('app.manage')
-    .factory('ManageService', ManageService);
+    .module('app.projects')
+    .factory('ProjectsService', ProjectsService);
 
-  ManageService.$inject = ['$q', 'data'];
+  ProjectsService.$inject = ['$q', 'data'];
   /* @ngInject */
-  function ManageService($q, data) {
+  function ProjectsService($q, data) {
 
     var service = {
 

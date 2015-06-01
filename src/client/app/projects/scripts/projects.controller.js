@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('app.manage')
-    .controller('ManageController', ManageController);
+    .module('app.projects')
+    .controller('ProjectsController', ProjectsController);
 
-  ManageController.$inject = ['workRequests', '$state'];
+  ProjectsController.$inject = ['workRequests', '$state'];
   /* @ngInject */
-  function ManageController(workRequests, $stat) {
+  function ProjectsController(workRequests, $stat) {
     var vm = this;
     vm.title = 'View Projects';
     vm.workRequests = [];

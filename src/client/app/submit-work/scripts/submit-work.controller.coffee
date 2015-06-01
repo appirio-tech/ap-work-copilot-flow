@@ -38,7 +38,7 @@ SubmitWorkController = ($scope, SubmitWorkService, NavService, $state) ->
 
       options = save: 'yes'
 
-      $state.go 'view-work-multiple' , options
+      $state.go 'view-projects' , options
 
   activate = ->
     SubmitWorkService.resetWork() unless $scope.work

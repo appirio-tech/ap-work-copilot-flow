@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('app.manage', [
+    .module('app.projects', [
       'app.core',
       'app.resource',
       'app.workRequest',

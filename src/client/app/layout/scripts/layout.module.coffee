@@ -3,7 +3,7 @@
 init = ($rootScope, $location) ->
   setPageClass = (e, data) ->
     if $location.$$url == '/'
-      $rootScope.pageClass = 'submit-work';
+      $rootScope.pageClass = 'getting-started';
     else
       $rootScope.pageClass = $location.$$path.replace /\//g, ' '
 

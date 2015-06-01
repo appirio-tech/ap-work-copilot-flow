@@ -8,7 +8,7 @@
     'app.auth',
     'app.user',
     'app.submit-work',
-    'app.manage'
+    'app.projects'
   ]).config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode(false);
   }]);

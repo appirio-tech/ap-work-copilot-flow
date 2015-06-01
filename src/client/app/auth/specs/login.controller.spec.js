@@ -78,7 +78,7 @@ describe('LoginController', function () {
 
         login(rightAuth);
 
-        expect($state.go).to.have.been.calledWith('view-work-multiple');
+        expect($state.go).to.have.been.calledWith('view-projects');
         flush();
       });
 
@@ -105,12 +105,12 @@ describe('LoginController', function () {
       it('should returnt to the last state on login', function() {
         sinon.stub($location, 'search').returns({});
 
-        $rootScope.preAuthState = 'view-work-multiple';
+        $rootScope.preAuthState = 'view-projects';
         sinon.spy($state, 'go');
 
         login(rightAuth);
 
-        expect($state.go).to.have.been.calledWith('view-work-multiple');
+        expect($state.go).to.have.been.calledWith('view-projects');
         flush();
       });
     })
