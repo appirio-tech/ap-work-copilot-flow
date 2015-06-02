@@ -29,37 +29,37 @@
         templateUrl: 'claim-project/claim-project.html'
       }
     }, {
-      state: 'claim-project.name',
+      state: 'claim-project.claim',
       config: {
         url: '',
-        templateUrl: 'claim-project/about-project/views/name.html',
-        controller: 'SubmitNameController',
+        templateUrl: 'claim-project/about-project/views/claim.html',
+        controller: 'SubmitClaimController',
         controllerAs: 'vm'
       }
     }, {
-      state: 'claim-project.type',
+      state: 'claim-project.challenges',
       config: {
         url: '',
-        templateUrl: 'claim-project/about-project/views/type.html',
-        controller: 'SubmitTypeController',
+        templateUrl: 'claim-project/about-project/views/challenges.html',
+        controller: 'SubmitChallengesController',
         controllerAs: 'vm'
       }
     },
     {
-      state: 'claim-project.brief',
+      state: 'claim-project.createChallenges',
       config: {
         url: '',
-        templateUrl: 'claim-project/about-project/views/brief.html',
-        controller: 'SubmitBriefController',
+        templateUrl: 'claim-project/about-project/views/createChallenges.html',
+        controller: 'CreateChallengesController',
         controllerAs: 'vm'
       }
     },
     {
-      state: 'claim-project.competitors',
+      state: 'claim-project.launch',
       config: {
         url: '',
-        templateUrl: 'claim-project/about-project/views/competitors.html',
-        controller: 'SubmitCompetitorsController',
+        templateUrl: 'claim-project/about-project/views/launch.html',
+        controller: 'LaunchController',
         controllerAs: 'vm'
       }
     }

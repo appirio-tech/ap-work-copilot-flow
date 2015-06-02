@@ -1,7 +1,0 @@
-@import "../../../core/styles/combined";
-
-.layout-main.claim-project .name {
-  > form {
-    @include main-restricted();
-  }
-}

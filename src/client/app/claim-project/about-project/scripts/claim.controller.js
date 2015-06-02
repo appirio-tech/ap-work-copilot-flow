@@ -4,11 +4,11 @@
 
   angular
     .module('app.claim-project')
-    .controller('SubmitNameController', SubmitNameController);
+    .controller('SubmitClaimController', SubmitClaimController);
 
-  SubmitNameController.$inject = ['$scope', '$state', 'ClaimProjectService', 'NavService'];
+  SubmitClaimController.$inject = ['$scope', '$state', 'ClaimProjectService'];
 
-  function SubmitNameController($scope, $state, ClaimProjectService, NavService) {
+  function SubmitClaimController($scope, $state, ClaimProjectService) {
     var vm   = this;
     vm.title = 'Claim Project';
     vm.submit;
