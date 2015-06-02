@@ -3,35 +3,35 @@
 # controller = null
 # scope = null
 # setNextStateSpy = null
-# navServNameState = null
+# navServClaimState = null
 
-# describe 'SubmitNameController', ->
+# describe 'SubmitClaimController', ->
 #   beforeEach inject ($rootScope, $controller, NavService) ->
 #     navServ = NavService
-#     navServNameState = navServ.findState 'name'
+#     navServClaimState = navServ.findState 'Claim'
 #     setNextStateSpy = sinon.spy navServ, 'setNextState'
 #     scope = $rootScope.$new()
-#     scope.nameForm =
+#     scope.ClaimForm =
 #       $valid: true
-#     controller = $controller 'SubmitNameController', $scope: scope
+#     controller = $controller 'SubmitClaimController', $scope: scope
 #     $rootScope.$apply()
 
-#   describe 'Name controller', ->
+#   describe 'Claim controller', ->
 #     it 'should be created successfully', ->
 #       expect(controller).to.be.defined
 
 #     describe 'after activate', ->
-#       it 'should have title of Name', ->
-#        expect(controller.title).to.equal('Name')
+#       it 'should have title of Claim', ->
+#        expect(controller.title).to.equal('Claim')
 
 #     describe 'submit', ->
 #       beforeEach ->
 #         controller.submit()
 
-#       context 'when name form is valid', ->
+#       context 'when Claim form is valid', ->
 
-#         it 'should set "name" state on NavService to "visited"', ->
-#           expect(navServNameState.visited).to.equal(true)
+#         it 'should set "Claim" state on NavService to "visited"', ->
+#           expect(navServClaimState.visited).to.equal(true)
 
 #         it 'should call setNextState on NavService', ->
 #           expect(setNextStateSpy).to.have.been.called

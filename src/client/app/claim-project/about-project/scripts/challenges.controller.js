@@ -3,11 +3,11 @@
 
   angular
     .module('app.claim-project')
-    .controller('SubmitTypeController', SubmitTypeController);
+    .controller('SubmitChallengesController', SubmitChallengesController);
 
-  SubmitTypeController.$inject = ['$scope', '$state', 'logger', 'ClaimProjectService', 'NavService'];
+  SubmitChallengesController.$inject = ['$scope', '$state', 'logger', 'ClaimProjectService'];
 
-  function SubmitTypeController($scope, $state, logger, ClaimProjectService, NavService) {
+  function SubmitChallengesController($scope, $state, logger, ClaimProjectService) {
     var vm   = this;
     vm.title = 'Add Challenges';
     vm.challenges = [{id: 0, requestType: null, risk: null, description: null}];

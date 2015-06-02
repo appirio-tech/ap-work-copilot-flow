@@ -1,5 +1,5 @@
 /* jshint -W117, -W030 */
-describe('SubmitTypeController', function () {
+describe('SubmitChallengesController', function () {
   var controller, scope;
 
   beforeEach(function () {
@@ -8,13 +8,13 @@ describe('SubmitTypeController', function () {
 
   beforeEach(function () {
     scope = $rootScope.$new();
-    controller = $controller('SubmitTypeController', {$scope: scope});
+    controller = $controller('SubmitChallengesController', {$scope: scope});
     $rootScope.$apply();
   });
 
   bard.verifyNoOutstandingHttpRequests();
 
-  describe('Type controller', function () {
+  describe('Challenges controller', function () {
     it('should be created successfully', function () {
       expect(controller).to.be.defined;
     });
