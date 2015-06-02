@@ -47,6 +47,3 @@ beforeEach inject ($httpBackend) ->
           clonedPayload
           {}
         ]
-
-# Transfer fakeserver responses to $httpBackend
-
