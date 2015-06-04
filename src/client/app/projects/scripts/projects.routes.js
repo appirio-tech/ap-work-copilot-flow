@@ -27,6 +27,7 @@
           },
           resolve: {
             workRequests: ['ProjectsService', function(ProjectsService) {
+              console.log('these are work requests', ProjectService.getWorkRequests())
               return ProjectsService.getWorkRequests();
             }]
           }

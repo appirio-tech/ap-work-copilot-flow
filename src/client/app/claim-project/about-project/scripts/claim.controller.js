@@ -14,7 +14,8 @@
     vm.submit;
 
     vm.submit = function () {
-      $state.go('claim-project.type')
+      ClaimProjectService.assignCopilot();
+      $state.go('claim-project.challenges')
     };
 
   }

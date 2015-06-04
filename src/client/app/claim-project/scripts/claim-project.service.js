@@ -135,6 +135,7 @@
       var deferred = $q.defer();
       data.get('work-request', {id: id}).then(function(data) {
         service.work = data.result.content;
+        console.log('this is service.work', data.result.content)
         deferred.resolve(service.work);
       });
       return deferred.promise;
