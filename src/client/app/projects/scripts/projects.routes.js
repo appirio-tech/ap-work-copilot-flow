@@ -27,8 +27,29 @@
           },
           resolve: {
             workRequests: ['ProjectsService', function(ProjectsService) {
-              console.log('these are work requests', ProjectService.getWorkRequests())
               return ProjectsService.getWorkRequests();
+            }]
+          }
+        }
+      }, {
+        state: 'view-my-projects',
+        config: {
+          url: '/my-projects/:id?',
+          templateUrl: 'projects/views/my-projects.html',
+          controller: 'MyProjectsController',
+          controllerAs: 'vm',
+          title: 'View My Projects',
+          settings: {},
+          params: {
+            save: {}
+          },
+          resolve: {
+            copilotAssignedProjects: ['$stateParams', 'ProjectsService', function($stateParams, ProjectsService) {
+              if ($stateParams.id) {
+                return ProjectsService.getAssignedProjects($stateParams.id);
+              } else {
+                return false;
+              }
             }]
           }
         }

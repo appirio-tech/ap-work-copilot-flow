@@ -51,6 +51,7 @@
 
     function setUser(user) {
       vm.handle = user.handle
+      console.log('the user', user)
     }
 
     function setUserError(reason) {

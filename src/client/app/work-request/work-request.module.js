@@ -18,5 +18,6 @@
     };
 
     ApiResource.add(config);
+    console.log('this is the api', ApiResource)
   }
 })();

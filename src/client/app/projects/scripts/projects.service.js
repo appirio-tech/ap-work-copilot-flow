@@ -21,6 +21,16 @@
       var deferred = $q.defer();
       data.get('work-request').then(function(data) {
         deferred.resolve(data.result.content);
+        console.log('this is data', data)
+      });
+      return deferred.promise;
+    };
+
+    service.getAssignedProjects = function() {
+      var deferred = $q.defer();
+      data.get('copilot-assigned-projects').then(function(data) {
+        deferred.resolve(data.result.content);
+        console.log('this is copilot', data.result.content)
       });
       return deferred.promise;
     };
