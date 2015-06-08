@@ -1,18 +1,4 @@
 .heading
   h1 View Projects
-  button (ui-sref='claim-project.claim({ id: project.id })') My Projects
-  button Open Projects
-
-hr
-
-table
-  tr
-    th Name
-    th Type
-    th Date Submitted
-  tr(ng-repeat= "project in vm.workRequests")
-    td {{project.name}}
-    td {{project.requestType}}
-    td {{project.createdAt}}
-    td
-      button(ui-sref='claim-project.claim({ id: project.id })') Details
+  button(ui-sref='view-projects.assigned') My Projects
+  button(ui-sref='view-projects.open') Open Projects

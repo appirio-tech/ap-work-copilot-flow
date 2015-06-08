@@ -7,7 +7,7 @@
 
   ProjectsController.$inject = ['workRequests', '$state'];
   /* @ngInject */
-  function ProjectsController(workRequests, $stat) {
+  function ProjectsController(workRequests, $state) {
     var vm = this;
     vm.title = 'View Projects';
     vm.workRequests = [];

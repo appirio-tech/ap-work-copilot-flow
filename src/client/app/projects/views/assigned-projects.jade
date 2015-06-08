@@ -1,0 +1,12 @@
+
+table
+  tr
+    th Name
+    th Type
+    th Date Submitted
+  tr(ng-repeat= "project in vm.workRequests")
+    td {{project.name}}
+    td {{project.requestType}}
+    td {{project.createdAt}}
+    td
+      button(ui-sref='claim-project.claim({ id: project.id })') Details

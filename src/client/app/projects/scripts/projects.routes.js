@@ -17,32 +17,25 @@
         state: 'view-projects',
         config: {
           url: '/projects',
-          templateUrl: 'projects/views/projects.html',
           controller: 'ProjectsController',
           controllerAs: 'vm',
           title: 'View Projects',
-          settings: {},
-          params: {
-            save: {}
-          },
+          // abstract: true,
           resolve: {
             workRequests: ['ProjectsService', function(ProjectsService) {
               return ProjectsService.getWorkRequests();
             }]
-          }
+          },
+          templateUrl: 'projects/views/projects.html'
         }
       }, {
-        state: 'view-my-projects',
+        state: 'view-projects.assigned',
         config: {
-          url: '/my-projects/:id?',
-          templateUrl: 'projects/views/my-projects.html',
-          controller: 'MyProjectsController',
+          url: '',
+          templateUrl: 'projects/views/assigned-projects.html',
+          controller: 'AssignedProjectsController',
           controllerAs: 'vm',
-          title: 'View My Projects',
-          settings: {},
-          params: {
-            save: {}
-          },
+          title: 'View Assigned Projects',
           resolve: {
             copilotAssignedProjects: ['$stateParams', 'ProjectsService', function($stateParams, ProjectsService) {
               if ($stateParams.id) {
@@ -53,7 +46,16 @@
             }]
           }
         }
+      }, {
+        state: 'view-projects.open',
+        config: {
+          url: '',
+          templateUrl: 'projects/views/open-projects.html',
+          controller: 'OpenProjectsController',
+          controllerAs: 'vm',
+          title: 'View Available Projects',
       }
+    }
     ];
   }
 })();
