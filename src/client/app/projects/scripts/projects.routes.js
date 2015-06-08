@@ -17,16 +17,19 @@
         state: 'view-projects',
         config: {
           url: '/projects',
+          templateUrl: 'projects/views/projects.html',
           controller: 'ProjectsController',
           controllerAs: 'vm',
           title: 'View Projects',
-          // abstract: true,
+          settings: {},
+          params: {
+            save: {}
+          },
           resolve: {
             workRequests: ['ProjectsService', function(ProjectsService) {
               return ProjectsService.getWorkRequests();
             }]
-          },
-          templateUrl: 'projects/views/projects.html'
+          }
         }
       }, {
         state: 'view-projects.assigned',
@@ -35,16 +38,16 @@
           templateUrl: 'projects/views/assigned-projects.html',
           controller: 'AssignedProjectsController',
           controllerAs: 'vm',
-          title: 'View Assigned Projects',
-          resolve: {
-            copilotAssignedProjects: ['$stateParams', 'ProjectsService', function($stateParams, ProjectsService) {
-              if ($stateParams.id) {
-                return ProjectsService.getAssignedProjects($stateParams.id);
-              } else {
-                return false;
-              }
-            }]
-          }
+          title: 'View Assigned Projects'
+          // resolve: {
+          //   copilotAssignedProjects: ['$stateParams', 'ProjectsService', function($stateParams, ProjectsService) {
+          //     if ($stateParams.id) {
+          //       return ProjectsService.getAssignedProjects($stateParams.id);
+          //     } else {
+          //       return false;
+          //     }
+          //   }]
+          // }
         }
       }, {
         state: 'view-projects.open',
@@ -53,7 +56,7 @@
           templateUrl: 'projects/views/open-projects.html',
           controller: 'OpenProjectsController',
           controllerAs: 'vm',
-          title: 'View Available Projects',
+          title: 'View Available Projects'
       }
     }
     ];
