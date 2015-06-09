@@ -1,35 +1,48 @@
-.message(ng-if="vm.showMessage")
-  img.checkmark-green(src="projects/images/check-solid-green.svg")
-  span Your project has been launched.  Your co-pilot will contact you within 1 business day.
+//- .message(ng-if="vm.showMessage")
+//-   img.checkmark-green(src="projects/images/check-solid-green.svg")
+//-   span Your project has been launched.  Your co-pilot will contact you within 1 business day.
 
-.heading
-  h1 View Projects
+//- .heading
+//-   h1 View Projects
 
-  button(ui-sref='submit-work.flow') New <br /> Project
+//-   button(ui-sref='submit-work.flow') New <br /> Project
 
-hr
+//- hr
 
-ul
-  li(ng-repeat= "project in vm.workRequests")
-    div
-      header
-        h4 {{project.name}}
+//- ul
+//-   li(ng-repeat= "project in vm.workRequests")
+//-     div
+//-       header
+//-         h4 {{project.name}}
 
-        span.type {{project.requestType}}
+//-         span.type {{project.requestType}}
 
-      .middle
-        img(src="projects/images/missing-image.svg", class="missing")
+//-       .middle
+//-         img(src="projects/images/missing-image.svg", class="missing")
 
-      .bottom(ng-class="project.class")
-        img.checkmark(ng-if="project.checkmark", src="projects/images/{{project.checkmark}}")
+//-       .bottom(ng-class="project.class")
+//-         img.checkmark(ng-if="project.checkmark", src="projects/images/{{project.checkmark}}")
 
-        span.status {{project.message}}
+//-         span.status {{project.message}}
 
-        br
+//-         br
 
-        span.action
+//-         span.action
 
-          a(ng-if="project.status == 'Incomplete'",
-            ui-sref="submit-work.flow({ id: project.id })") Continue setup
+//-           a(ng-if="project.status == 'Incomplete'",
+//-             ui-sref="submit-work.flow({ id: project.id })") Continue setup
 
-          span(ng-if="project.status == 'Submitted'") Waiting for Project Approval
+//-           span(ng-if="project.status == 'Submitted'") Waiting for Project Approval
+
+h1 Assigned Projects
+table
+  tr
+    th Name
+    th Type
+    th Date Submitted
+  tr(ng-repeat= "project in vm.workRequests")
+    td {{project.name}}
+    td {{project.requestType}}
+    td {{project.createdAt}}
+    td
+      button(ui-sref='claim-project.claim({ id: project.id })') Details
