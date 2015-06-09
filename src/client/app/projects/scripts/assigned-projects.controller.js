@@ -3,18 +3,18 @@
 
   angular
     .module('app.projects')
-    .controller('ProjectsController', ProjectsController);
+    .controller('AssignedProjectsController', AssignedProjectsController);
 
-  ProjectsController.$inject = ['workRequests', '$state'];
+  AssignedProjectsController.$inject = ['copilotAssignedProjects', '$state'];
   /* @ngInject */
-  function ProjectsController(workRequests, $state) {
+  function AssignedProjectsController(copilotAssignedProjects, $state) {
     var vm = this;
     vm.title = 'View Projects';
-    vm.workRequests = [];
+    vm.copilotAssignedProjects = [];
     vm.formatWorkRequests = null;
 
     vm.activate = function() {
-      vm.workRequests = vm.formatWorkRequests(workRequests);
+      vm.copilotAssignedProjects = vm.formatWorkRequests(copilotAssignedProjects);
     };
 
     vm.formatWorkRequests = function(requests) {
