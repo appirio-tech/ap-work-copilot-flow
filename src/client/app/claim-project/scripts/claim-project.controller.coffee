@@ -38,7 +38,7 @@ ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
 
       options = save: 'yes'
 
-      $state.go 'view-projects' , options
+      $state.go 'view-projects.assigned' , options
 
   activate = ->
     ClaimProjectService.resetWork() unless $scope.work

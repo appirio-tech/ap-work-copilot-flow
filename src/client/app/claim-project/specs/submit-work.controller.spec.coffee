@@ -73,7 +73,7 @@ describe 'ClaimProjectController', ->
         scope.launch()
 
       it 'should set state to "launch-success"', ->
-        stateSpy.calledWith('view-projects').should.ok
+        stateSpy.calledWith('view-projects.assigned').should.ok
 
     context 'when a form is invalid', ->
       beforeEach inject ->

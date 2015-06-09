@@ -2,8 +2,7 @@
   'use strict';
 
   angular
-    .module('app.projects')
-    .run(runApp);
+    .module('app.projects').run(runApp);
 
   runApp.$inject = ['routerHelper', 'ProjectsService', 'ClaimProjectService'];
   /* @ngInject */
@@ -21,6 +20,7 @@
           controller: 'ProjectsController',
           controllerAs: 'vm',
           title: 'View Projects',
+          abstract: true,
           settings: {},
           params: {
             save: {}
@@ -34,31 +34,31 @@
       }, {
         state: 'view-projects.assigned',
         config: {
-          url: '',
-          templateUrl: 'projects/views/assigned-projects.html',
-          controller: 'AssignedProjectsController',
-          controllerAs: 'vm',
-          title: 'View Assigned Projects'
-          // resolve: {
-          //   copilotAssignedProjects: ['$stateParams', 'ProjectsService', function($stateParams, ProjectsService) {
-          //     if ($stateParams.id) {
-          //       return ProjectsService.getAssignedProjects($stateParams.id);
-          //     } else {
-          //       return false;
-          //     }
-          //   }]
-          // }
+        url: '',
+        templateUrl: 'projects/views/assigned-projects.html',
+        controller: 'AssignedProjectsController',
+        controllerAs: 'vm',
+        //later change to getAssignedProjects()
+        resolve: {
+          copilotAssignedProjects: ['ProjectsService', function(ProjectsService) {
+            return ProjectsService.getWorkRequests();
+          }]
+        }
         }
       }, {
         state: 'view-projects.open',
         config: {
           url: '',
           templateUrl: 'projects/views/open-projects.html',
-          controller: 'OpenProjectsController',
+          controller: 'ProjectsController',
           controllerAs: 'vm',
-          title: 'View Available Projects'
-      }
-    }
+          resolve: {
+            workRequests: ['ProjectsService', function(ProjectsService) {
+              return ProjectsService.getWorkRequests();
+            }]
+          }
+          }
+        }
     ];
   }
 })();
