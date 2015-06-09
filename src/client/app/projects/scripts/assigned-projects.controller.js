@@ -15,6 +15,7 @@
 
     vm.activate = function() {
       vm.copilotAssignedProjects = vm.formatWorkRequests(copilotAssignedProjects);
+      console.log('activate assigned controller')
     };
 
     vm.formatWorkRequests = function(requests) {

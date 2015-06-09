@@ -5,6 +5,7 @@ ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
   $scope.work         = ClaimProjectService.work
   $scope.completed    = NavService.completed
   $scope.asideService = getEstimate: ClaimProjectService.getEstimate
+  $scope.showClaimedModal = false
 
   # Watch service to set active state
   watchActiveState = ->
@@ -39,6 +40,11 @@ ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
       options = save: 'yes'
 
       $state.go 'view-projects.assigned' , options
+
+  $scope.submitClaim = ->
+    console.log('submitted le claim')
+    $scope.showClaimedModal = true;
+
 
   activate = ->
     ClaimProjectService.resetWork() unless $scope.work

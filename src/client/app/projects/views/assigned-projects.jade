@@ -1,16 +1,12 @@
+//- h1 Assigned Projects
 //- .message(ng-if="vm.showMessage")
 //-   img.checkmark-green(src="projects/images/check-solid-green.svg")
 //-   span Your project has been launched.  Your co-pilot will contact you within 1 business day.
 
-//- .heading
-//-   h1 View Projects
-
-//-   button(ui-sref='submit-work.flow') New <br /> Project
-
 //- hr
 
 //- ul
-//-   li(ng-repeat= "project in vm.workRequests")
+//-   li(ng-repeat= "project in vm.copilotAssignedProjects")
 //-     div
 //-       header
 //-         h4 {{project.name}}
@@ -40,9 +36,9 @@ table
     th Name
     th Type
     th Date Submitted
-  tr(ng-repeat= "project in vm.workRequests")
+  tr(ng-repeat= "project in vm.copilotAssignedProjects")
     td {{project.name}}
     td {{project.requestType}}
     td {{project.createdAt}}
     td
-      button(ui-sref='claim-project.claim({ id: project.id })') Details
+      button(ui-sref='claim-project({ id: project.id })') Details

@@ -15,14 +15,15 @@
 
       // variables
       work           : {},
+      claimSubmitted : false,
 
       // functions
       save           : null,
       savePrice      : null,
       getEstimate    : null,
       resetWork      : null,
-      initializeWork : null
-
+      initializeWork : null,
+      submitClaim: null
     };
 
     // using a default helps with resetting after submit
@@ -140,6 +141,10 @@
       });
       return deferred.promise;
     };
+
+   service.submitClaim = function() {
+    service.claimSubmitted = true;
+   }
 
     return service;
 

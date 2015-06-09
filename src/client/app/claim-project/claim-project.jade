@@ -1,14 +1,29 @@
 header
 
-h1 Project Details
+div(ng-show="showClaimedModal") Congratulations! You have claimed this project.
+  div
+    button(ui-sref="claim-project.challenges") Create Estimates
+  div
+    a I'll do it later
 
-  ul
-    li Name: {{ work.name }}
-    li Type: {{ work.requestType }}
-    li Estimate: {{asideService.getEstimate() | estimate}}
-    li Summary: {{work.summary}}
-    li Features: {{work.features}}
-    li Competitors: {{work.competitorApps}}
+h2{{ work.name }}
+div {{work.requestType | request}} Project
+button(ng-click="submitClaim()") Claim Project
 
-main(ui-view="")
+hr
 
+h5 Project Description
+p {{work.summary}}
+
+h5 Similar Apps
+p {{work.competitorApps}}
+
+h5 Description of Users
+p {{work.usageDescription}}
+
+h5 Features
+p {{work.features}}
+
+h5 Visual Elements
+
+aside(ui-view="")

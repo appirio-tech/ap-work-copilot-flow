@@ -15,7 +15,7 @@
       config: {
         url: '/claim-project/:id?',
         title: 'Claim Project',
-        abstract: true,
+        // abstract: true,
         controller: 'ClaimProjectController',
         resolve: {
           work: ['$stateParams', 'ClaimProjectService', function($stateParams, ClaimProjectService) {
@@ -28,15 +28,7 @@
         },
         templateUrl: 'claim-project/claim-project.html'
       }
-    }, {
-      state: 'claim-project.claim',
-      config: {
-        url: '',
-        templateUrl: 'claim-project/about-project/views/claim.html',
-        controller: 'SubmitClaimController',
-        controllerAs: 'vm'
-      }
-    }, {
+    },{
       state: 'claim-project.challenges',
       config: {
         url: '',
@@ -66,3 +58,12 @@
     ];
   }
 })();
+// {
+//      state: 'claim-project.claim',
+//      config: {
+//        url: '',
+//        templateUrl: 'claim-project/about-project/views/claim.html',
+//        controller: 'SubmitClaimController',
+//        controllerAs: 'vm'
+//      }
+//    },
