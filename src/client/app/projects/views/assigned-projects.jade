@@ -34,11 +34,11 @@ h1 Assigned Projects
 table
   tr
     th Name
-    th Type
-    th Date Submitted
+    th Complexity
+    th Status
   tr(ng-repeat= "project in vm.copilotAssignedProjects")
-    td {{project.name}}
-    td {{project.requestType}}
-    td {{project.createdAt}}
+    td {{project.id}}
+    td {{project.estimate.complexity}}
+    td {{project.status}}
     td
       button(ui-sref='claim-project({ id: project.id })') Details

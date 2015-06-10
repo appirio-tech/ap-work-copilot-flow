@@ -14,21 +14,7 @@
     vm.formatWorkRequests = null;
 
     vm.activate = function() {
-      vm.copilotAssignedProjects = vm.formatWorkRequests(copilotAssignedProjects);
-      console.log('activate assigned controller')
-    };
-
-    vm.formatWorkRequests = function(requests) {
-      var typeDisplays = {
-        'design': 'Mobile: Design',
-        'code'  : 'Mobile: Code',
-        'design & code': 'Design & Code'
-      };
-
-      return requests.map(function(work) {
-        work.requestType = typeDisplays[work.requestType];
-        return work;
-      });
+      vm.copilotAssignedProjects = copilotAssignedProjects;
     };
 
     vm.activate();
