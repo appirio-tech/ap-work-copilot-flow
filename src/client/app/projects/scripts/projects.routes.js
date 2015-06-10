@@ -41,7 +41,7 @@
         //later change to getAssignedProjects()
         resolve: {
           copilotAssignedProjects: ['ProjectsService', function(ProjectsService) {
-            return ProjectsService.getWorkRequests();
+            return ProjectsService.getAssignedProjects();
           }]
         }
         }

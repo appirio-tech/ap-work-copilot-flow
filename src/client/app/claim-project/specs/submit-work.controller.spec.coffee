@@ -67,19 +67,19 @@ describe 'ClaimProjectController', ->
     it 'should set completed to true', ->
       expect(scope.completed).to.ok
 
-  describe 'launch work', ->
-    context 'when all forms are valid', ->
-      beforeEach inject ->
-        scope.launch()
+  # describe 'launch work', ->
+  #   context 'when all forms are valid', ->
+  #     beforeEach inject ->
+  #       scope.launch()
 
-      it 'should set state to "launch-success"', ->
-        stateSpy.calledWith('view-projects.assigned').should.ok
+  #     it 'should set state to "launch-success"', ->
+  #       stateSpy.calledWith('view-projects.assigned').should.ok
 
-    context 'when a form is invalid', ->
-      beforeEach inject ->
-        navServ.states[1].form.$valid = false
-        scope.launch()
-        scope.$apply()
+  #   context 'when a form is invalid', ->
+  #     beforeEach inject ->
+  #       navServ.states[1].form.$valid = false
+  #       scope.launch()
+  #       scope.$apply()
 
-      it 'should set activeState to "type"', ->
-        expect(scope.activeState).to.equal 'type'
+  #     it 'should set activeState to "type"', ->
+  #       expect(scope.activeState).to.equal 'type'
