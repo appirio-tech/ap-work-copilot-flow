@@ -35,10 +35,10 @@
       challengesEstimate.complexity = vm.overallDifficulty;
       challengesEstimate.difficultyExplanation = vm.difficultyExplanation;
       challengesEstimate.challengeEstimates = vm.challenges;
-      console.log('the challenges estimate', challengesEstimate);
-      // ClaimProjectService.challenges = vm.challenges;
-      console.log('on submit challenge, copilot work', vm.copilotWork)
       ClaimProjectService.submitChallenges(vm.copilotWork.id, challengesEstimate);
+      // console.log('the challenges estimate', challengesEstimate);
+      // // ClaimProjectService.challenges = vm.challenges;
+      // console.log('on submit challenge, copilot work', vm.copilotWork)
       // vm.showChallengesAdded = true;
     };
   }

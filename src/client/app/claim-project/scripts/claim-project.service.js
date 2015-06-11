@@ -16,7 +16,7 @@
       // variables
       work           : {},
       copilotWork : null,
-      challenges: [],
+      allowCreateChallenges: false,
 
       // functions
       save           : null,
@@ -138,7 +138,6 @@
       var deferred = $q.defer();
       data.get('work-request', {id: id}).then(function(data) {
         service.work = data.result.content;
-        console.log('this is service.work', data.result.content)
         deferred.resolve(service.work);
       });
       return deferred.promise;
@@ -148,7 +147,6 @@
       var deferred = $q.defer();
       data.get('copilot-assigned-projects', {id: id}).then(function(data) {
         service.copilotWork = data.result.content;
-        console.log('this is copilot service.work', data.result.content)
         deferred.resolve(service.copilotWork);
       });
       return deferred.promise;
@@ -179,6 +177,8 @@
       data.result.content.estimate = challengesEstimate;
       data.$update({id: projectId});
       console.log('Updated project challenge estimates', data.result.content);
+      service.allowCreateChallenges = true;
+      //show create challenges modal
     }).catch(function(e) {
         console.log('le error', e)
         $q.reject(e);
