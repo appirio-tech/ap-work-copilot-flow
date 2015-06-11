@@ -2,7 +2,7 @@ header
 
 div(ng-show="showClaimedModal") Congratulations! You have claimed this project.
   div
-    button(ui-sref="claim-project.challenges({projectId: 'project-1'})") Create Estimates
+    button(ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimates
   div
     a I'll do it later
 

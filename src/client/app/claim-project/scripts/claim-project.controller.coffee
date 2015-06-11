@@ -1,6 +1,6 @@
 'use strict'
 
-ClaimProjectController = ($scope,  ClaimProjectService, NavService, $state) ->
+ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
   $scope.activeState  = NavService.activeState
   $scope.work         = ClaimProjectService.work
   $scope.copilotWork = ClaimProjectService.copilotWork
