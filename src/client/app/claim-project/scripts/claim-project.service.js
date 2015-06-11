@@ -174,9 +174,9 @@
         });
     };
 
-   service.submitChallenges = function(projectId, challenges) {
+   service.submitChallenges = function(projectId, challengesEstimate) {
     data.get('copilot-assigned-projects', {id: projectId}).then(function(data) {
-      data.result.content.estimate.challengeEstimates = challenges;
+      data.result.content.estimate = challengesEstimate;
       data.$update({id: projectId});
       console.log('Updated project challenge estimates', data.result.content);
     }).catch(function(e) {

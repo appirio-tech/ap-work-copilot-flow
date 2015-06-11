@@ -11,17 +11,19 @@
     var vm   = this;
     vm.title = 'Add Challenges';
     vm.copilotWork = ClaimProjectService.copilotWork;
+    vm.challengesEstimate = {};
     vm.challenges = [];
     vm.overallDifficulty = null;
+    vm.difficultyExplanation = null;
     // vm.showChallengesAdded = false;
     vm.index = 0;
-    vm.challenge = {id: vm.index, requestType: null, description: null, count: null}
+    vm.challenge = {id: vm.index, challengeType: null, count: null}
     vm.submit;
 
     vm.addChallenge = function(challenge) {
         var challengeId = vm.index++;
         vm.challenges.push(vm.challenge);
-        vm.challenge = {id: vm.index, requestType: null, description: null, count: null}
+        vm.challenge = {id: vm.index, challengeType: null, count: null}
     }
 
     vm.removeChallenge = function(index) {
@@ -29,10 +31,14 @@
     }
 
     vm.submit = function(form) {
-      console.log('the challenges array', vm.challenges);
+      var challengesEstimate = {}
+      challengesEstimate.complexity = vm.overallDifficulty;
+      challengesEstimate.difficultyExplanation = vm.difficultyExplanation;
+      challengesEstimate.challengeEstimates = vm.challenges;
+      console.log('the challenges estimate', challengesEstimate);
       // ClaimProjectService.challenges = vm.challenges;
       console.log('on submit challenge, copilot work', vm.copilotWork)
-      ClaimProjectService.submitChallenges(vm.copilotWork.id, vm.challenges);
+      ClaimProjectService.submitChallenges(vm.copilotWork.id, challengesEstimate);
       // vm.showChallengesAdded = true;
     };
   }

@@ -6,8 +6,9 @@ ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
   $scope.copilotWork = ClaimProjectService.copilotWork
   $scope.completed    = NavService.completed
   $scope.asideService = getEstimate: ClaimProjectService.getEstimate
-  $scope.showClaimButton = true;
-  $scope.showClaimedModal = false;
+  # $scope.showClaimButton = true
+  $scope.showClaimedModal = false
+  $scope.showCreateEstimatesButton = false
 
   # Watch service to set active state
   watchActiveState = ->
@@ -44,6 +45,7 @@ ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
       $state.go 'view-projects.assigned' , options
 
   $scope.submitClaim = ->
+    $scope.projectAvailable = false
     $scope.showClaimedModal = true
     # $scope.copilotWork.status = 'claim_submitted';
     $scope.work.status = 'claim_submitted'
@@ -51,7 +53,16 @@ ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
     $scope.showClaimButton = false
 
   $scope.projectAvailable = ->
-    $scope.work.status != 'claim_submitted'
+    $scope.work.status == 'Incomplete'
+
+  $scope.revealCreateEstimatesButton = ->
+    $scope.showCreateEstimatesButton = true
+    $scope.work.status = 'claim_submitted'
+    $scope.showClaimedModal  = false
+
+  $scope.hideClaimedModal = ->
+    $scope.showClaimedModal  = false
+
 
   activate = ->
     # ClaimProjectService.resetWork() unless $scope.work

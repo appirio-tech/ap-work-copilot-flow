@@ -2,13 +2,14 @@ header
 
 div(ng-show="showClaimedModal") Congratulations! You have claimed this project.
   div
-    button(ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimates
+    button(ng-click="hideClaimedModal()", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimates
   div
-    a I'll do it later
+    a(ng-click="revealCreateEstimatesButton()") I'll do it later
 
 h2{{ work.name }}
 div {{work.requestType | request}} Project
-button(ng-click="submitClaim()", ng-show="projectAvailable()") Claim Project
+button(ng-show="projectAvailable()", ng-click="submitClaim()") Claim Project
+button(ng-show="showCreateEstimatesButton", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimatess
 
 hr
 
