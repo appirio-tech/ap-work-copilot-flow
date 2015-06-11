@@ -156,23 +156,33 @@
 
     service.submitClaim= function(projectId) {
       // project.status = 'claim_submitted';
-      data.get('copilot-assigned-projects', {id: projectId}).then(function(data) {
-        data.result.content.status = 'claim_submitted';
-        data.$update({id: projectId});
-      console.log('Updated project status', data.result.content);
-    }).catch(function(e) {
+      // data.get('copilot-assigned-projects', {id: projectId}).then(function(data) {
+      //   data.result.content.status = 'claim_submitted';
+      //   data.$update({id: projectId});
+      //   console.log('Updated project status', data.result.content);
+      // }).catch(function(e) {
+      //     console.log('le error', e)
+      //     $q.reject(e);
+      // });
+        data.create('copilot-assigned-projects', {id: projectId}).then(function(data) {
+          // data.result.content.status = 'claim_submitted';
+          // data.$update({id: projectId});
+          console.log('Updated project status', data)
+        }).catch(function(e) {
             console.log('le error', e)
-           $q.reject(e);
-       });
+            $q.reject(e);
+        });
     };
 
-   service.submitChallenges = function(challenges) {
-    data.update('copilot-assigned-projects', challenges).then(function(data) {
-      promise.resolve(data);
-      console.log('POSTED CHALLENGES', data)
+   service.submitChallenges = function(projectId, challenges) {
+    data.get('copilot-assigned-projects', {id: projectId}).then(function(data) {
+      data.result.content.estimate.challengeEstimates = challenges;
+      data.$update({id: projectId});
+      console.log('Updated project challenge estimates', data.result.content);
     }).catch(function(e) {
-          $q.reject(e);
-      });
+        console.log('le error', e)
+        $q.reject(e);
+    });
    };
 
     return service;

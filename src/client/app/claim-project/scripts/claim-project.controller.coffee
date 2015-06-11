@@ -44,12 +44,14 @@ ClaimProjectController = ($scope,  ClaimProjectService, NavService, $state) ->
       $state.go 'view-projects.assigned' , options
 
   $scope.submitClaim = ->
-    $scope.showClaimedModal = true;
-    ClaimProjectService.submitClaim($scope.copilotWork.id);
-    $scope.showClaimButton = false;
+    $scope.showClaimedModal = true
+    # $scope.copilotWork.status = 'claim_submitted';
+    $scope.work.status = 'claim_submitted'
+    ClaimProjectService.submitClaim($scope.work.id)
+    $scope.showClaimButton = false
 
   $scope.projectAvailable = ->
-    $scope.copilotWork.status != 'claim_submitted'
+    $scope.work.status != 'claim_submitted'
 
   activate = ->
     # ClaimProjectService.resetWork() unless $scope.work

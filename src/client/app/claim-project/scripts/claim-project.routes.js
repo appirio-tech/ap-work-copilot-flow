@@ -38,10 +38,19 @@
     },{
       state: 'claim-project.challenges',
       config: {
-        url: '',
+        url: '/:projectId?',
         templateUrl: 'claim-project/about-project/views/challenges.html',
         controller: 'SubmitChallengesController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          copilotWork: ['$stateParams', 'ClaimProjectService', function($stateParams, ClaimProjectService) {
+            if ($stateParams.projectId) {
+              return ClaimProjectService.initializeCopilotWork($stateParams.projectId);
+            } else {
+              return false;
+            }
+          }]
+        }
       }
     },
     {

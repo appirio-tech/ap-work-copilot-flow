@@ -10,6 +10,7 @@
   function SubmitChallengesController($scope, $state, logger, ClaimProjectService) {
     var vm   = this;
     vm.title = 'Add Challenges';
+    vm.copilotWork = ClaimProjectService.copilotWork;
     vm.challenges = [];
     vm.overallDifficulty = null;
     // vm.showChallengesAdded = false;
@@ -28,9 +29,10 @@
     }
 
     vm.submit = function(form) {
-      console.log('the challenges array', vm.challenges)
-      ClaimProjectService.challenges = vm.challenges;
-      ClaimProjectService.submitChallenges(vm.challenges);
+      console.log('the challenges array', vm.challenges);
+      // ClaimProjectService.challenges = vm.challenges;
+      console.log('on submit challenge, copilot work', vm.copilotWork)
+      ClaimProjectService.submitChallenges(vm.copilotWork.id, vm.challenges);
       // vm.showChallengesAdded = true;
     };
   }
