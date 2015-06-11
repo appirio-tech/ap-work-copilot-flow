@@ -13,7 +13,7 @@
     return [{
       state: 'claim-project',
       config: {
-        url: '/claim-project/:id?',
+        url: '/claim-project/:id?/:projectId?',
         title: 'Claim Project',
         // abstract: true,
         controller: 'ClaimProjectController',
@@ -21,6 +21,13 @@
           work: ['$stateParams', 'ClaimProjectService', function($stateParams, ClaimProjectService) {
             if ($stateParams.id) {
               return ClaimProjectService.initializeWork($stateParams.id);
+            } else {
+              return false;
+            }
+          }],
+          copilotWork: ['$stateParams', 'ClaimProjectService', function($stateParams, ClaimProjectService) {
+            if ($stateParams.projectId) {
+              return ClaimProjectService.initializeCopilotWork($stateParams.projectId);
             } else {
               return false;
             }

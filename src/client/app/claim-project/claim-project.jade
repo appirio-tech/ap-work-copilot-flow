@@ -8,7 +8,7 @@ div(ng-show="showClaimedModal") Congratulations! You have claimed this project.
 
 h2{{ work.name }}
 div {{work.requestType | request}} Project
-button(ng-click="submitClaim()") Claim Project
+button(ng-click="submitClaim()", ng-show="projectAvailable()") Claim Project
 
 hr
 

@@ -2,15 +2,15 @@
 h2 Add Challenge Estimates
 
 form(name="challengeForm", ng-submit="vm.submit()")
-  div(ng-form="challengesForm")
+  ng-form(name="challengesForm")
     label Challenge Type
-    select(name = "Type", ng-model = "vm.challenge.requestType", required)
+    select(name = "Type", ng-model = "vm.challenge.requestType")
       option(value="", disabled, selected) Type of Challenge
       option(value = "design") Design
       option(value = "code") Code
 
     label Challenge Risk
-    select(name = "Count", ng-model = "vm.challenge.count", required)
+    select(name = "Count", ng-model = "vm.challenge.count")
       option(value="", disabled, selected) How Many
       option(value = 1) 1
       option(value = 2) 2
@@ -21,7 +21,7 @@ form(name="challengeForm", ng-submit="vm.submit()")
     //- label Challenge Description
     //- input(placeholder="Enter challenge description", ng-model = "challenge.description", required)
 
-    button(type="button", ng-click="vm.addChallenge(challenge)") +
+   button(type="button", ng-click="vm.addChallenge(challenge)") +
     //- button(type="button", ng-click="vm.removeChallenge($index)") Remove
 
   hr
@@ -31,7 +31,7 @@ form(name="challengeForm", ng-submit="vm.submit()")
         a(ng-click="vm.removeChallenge($index)") remove
 
   label Overall Project Difficulty
-  select(name = "Difficulty", ng-model = "vm.overallDifficulty", required)
+  select(name = "Difficulty", ng-model = "vm.overallDifficulty", required=true)
     option(value="", disabled, selected) Difficulty Level
     option(value = "low") Low
     option(value = "medium") Medium

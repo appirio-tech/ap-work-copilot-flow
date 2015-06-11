@@ -15,7 +15,8 @@
 
       // variables
       work           : {},
-      claimSubmitted : false,
+      copilotWork : null,
+      challenges: [],
 
       // functions
       save           : null,
@@ -23,6 +24,7 @@
       getEstimate    : null,
       resetWork      : null,
       initializeWork : null,
+      submitChallenges: null,
       submitClaim: null
     };
 
@@ -142,9 +144,36 @@
       return deferred.promise;
     };
 
-   service.submitClaim = function() {
-    service.claimSubmitted = true;
-   }
+    service.initializeCopilotWork = function(id) {
+      var deferred = $q.defer();
+      data.get('copilot-assigned-projects', {id: id}).then(function(data) {
+        service.copilotWork = data.result.content;
+        console.log('this is copilot service.work', data.result.content)
+        deferred.resolve(service.copilotWork);
+      });
+      return deferred.promise;
+    };
+
+    service.submitClaim= function(id) {
+      // project.status = 'claim_submitted';
+      data.get('copilot-assigned-projects', {id: id}).then(function(data) {
+        data.result.content.status = 'claim_submitted';
+        data.$update();
+      console.log('Updated project status', data.result.content);
+    }).catch(function(e) {
+            console.log('le error', e)
+           $q.reject(e);
+       });
+    };
+
+   service.submitChallenges = function(challenges) {
+    data.update('copilot-assigned-projects', challenges).then(function(data) {
+      promise.resolve(data);
+      console.log('POSTED CHALLENGES', data)
+    }).catch(function(e) {
+          $q.reject(e);
+      });
+   };
 
     return service;
 

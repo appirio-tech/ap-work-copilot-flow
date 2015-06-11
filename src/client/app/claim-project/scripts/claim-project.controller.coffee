@@ -1,11 +1,13 @@
 'use strict'
 
-ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
+ClaimProjectController = ($scope,  ClaimProjectService, NavService, $state) ->
   $scope.activeState  = NavService.activeState
   $scope.work         = ClaimProjectService.work
+  $scope.copilotWork = ClaimProjectService.copilotWork
   $scope.completed    = NavService.completed
   $scope.asideService = getEstimate: ClaimProjectService.getEstimate
-  $scope.showClaimedModal = false
+  $scope.showClaimButton = true;
+  $scope.showClaimedModal = false;
 
   # Watch service to set active state
   watchActiveState = ->
@@ -42,12 +44,15 @@ ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
       $state.go 'view-projects.assigned' , options
 
   $scope.submitClaim = ->
-    console.log('submitted le claim')
     $scope.showClaimedModal = true;
+    ClaimProjectService.submitClaim($scope.copilotWork.id);
+    $scope.showClaimButton = false;
 
+  $scope.projectAvailable = ->
+    $scope.copilotWork.status != 'claim_submitted'
 
   activate = ->
-    ClaimProjectService.resetWork() unless $scope.work
+    # ClaimProjectService.resetWork() unless $scope.work
 
   activate()
 
