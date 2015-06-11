@@ -154,11 +154,11 @@
       return deferred.promise;
     };
 
-    service.submitClaim= function(id) {
+    service.submitClaim= function(projectId) {
       // project.status = 'claim_submitted';
-      data.get('copilot-assigned-projects', {id: id}).then(function(data) {
+      data.get('copilot-assigned-projects', {id: projectId}).then(function(data) {
         data.result.content.status = 'claim_submitted';
-        data.$update();
+        data.$update({id: projectId});
       console.log('Updated project status', data.result.content);
     }).catch(function(e) {
             console.log('le error', e)
