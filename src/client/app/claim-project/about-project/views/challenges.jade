@@ -41,3 +41,8 @@ form(name="challengeForm", ng-submit="vm.submit()")
   input(name="difficultyExplanation", ng-model="vm.difficultyExplanation", required=true)
   button(type="submit") Continue
 
+div(ng-show="vm.showCreateChallengesModal()") Estimate Created.
+  div
+    button(ng-click="vm.hideCreateChallengesModal()", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Challenges
+  div
+    a(ng-click="vm.hideCreateChallengesModal()") I'll do it later

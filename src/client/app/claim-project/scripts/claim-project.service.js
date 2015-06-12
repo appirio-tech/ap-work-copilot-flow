@@ -185,6 +185,10 @@
     });
    };
 
+   // service.allowCreateChallenges = function() {
+   //  return service.showCreateChallenges;
+   // }
+
     return service;
 
   }

@@ -10,6 +10,7 @@ h2{{ work.name }}
 div {{work.requestType | request}} Project
 button(ng-show="projectAvailable()", ng-click="submitClaim()") Claim Project
 button(ng-show="showCreateEstimatesButton", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimatess
+button(ng-show="showCreateChallengesButton", href="https://www.topcoder.com/direct/home.action") Create Estimatess
 
 hr
 

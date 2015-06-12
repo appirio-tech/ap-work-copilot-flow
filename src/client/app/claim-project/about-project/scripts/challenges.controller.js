@@ -41,5 +41,14 @@
       // console.log('on submit challenge, copilot work', vm.copilotWork)
       // vm.showChallengesAdded = true;
     };
+
+    vm.showCreateChallengesModal = function() {
+      return ClaimProjectService.allowCreateChallenges;
+    }
+
+    vm.hideCreateChallengesModal = function() {
+      ClaimProjectService.allowCreateChallenges = false;
+      vm.revealCreateChallengesButton();
+    }
   }
 })();
