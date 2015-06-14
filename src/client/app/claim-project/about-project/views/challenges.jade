@@ -1,14 +1,14 @@
-h2 Add Challenge Estimates
+h5 Create Project Estimates
 
 form(name="challengeForm", ng-submit="vm.submit()")
   ng-form(name="challengesForm")
-    label Challenge Type
+    //- label Challenge Type
     select(name = "Type", ng-model = "vm.challenge.challengeType")
       option(value="", disabled, selected) Type of Challenge
       option(value = "design") Design
       option(value = "code") Code
 
-    label Challenge Risk
+    //- label Challenge Risk
     select(name = "Count", ng-model = "vm.challenge.count")
       option(value="", disabled, selected) How Many
       option(value = 1) 1
@@ -36,6 +36,7 @@ form(name="challengeForm", ng-submit="vm.submit()")
     option(value = "medium") Medium
     option(value = "high") High
 
+  br
   label Explain Complexity
-  input(name="difficultyExplanation", ng-model="vm.difficultyExplanation", required=true)
+  textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation", required=true)
   button(type="submit") Continue

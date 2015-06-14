@@ -19,7 +19,6 @@ body {
   overflow-x         : hidden;
   overflow-y         : auto;
   -webkit-text-stroke: 1px transparent;
-  background-color   : $limed-spruce;
 
   @include font-line(14);
   @include source-sans();
@@ -40,7 +39,7 @@ h1 {
 
 h2 {
   color: $ship-gray;
-  @include roboto-light();
+  @include font-line(18)
 }
 
 h3 {
@@ -48,7 +47,7 @@ h3 {
 }
 
 h4, h5, h6 {
-  @include font-line(16);
+  @include font-line(20);
 }
 
 hr {
@@ -99,18 +98,6 @@ a.clean {
 
   footer {
     margin: $margin-18;
-  }
-}
-
-.statusModal {
-  position: absolute;
-  background: black;
-  opacity: 0.8;
-  span {
-    color: white;
-  }
-  a {
-    color: white;
   }
 }
 

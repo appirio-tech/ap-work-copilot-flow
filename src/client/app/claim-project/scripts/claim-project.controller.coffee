@@ -15,7 +15,6 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, NavS
   $scope.projectAvailable = true
   # $scope.projectStatus = ClaimProjectService.currentStatus();
 
-
   # Watch service to set active state
   watchActiveState = ->
     NavService.activeState
@@ -53,7 +52,6 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, NavS
   $rootScope.$on 'projectClaimed', ->
    $scope.showClaimedModal = true
    $scope.projectAvailable = false
-   # $scope.hideClaimButton = true
 
    $rootScope.$on 'challengeEstimatesSubmitted', ->
     $rootScope.showCreateChallengesModal = true
