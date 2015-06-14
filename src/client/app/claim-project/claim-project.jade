@@ -1,18 +1,17 @@
 main
   div
     .statusModal(ng-show="showClaimedModal")
-      div
         span Congratulations! You have claimed this project.
-      div
+        br
         button(ng-click="revealProjectEstimates()", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimates
-      div
+        br
         a(ng-click="revealCreateEstimatesButton()") I'll do it later
 
     .statusModal(ng-show="showCreateChallengesModal")
-      div
         span Estimate Created.
+        br
         button(ng-click="openCreateChallenges()") Create Challenges
-      div
+        br
         a(ng-click="hideCreateChallengesModal()") I'll do it later
 
     h2{{ work.name }}

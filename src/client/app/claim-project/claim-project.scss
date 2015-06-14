@@ -7,13 +7,20 @@
   .statusModal {
     position: absolute;
     background: $black;
+    height: 20%;
     opacity: 0.8;
     width: 100%;
+    text-align: center;
     span {
       color: white;
+      width: 100%
     }
     a {
       color: white;
+    }
+    button {
+      background-color: white;
+      color: $black
     }
   }
 
