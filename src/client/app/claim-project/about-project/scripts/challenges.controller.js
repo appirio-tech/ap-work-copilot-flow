@@ -11,6 +11,8 @@
     var vm   = this;
     vm.title = 'Add Challenges';
     vm.copilotWork = ClaimProjectService.copilotWork;
+    vm.estimatesSubmitted = false;
+    vm.projectEstimateStatus = 'Create Project Estimate'
     vm.challengesEstimate = {};
     vm.challenges = [];
     vm.overallDifficulty = null;
@@ -21,9 +23,10 @@
     vm.submit;
 
     //event listeners
-  // $rootScope.on('challengeEstimatesSubmitted', function() {
-  //   $scope.show
-  // })
+  $rootScope.$on('challengeEstimatesSubmitted', function() {
+    vm.estimatesSubmitted = true;
+    vm.projectEstimateStatus = 'Project Estimate'
+  })
 
 
     vm.addChallenge = function(challenge) {

@@ -10,16 +10,12 @@
   function ClaimProjectService($rootScope, $q, data) {
     // local used by "save" function
     var created = false;
-
     var service = {
 
       // variables
       work           : {},
       copilotWork : null,
       claimedProjectId: null,
-      //add temporary persistence for project status
-      // projectAvailable: true,
-      // allowCreateChallenges: false,
 
       // functions
       save           : null,

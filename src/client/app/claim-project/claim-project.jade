@@ -16,11 +16,12 @@ main
 
     h2{{ work.name }}
     div {{work.requestType | request}} Project
-    button(ng-show="projectAvailable", ng-click="submitClaim()") Claim Project
-    button(ng-show="showCreateEstimatesButton", ui-sref="claim-project.challenges") Create Estimates
-    button(ng-show="showCreateChallengesButton", ng-click="openCreateChallenges()") Create Challenges
-    button(ng-show="showLaunchButton", ng-click="launchProject()") Launch Project
-
+    button(ng-if="projectAvailable", ng-click="submitClaim()") Claim Project
+    button(ng-if="showCreateEstimatesButton", ui-sref="claim-project.challenges") Create Estimates
+    button(ng-if="showCreateChallengesButton", ng-click="openCreateChallenges()") Create Challenges
+    button(ng-if="showLaunchButton", ng-click="launchProject()") Launch Project
+    br
+    br
     hr
 
     h5 Project Description

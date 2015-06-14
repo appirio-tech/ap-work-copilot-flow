@@ -1,6 +1,6 @@
-h5 Create Project Estimates
+h5 {{vm.projectEstimateStatus}}
 
-form(name="challengeForm", ng-submit="vm.submit()")
+form(name="challengeForm", ng-submit="vm.submit()", ng-hide="vm.estimatesSubmitted")
   ng-form(name="challengesForm")
     //- label Challenge Type
     select(name = "Type", ng-model = "vm.challenge.challengeType")
@@ -40,3 +40,8 @@ form(name="challengeForm", ng-submit="vm.submit()")
   label Explain Complexity
   textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation", required=true)
   button(type="submit") Continue
+
+div(ng-show="vm.estimatesSubmitted")
+  ul
+    li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.requestType | request}} Challenges
+      a(ng-click="vm.removeChallenge($index)") remove
