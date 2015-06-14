@@ -1,14 +1,20 @@
 'use strict'
 
-ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
+ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, NavService, $state) ->
   $scope.activeState  = NavService.activeState
   $scope.work         = ClaimProjectService.work
   $scope.copilotWork = ClaimProjectService.copilotWork
   $scope.completed    = NavService.completed
   $scope.asideService = getEstimate: ClaimProjectService.getEstimate
-  # $scope.showClaimButton = true
+  # $scope.hideClaimButton = false
   $scope.showClaimedModal = false
   $scope.showCreateEstimatesButton = false
+  $rootScope.showCreateChallengesModal = false
+  $scope.showCreateChallengesButton = false
+  $scope.showLaunchButton = false
+  $scope.projectAvailable = true
+  # $scope.projectStatus = ClaimProjectService.currentStatus();
+
 
   # Watch service to set active state
   watchActiveState = ->
@@ -44,24 +50,36 @@ ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
 
       $state.go 'view-projects.assigned' , options
 
-  $scope.submitClaim = ->
-    $scope.projectAvailable = false
-    $scope.showClaimedModal = true
-    # $scope.copilotWork.status = 'claim_submitted';
-    $scope.work.status = 'claim_submitted'
-    ClaimProjectService.submitClaim($scope.work.id)
-    $scope.showClaimButton = false
+  $rootScope.$on 'projectClaimed', ->
+   $scope.showClaimedModal = true
+   $scope.projectAvailable = false
+   # $scope.hideClaimButton = true
 
-  $scope.projectAvailable = ->
-    $scope.work.status == 'Incomplete'
+   $rootScope.$on 'challengeEstimatesSubmitted', ->
+    $rootScope.showCreateChallengesModal = true
+
+  $scope.submitClaim = ->
+    ClaimProjectService.submitClaim($scope.work.id)
+
+  # $scope.projectAvailable = ->
+  #   ClaimProjectService.projectAvailable
 
   $scope.revealCreateEstimatesButton = ->
     $scope.showCreateEstimatesButton = true
-    $scope.work.status = 'claim_submitted'
     $scope.showClaimedModal  = false
 
-  $scope.hideClaimedModal = ->
+  $scope.revealProjectEstimates = ->
     $scope.showClaimedModal  = false
+    $scope.showCreateEstimatesButton = true
+
+  $scope.openCreateChallenges = ->
+    $window.open('https://www.topcoder.com/direct/home.action', '_blank')
+    true
+    $scope.showLaunchButton = true
+
+  $scope.hideCreateChallengesModal = ->
+    $scope.showCreateChallengesModal = false
+    $scope.showCreateChallengesButton = true
 
 
   activate = ->
@@ -69,7 +87,7 @@ ClaimProjectController = ($scope, ClaimProjectService, NavService, $state) ->
 
   activate()
 
-ClaimProjectController.$inject = ['$scope', 'ClaimProjectService', 'NavService', '$state']
+ClaimProjectController.$inject = ['$scope', '$rootScope', '$window','ClaimProjectService', 'NavService', '$state']
 
 angular.module('app.claim-project').controller 'ClaimProjectController', ClaimProjectController
 

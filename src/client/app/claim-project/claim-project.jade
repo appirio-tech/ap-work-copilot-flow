@@ -1,16 +1,25 @@
 header
 
-div(ng-show="showClaimedModal") Congratulations! You have claimed this project.
+.statusModal(ng-show="showClaimedModal")
   div
-    button(ng-click="hideClaimedModal()", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimates
+    span Congratulations! You have claimed this project.
+    button(ng-click="revealProjectEstimates()", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimates
   div
     a(ng-click="revealCreateEstimatesButton()") I'll do it later
 
+.statusModal(ng-show="showCreateChallengesModal")
+  div
+    span Estimate Created.
+    button(ng-click="openCreateChallenges()") Create Challenges
+  div
+    a(ng-click="hideCreateChallengesModal()") I'll do it later
+
 h2{{ work.name }}
 div {{work.requestType | request}} Project
-button(ng-show="projectAvailable()", ng-click="submitClaim()") Claim Project
-button(ng-show="showCreateEstimatesButton", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimatess
-button(ng-show="showCreateChallengesButton", href="https://www.topcoder.com/direct/home.action") Create Estimatess
+button(ng-show="projectAvailable", ng-click="submitClaim()") Claim Project
+button(ng-show="showCreateEstimatesButton", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimates
+button(ng-show="showCreateChallengesButton", ng-click="openCreateChallenges()") Create Challenges
+button(ng-show="showLaunchButton", ng-click="launchProject()") Launch Project
 
 hr
 

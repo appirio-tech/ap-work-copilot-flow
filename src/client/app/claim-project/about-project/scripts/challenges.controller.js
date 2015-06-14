@@ -5,9 +5,9 @@
     .module('app.claim-project')
     .controller('SubmitChallengesController', SubmitChallengesController);
 
-  SubmitChallengesController.$inject = ['$scope', '$state', 'logger', 'ClaimProjectService'];
+  SubmitChallengesController.$inject = ['$scope', '$rootScope', '$state', 'logger', 'ClaimProjectService'];
 
-  function SubmitChallengesController($scope, $state, logger, ClaimProjectService) {
+  function SubmitChallengesController($scope, $rootScope, $state, logger, ClaimProjectService) {
     var vm   = this;
     vm.title = 'Add Challenges';
     vm.copilotWork = ClaimProjectService.copilotWork;
@@ -19,6 +19,12 @@
     vm.index = 0;
     vm.challenge = {id: vm.index, challengeType: null, count: null}
     vm.submit;
+
+    //event listeners
+  // $rootScope.on('challengeEstimatesSubmitted', function() {
+  //   $scope.show
+  // })
+
 
     vm.addChallenge = function(challenge) {
         var challengeId = vm.index++;
@@ -50,5 +56,7 @@
       ClaimProjectService.allowCreateChallenges = false;
       vm.revealCreateChallengesButton();
     }
+
+
   }
 })();
