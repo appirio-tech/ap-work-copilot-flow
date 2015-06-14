@@ -17,7 +17,7 @@ main
     h2{{ work.name }}
     div {{work.requestType | request}} Project
     button(ng-show="projectAvailable", ng-click="submitClaim()") Claim Project
-    button(ng-show="showCreateEstimatesButton", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimates
+    button(ng-show="showCreateEstimatesButton", ui-sref="claim-project.challenges") Create Estimates
     button(ng-show="showCreateChallengesButton", ng-click="openCreateChallenges()") Create Challenges
     button(ng-show="showLaunchButton", ng-click="launchProject()") Launch Project
 

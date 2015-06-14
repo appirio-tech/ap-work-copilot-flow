@@ -75,9 +75,12 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, NavS
     $window.open('https://www.topcoder.com/direct/home.action', '_blank')
     true
     $scope.showLaunchButton = true
+    $scope.showCreateChallengesButton = false
 
   $scope.hideCreateChallengesModal = ->
     $scope.showCreateChallengesModal = false
+    $scope.projectAvailable = false
+    $scope.showCreateEstimatesButton = false
     $scope.showCreateChallengesButton = true
 
 
