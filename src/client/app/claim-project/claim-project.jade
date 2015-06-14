@@ -3,7 +3,7 @@ main
     .statusModal(ng-show="showClaimedModal")
         span Congratulations! You have claimed this project.
         br
-        button(ng-click="revealProjectEstimates()", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimates
+        button(ng-click="revealProjectEstimates()", ui-sref="claim-project.challenges") Create Estimates
         br
         a(ng-click="revealCreateEstimatesButton()") I'll do it later
 
@@ -16,7 +16,7 @@ main
 
     h2{{ work.name }}
     div {{work.requestType | request}} Project
-    button(ng-if="projectAvailable", ng-click="submitClaim()") Claim Project
+    button(ng-show="projectAvailable", ng-click="submitClaim()") Claim Project
     button(ng-show="showCreateEstimatesButton", ui-sref="claim-project.challenges({projectId: copilotWork.id || 'project-2'})") Create Estimates
     button(ng-show="showCreateChallengesButton", ng-click="openCreateChallenges()") Create Challenges
     button(ng-show="showLaunchButton", ng-click="launchProject()") Launch Project

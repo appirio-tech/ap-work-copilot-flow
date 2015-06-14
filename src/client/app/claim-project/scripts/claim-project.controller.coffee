@@ -13,6 +13,7 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, NavS
   $scope.showCreateChallengesButton = false
   $scope.showLaunchButton = false
   $scope.projectAvailable = true
+  $scope.claimedProjectId = ClaimProjectService.claimedProjectId;
   # $scope.projectStatus = ClaimProjectService.currentStatus();
 
   # Watch service to set active state

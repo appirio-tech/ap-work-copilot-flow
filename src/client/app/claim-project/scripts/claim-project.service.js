@@ -16,6 +16,7 @@
       // variables
       work           : {},
       copilotWork : null,
+      claimedProjectId: null,
       //add temporary persistence for project status
       // projectAvailable: true,
       // allowCreateChallenges: false,
@@ -155,9 +156,12 @@
     };
 
     service.submitClaim= function(projectId) {
-        data.create('copilot-assigned-projects', {id: projectId}).then(function(data) {
+        data.create('copilot-assigned-projects').then(function(data) {
           console.log('Updated project status', data)
+          //later change to dynamic copilot project id
+          service.claimedProjectId = 'project-2';
         }).catch(function(e) {
+          service.claimedProjectId = 'project-2';
           $rootScope.$emit('projectClaimed');
           // service.projectAvailable= false;
             console.log('error on project claim', e);
