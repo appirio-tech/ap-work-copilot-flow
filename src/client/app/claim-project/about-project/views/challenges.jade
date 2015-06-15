@@ -44,4 +44,3 @@ form(name="challengeForm", ng-submit="vm.submit()", ng-hide="vm.estimatesSubmitt
 div(ng-show="vm.estimatesSubmitted")
   ul
     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.requestType | request}} Challenges
-      a(ng-click="vm.removeChallenge($index)") remove

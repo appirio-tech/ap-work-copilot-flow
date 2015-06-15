@@ -28,13 +28,16 @@ main
     p {{work.summary}}
 
     h5 Similar Apps
-    p {{work.competitorApps}}
+    ul
+      li(ng-repeat="competitor in work.competitorApps") {{competitor}}
 
     h5 Description of Users
     p {{work.usageDescription}}
 
     h5 Features
-    p {{work.features}}
+    //- p {{work.features}}
+    ul
+      li(ng-repeat="feature in work.features") {{feature.name}}: {{feature.description}}
 
     h5 Visual Elements
 
