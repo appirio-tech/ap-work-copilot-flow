@@ -1,12 +1,24 @@
-h1 Open Projects
-table
-  tr
-    th Name
-    th Type
-    th Date Submitted
-  tr(ng-repeat= "project in vm.workRequests")
-    td {{project.name}}
-    td {{project.requestType}}
-    td {{project.createdAt}}
-    td
-      button(ui-sref='claim-project({ id: project.id })') Details
+//- h5 Available Projects
+//- table
+//-   tr
+//-     th Name
+//-     th Type
+//-     th Date Submitted
+//-   tr(ng-repeat= "project in vm.workRequests")
+//-     td {{project.name}}
+//-     td {{project.requestType}}
+//-     td {{project.createdAt}}
+//-     td
+//-       button(ui-sref='claim-project({ id: project.id })') Details
+ul
+  li(ng-repeat= "project in vm.workRequests")
+    div
+      h5 {{project.name}}
+
+      span.type {{project.requestType}}
+      br
+      img(src="manage/images/missing-image.svg", class="missing")
+      br
+      span.status {{project.createdAt}}
+      br
+      button(ui-sref='claim-project({ id: project.id })') View Details

@@ -2,7 +2,7 @@
 @import "bourbon";
 @import "neat";
 
-.layout-main.manage {
+.layout-main.projects {
 
   @include outer-container;
 
@@ -12,18 +12,16 @@
     margin: 20px 0;
   }
 
-  @include roboto();
-
   .message {
     background: #38b449;
     line-height: 25px;
     vertical-align: middle;
     padding-left: 20px;
+    margin-bottom: 15px;
     span {
       color: white;
       position: relative;
       bottom: 12px;
-      font-family: sans-serif;
     }
     img.checkmark-green {
       height: 43px;
@@ -72,8 +70,7 @@
 
       width: 220px;
       height: 100%;
-      background: whitesmoke;
-      box-shadow: 3px 3px 14px 1px rgba(0,0,0,0.35);
+      border: 1px solid $mild-gray;
 
       header {
 
@@ -145,3 +142,4 @@
     }
   }
 }
+

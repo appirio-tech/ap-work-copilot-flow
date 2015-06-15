@@ -38,8 +38,7 @@ h1 {
 }
 
 h2 {
-  color: $ship-gray;
-  @include font-line(18)
+  @include font-line(15);
 }
 
 h3 {
