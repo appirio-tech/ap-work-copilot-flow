@@ -1,14 +1,44 @@
-header
+main
+  div
+    .statusModal(ng-show="showClaimedModal")
+        span Congratulations! You have claimed this project.
+        br
+        button(ng-click="revealProjectEstimates()", ui-sref="claim-project.challenges") Create Estimates
+        br
+        a(ng-click="revealCreateEstimatesButton()") I'll do it later
 
-h1 Project Details
+    .statusModal(ng-show="showCreateChallengesModal")
+        span Estimate Created.
+        br
+        button(ng-click="openCreateChallenges()") Create Challenges
+        br
+        a(ng-click="hideCreateChallengesModal()") I'll do it later
 
-  ul
-    li Name: {{ work.name }}
-    li Type: {{ work.requestType }}
-    li Estimate: {{asideService.getEstimate() | estimate}}
-    li Summary: {{work.summary}}
-    li Features: {{work.features}}
-    li Competitors: {{work.competitorApps}}
+    h2{{ work.name }}
+    div {{work.requestType | request}} Project
+    button(ng-if="projectAvailable", ng-click="submitClaim()") Claim Project
+    button(ng-if="showCreateEstimatesButton", ui-sref="claim-project.challenges") Create Estimates
+    button(ng-if="showCreateChallengesButton", ng-click="openCreateChallenges()") Create Challenges
+    button(ng-if="showLaunchButton", ng-click="launchProject()") Launch Project
+    br
+    br
+    hr
 
-main(ui-view="")
+    h5 Project Description
+    p {{work.summary}}
 
+    h5 Similar Apps
+    ul
+      li(ng-repeat="competitor in work.competitorApps") {{competitor}}
+
+    h5 Description of Users
+    p {{work.usageDescription}}
+
+    h5 Features
+    //- p {{work.features}}
+    ul
+      li(ng-repeat="feature in work.features") {{feature.name}}: {{feature.description}}
+
+    h5 Visual Elements
+
+  aside(ui-view="")

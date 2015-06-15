@@ -5,24 +5,26 @@
     .module('app.claim-project')
     .factory('ClaimProjectService', ClaimProjectService);
 
-  ClaimProjectService.$inject = ['$q', 'data'];
+  ClaimProjectService.$inject = ['$rootScope', '$q', 'data'];
   /* @ngInject */
-  function ClaimProjectService($q, data) {
+  function ClaimProjectService($rootScope, $q, data) {
     // local used by "save" function
     var created = false;
-
     var service = {
 
       // variables
       work           : {},
+      copilotWork : null,
+      claimedProjectId: null,
 
       // functions
       save           : null,
       savePrice      : null,
       getEstimate    : null,
       resetWork      : null,
-      initializeWork : null
-
+      initializeWork : null,
+      submitChallenges: null,
+      submitClaim: null
     };
 
     // using a default helps with resetting after submit
@@ -139,6 +141,48 @@
       });
       return deferred.promise;
     };
+
+    service.initializeCopilotWork = function(id) {
+      var deferred = $q.defer();
+      data.get('copilot-assigned-projects', {id: id}).then(function(data) {
+        service.copilotWork = data.result.content;
+        deferred.resolve(service.copilotWork);
+      });
+      return deferred.promise;
+    };
+
+    service.submitClaim= function(projectId) {
+        data.create('copilot-assigned-projects').then(function(data) {
+          console.log('Updated project status', data)
+          //later change to dynamic copilot project id
+          service.claimedProjectId = 'project-2';
+        }).catch(function(e) {
+          service.claimedProjectId = 'project-2';
+          $rootScope.$emit('projectClaimed');
+          // service.projectAvailable= false;
+            console.log('error on project claim', e);
+            $q.reject(e);
+        });
+    };
+
+   service.submitChallenges = function(projectId, challengesEstimate) {
+    data.get('copilot-assigned-projects', {id: projectId}).then(function(data) {
+      data.result.content.estimate = challengesEstimate;
+      data.result.content.status = 'awaiting_approval';
+      data.$update({id: projectId});
+      $rootScope.$emit('challengeEstimatesSubmitted')
+      console.log('Updated project challenge estimates', data.result.content);
+      //show create challenges modal
+    }).catch(function(e) {
+      // $rootScope.$emit('challengeEstimatesSubmitted')
+        console.log('error on submit challenge', e)
+        $q.reject(e);
+    });
+   };
+
+   // service.allowCreateChallenges = function() {
+   //  return service.showCreateChallenges;
+   // }
 
     return service;
 

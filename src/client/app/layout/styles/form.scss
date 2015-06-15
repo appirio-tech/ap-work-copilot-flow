@@ -61,21 +61,25 @@ input {
 }
 
 textarea {
-  height: 150px;
+  height: 80px;
 }
 
 button {
   width           : 100%;
-  background-color: $apple;
+  background-color: $metallic-gray;
   border-radius   : $border-radius-3;
   border          : none;
   color           : $white;
   height          : 40px;
-  max-width       : 300px;
+  max-width       : 150px;
   margin: 5px;
 
-  @include roboto-bold();
   @include font-line(16);
+
+  &.addButton {
+    height: 35px;
+    max-width: 35px;
+  }
 
   &.submit {
     display     : block;

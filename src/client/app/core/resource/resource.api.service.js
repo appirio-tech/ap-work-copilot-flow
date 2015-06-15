@@ -34,7 +34,9 @@
         }
 
         // Add the base url
-        config.url = apiUrl + config.url;
+        // config.url = apiUrl + config.url;
+        var endpoint = config.apiUrl || apiUrl;
+        config.url = endpoint + config.url;
 
         // If the url follows the expected pattern, we can set cool defaults
         if (!config.unnatural) {

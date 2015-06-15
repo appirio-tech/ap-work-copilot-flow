@@ -1,0 +1,25 @@
+//- h5 My Projects
+//- table
+//-   tr
+//-     th Name
+//-     th Complexity
+//-     th Status
+//-   tr(ng-repeat= "project in vm.copilotAssignedProjects")
+//-     td {{project.id}}
+//-     td {{project.estimate.complexity}}
+//-     td {{project.status}}
+//-     td
+//-       button(ui-sref='claim-project({ id: "1432752374193:174bb0a0-ebd2-4640-9d35-c69b92e5ecec", projectId: project.id })') Details
+
+ul
+  li(ng-repeat= "project in vm.copilotAssignedProjects")
+    div
+      h5 {{project.id}}
+
+      span.type {{project.estimate.complexity}}
+      br
+      img(src="manage/images/missing-image.svg", class="missing")
+      br
+      span.status {{project.status}}
+      br
+      button(ui-sref='claim-project({ id: "1432752374193:174bb0a0-ebd2-4640-9d35-c69b92e5ecec", projectId: project.id })') View Details

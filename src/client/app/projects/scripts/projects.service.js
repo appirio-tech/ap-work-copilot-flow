@@ -25,6 +25,14 @@
       return deferred.promise;
     };
 
+    service.getAssignedProjects = function() {
+      var deferred = $q.defer();
+      data.get('copilot-assigned-projects').then(function(data) {
+        deferred.resolve(data.result.content);
+      });
+      return deferred.promise;
+    };
+
     return service;
 
   }

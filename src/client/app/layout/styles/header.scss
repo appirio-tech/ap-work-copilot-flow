@@ -23,7 +23,6 @@ $header-height: 50px;
 
   .login {
     @include span-columns(4);
-
     @include font(20);
   }
 

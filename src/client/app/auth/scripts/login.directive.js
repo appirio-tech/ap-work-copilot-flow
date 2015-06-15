@@ -50,7 +50,7 @@
     }
 
     function setUser(user) {
-      vm.handle = user.handle
+      vm.handle = user.handle;
     }
 
     function setUserError(reason) {

@@ -13,9 +13,10 @@
     return [{
       state: 'claim-project',
       config: {
-        url: '/claim-project/:id?',
+        url: '/claim-project/:id?/:projectId?',
         title: 'Claim Project',
-        abstract: true,
+        reloadOnSearch: false,
+        // abstract: true,
         controller: 'ClaimProjectController',
         resolve: {
           work: ['$stateParams', 'ClaimProjectService', function($stateParams, ClaimProjectService) {
@@ -24,25 +25,34 @@
             } else {
               return false;
             }
+          }],
+          copilotWork: ['$stateParams', 'ClaimProjectService', function($stateParams, ClaimProjectService) {
+            if ($stateParams.projectId) {
+              return ClaimProjectService.initializeCopilotWork($stateParams.projectId);
+            } else {
+              return false;
+            }
           }]
         },
         templateUrl: 'claim-project/claim-project.html'
       }
-    }, {
-      state: 'claim-project.claim',
-      config: {
-        url: '',
-        templateUrl: 'claim-project/about-project/views/claim.html',
-        controller: 'SubmitClaimController',
-        controllerAs: 'vm'
-      }
-    }, {
+    },{
       state: 'claim-project.challenges',
       config: {
-        url: '',
+        url: '/challengeEstimates',
+        reloadOnSearch: false,
         templateUrl: 'claim-project/about-project/views/challenges.html',
         controller: 'SubmitChallengesController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          copilotWork: ['ClaimProjectService', function(ClaimProjectService) {
+            if (ClaimProjectService.claimedProjectId) {
+              return ClaimProjectService.initializeCopilotWork(ClaimProjectService.claimedProjectId);
+            } else {
+              return false;
+            }
+          }]
+        }
       }
     },
     {
@@ -66,3 +76,12 @@
     ];
   }
 })();
+// {
+//      state: 'claim-project.claim',
+//      config: {
+//        url: '',
+//        templateUrl: 'claim-project/about-project/views/claim.html',
+//        controller: 'SubmitClaimController',
+//        controllerAs: 'vm'
+//      }
+//    },

@@ -1,7 +1,28 @@
 @import "../core/styles/combined";
 @import "bourbon";
+@import "neat";
 
 .layout-main.claim-project {
+
+  .statusModal {
+    position: absolute;
+    background: $black;
+    height: 20%;
+    opacity: 0.8;
+    width: 100%;
+    text-align: center;
+    span {
+      color: white;
+      width: 100%
+    }
+    a {
+      color: white;
+    }
+    button {
+      background-color: white;
+      color: $black
+    }
+  }
 
   header {
     background-color: $black;
@@ -9,7 +30,6 @@
 
   main {
     background-color: $white;
-    text-align      : center;
 
     .starting-line {
       min-height      : 1px;
@@ -42,6 +62,10 @@
       > button {
         width: 280px;
       }
+
+      p {
+        color: $mild-gray;
+      }
     }
 
     button.launch {
@@ -56,5 +80,13 @@
         @include transition(opacity 0.3s ease-in 0s);
       }
     }
+  }
+  div {
+    @include outer-container;
+    @include span-columns(6);
+  }
+  aside {
+    @include shift(1);
+    @include span-columns(5);
   }
 }
