@@ -32,10 +32,10 @@
           }
         }
       }, {
-        state: 'view-projects.assigned',
+        state: 'view-projects.open',
         config: {
         url: '',
-        templateUrl: 'projects/views/assigned-projects.html',
+        templateUrl: 'projects/views/open-projects.html',
         controller: 'AssignedProjectsController',
         controllerAs: 'vm',
         //later change to getAssignedProjects()
