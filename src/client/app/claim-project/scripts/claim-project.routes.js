@@ -15,7 +15,6 @@
       config: {
         url: '/claim-project/:id?/:projectId?',
         title: 'Claim Project',
-        reloadOnSearch: false,
         // abstract: true,
         controller: 'ClaimProjectController',
         resolve: {
@@ -40,7 +39,6 @@
       state: 'claim-project.challenges',
       config: {
         url: '/challengeEstimates',
-        reloadOnSearch: false,
         templateUrl: 'claim-project/about-project/views/challenges.html',
         controller: 'SubmitChallengesController',
         controllerAs: 'vm',

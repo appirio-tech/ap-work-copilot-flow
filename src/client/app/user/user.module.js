@@ -14,7 +14,7 @@
 
   function UserModule($rootScope, ApiResource, TokenService, UserService) {
     var config = {
-      url: 'users',
+      url: 'users/:id',
       resource: 'user',
       apiUrl: 'https://api.topcoder-dev.com/v3/'
     };

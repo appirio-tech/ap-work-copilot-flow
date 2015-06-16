@@ -5,9 +5,9 @@
     .module('app.claim-project')
     .factory('ClaimProjectService', ClaimProjectService);
 
-  ClaimProjectService.$inject = ['$rootScope', '$q', 'data'];
+  ClaimProjectService.$inject = ['$rootScope', '$q', 'data', 'UserService'];
   /* @ngInject */
-  function ClaimProjectService($rootScope, $q, data) {
+  function ClaimProjectService($rootScope, $q, data, UserService) {
     // local used by "save" function
     var created = false;
     var service = {
@@ -16,6 +16,7 @@
       work           : {},
       copilotWork : null,
       claimedProjectId: null,
+      copilotWorkId: null,
 
       // functions
       save           : null,
@@ -144,15 +145,23 @@
 
     service.initializeCopilotWork = function(id) {
       var deferred = $q.defer();
-      data.get('copilot-assigned-projects', {id: id}).then(function(data) {
-        service.copilotWork = data.result.content;
-        deferred.resolve(service.copilotWork);
+      data.get('copilot-assigned-projects', {id: id}).then(function(copilotData) {
+        // service.copilotWork = data.result.id;
+        console.log('copilot data fr initialize', copilotData)
+        service.copilotWorkId = copilotData.result.id;
+        // deferred.resolve(service.copilotWork);
+      }).then(function() {
+        data.get('work-request', {id: service.copilotWorkId}).then(function(data) {
+          service.copilotWork = data.result.content;
+          console.log('initializing copilot work', data.id)
+          deferred.resolve(service.copilotWork);
+        });
       });
       return deferred.promise;
     };
 
     service.submitClaim= function(projectId) {
-        data.create('copilot-assigned-projects').then(function(data) {
+        data.create('copilot-assigned-projects', {id: UserService.currentUser.id}).then(function(data) {
           console.log('Updated project status', data)
           //later change to dynamic copilot project id
           service.claimedProjectId = 'project-2';

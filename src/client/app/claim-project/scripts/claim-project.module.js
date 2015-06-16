@@ -3,6 +3,7 @@
 
   angular.module('app.claim-project', [
     'app.core',
+    'app.user',
     'app.constants',
     'app.resource',
     'app.workRequest',
