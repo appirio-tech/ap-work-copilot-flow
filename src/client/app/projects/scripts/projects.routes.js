@@ -32,13 +32,12 @@
           }
         }
       }, {
-        state: 'view-projects.open',
+        state: 'view-projects.assigned',
         config: {
         url: '',
-        templateUrl: 'projects/views/open-projects.html',
+        templateUrl: 'projects/views/assigned-projects.html',
         controller: 'AssignedProjectsController',
         controllerAs: 'vm',
-        //later change to getAssignedProjects()
         resolve: {
           copilotAssignedProjects: ['ProjectsService', function(ProjectsService) {
             return ProjectsService.getAssignedProjects();
