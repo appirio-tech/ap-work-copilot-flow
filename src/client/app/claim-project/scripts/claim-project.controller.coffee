@@ -48,7 +48,7 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, NavS
 
       options = save: 'yes'
 
-      $state.go 'view-projects.assigned' , options
+      $state.go 'view-projects.open' , options
 
   $rootScope.$on 'projectClaimed', ->
    $scope.showClaimedModal = true
