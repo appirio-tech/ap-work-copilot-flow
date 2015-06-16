@@ -4,10 +4,12 @@
 
 .layout-main.projects {
   li {
-    @include omega-reset(2n);
-    @include span-columns(4);
-    @include omega(3n);
+    // @include omega-reset(2n);
+    // @include span-columns(4);
+    // @include omega(3n);
+    @include span-columns(3);
+  @include omega(4n);
     height: 220px;
-    margin-bottom: $margin-20;
+    margin-bottom: $margin-15;
   }
 }

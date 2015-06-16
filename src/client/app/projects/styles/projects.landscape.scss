@@ -12,9 +12,11 @@
   }
 
   li {
-    @include omega-reset(1n);
-    @include span-columns(6);
-    @include omega(4n);
+    // @include omega-reset(1n);
+    // @include span-columns(6);
+    // @include omega(4n);
+    @include span-columns(3);
+  @include omega(4n);
     height: 220px;
   }
 }

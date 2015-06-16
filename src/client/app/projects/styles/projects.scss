@@ -6,7 +6,7 @@
 
   @include outer-container;
 
-  padding: $padding-20 $padding-30;
+  padding: $padding-20 $padding-15;
 
   hr {
     margin: 20px 0;
@@ -57,11 +57,13 @@
 
   li {
 
-    @include span-columns(12);
-    @include omega(1n);
+    // @include span-columns(12);
+    // @include omega(1n);
     //@include shift(.5);
-    height: 245px;
-    margin-bottom: $margin-20;
+    @include span-columns(3);
+  @include omega(4n);
+    height: 220px;
+    margin-bottom: $margin-15;
 
     div {
 
