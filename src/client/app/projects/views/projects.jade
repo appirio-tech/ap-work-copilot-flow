@@ -1,6 +1,7 @@
-.heading
+.projectsHeading
   h1 Copilot Projects
-  button(ui-sref='view-projects.assigned') My Projects
-  button(ui-sref='view-projects.open') Open Projects
+  div
+    button(ui-sref='view-projects.assigned', ng-click="vm.assignedButtonSelected()", ng-class="{'selected': vm.highlightAssignedButton == true}") My Projects
+    button(ui-sref='view-projects.open', ng-click="vm.openButtonSelected()", ng-class="{'selected': vm.highlightOpenButton == true}") Open Projects
 
-  main(ui-view="")
+  main(class="layout-main projects", ui-view="")

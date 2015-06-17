@@ -10,6 +10,8 @@
   function ProjectsController(workRequests, $state) {
     var vm = this;
     vm.title = 'View Projects';
+    vm.highlightAssignedButton = false;
+    vm.highlightOpenButton = true;
     vm.active = null;
     vm.workRequests = [];
     vm.formatWorkRequests = null;
@@ -37,6 +39,16 @@
 
     vm.hoverDeselect = function(index) {
       vm.active = null;
+    }
+
+    vm.assignedButtonSelected = function() {
+      vm.highlightAssignedButton = true;
+      vm.highlightOpenButton = false;
+    }
+
+    vm.openButtonSelected = function() {
+      vm.highlightAssignedButton = false;
+      vm.highlightOpenButton = true;
     }
 
     vm.activate();
