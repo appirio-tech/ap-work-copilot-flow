@@ -4,10 +4,18 @@
 
 .layout-main.projects {
   li {
-    @include omega-reset(2n);
-    @include span-columns(4);
-    @include omega(3n);
+    @include span-columns(3);
+    @include omega(4n);
     height: 220px;
-    margin-bottom: $margin-20;
+    margin-bottom: $margin-15;
+    div.hovered {
+      background-color: $charcoal-gray;
+    }
+    button {
+      border: 1px solid white;
+      background-color: $charcoal-gray;
+      border-radius: 10px;
+      color: white
+    }
   }
 }

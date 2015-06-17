@@ -12,9 +12,17 @@
   }
 
   li {
-    @include omega-reset(1n);
-    @include span-columns(6);
+    @include span-columns(3);
     @include omega(4n);
     height: 220px;
+    div.hovered {
+      background-color: $charcoal-gray;
+    }
+    button {
+      border: 1px solid white;
+      background-color: $charcoal-gray;
+      border-radius: 10px;
+      color: white
+    }
   }
 }
