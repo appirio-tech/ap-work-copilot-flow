@@ -10,6 +10,7 @@
   function ProjectsController(workRequests, $state) {
     var vm = this;
     vm.title = 'View Projects';
+    vm.active = null;
     vm.workRequests = [];
     vm.formatWorkRequests = null;
 
@@ -29,6 +30,14 @@
         return work;
       });
     };
+
+    vm.hoverSelect = function(index) {
+      vm.active = index;
+    }
+
+    vm.hoverDeselect = function(index) {
+      vm.active = null;
+    }
 
     vm.activate();
 

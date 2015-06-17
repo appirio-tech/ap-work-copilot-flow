@@ -124,6 +124,10 @@
           padding-top: 23px;
         }
 
+        &.hovered {
+          border: 1px solid red;
+        }
+
         span.status {
           font-weight: bold;
           color: white;

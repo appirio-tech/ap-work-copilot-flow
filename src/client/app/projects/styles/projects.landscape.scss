@@ -18,5 +18,8 @@
     @include span-columns(3);
   @include omega(4n);
     height: 220px;
+    &.hovered {
+      border: 1px solid red;
+    }
   }
 }

@@ -11,5 +11,8 @@
   @include omega(4n);
     height: 220px;
     margin-bottom: $margin-15;
+    &.hovered {
+      border: 1px solid red;
+    }
   }
 }

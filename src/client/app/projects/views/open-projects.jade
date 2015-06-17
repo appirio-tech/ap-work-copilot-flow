@@ -11,7 +11,7 @@
 //-     td
 //-       button(ui-sref='claim-project({ id: project.id })') Details
 ul
-  li(ng-repeat= "project in vm.workRequests")
+  li(ng-repeat= "project in vm.workRequests", ng-mouseenter="vm.hoverSelect($index)", ng-mouseleave="vm.hoverDeselect($index)", ng-class="{'hovered': $index == vm.active}")
     div
       h5 {{project.name}}
 
