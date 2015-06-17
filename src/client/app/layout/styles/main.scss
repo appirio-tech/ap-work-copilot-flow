@@ -98,5 +98,26 @@ a.clean {
   footer {
     margin: $margin-18;
   }
+
+  .projectsHeading {
+    height: 150px;
+    background-color: $white;
+
+    h1 {
+      @include font-line(31);
+    }
+    div {
+      text-align: center;
+      margin-top: 73px;
+    }
+    button {
+      border-radius: 0px;
+      margin: 0px;
+      background-color: $olive-gray;
+    }
+    &.selected {
+      background-color: $black;
+    }
+  }
 }
 

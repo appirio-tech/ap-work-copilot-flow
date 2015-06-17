@@ -5,7 +5,6 @@
 .layout-main.projects {
 
   @include outer-container;
-
   padding: $padding-20 $padding-15;
 
   hr {
@@ -31,7 +30,9 @@
     }
   }
 
-  .heading {
+  .projectsHeading {
+    height: 150px;
+    background-color: $white;
     > * {
       vertical-align: middle;
     }

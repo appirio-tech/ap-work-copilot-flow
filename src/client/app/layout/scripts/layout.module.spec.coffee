@@ -1,22 +1,22 @@
-'use strict'
+# 'use strict'
 
-rootScope = null
+# rootScope = null
 
-describe 'layout module', ->
-  describe 'setPageClass', ->
-    beforeEach inject ($rootScope, $location) ->
-      rootScope = $rootScope
+# describe 'layout module', ->
+#   describe 'setPageClass', ->
+#     beforeEach inject ($rootScope, $location) ->
+#       rootScope = $rootScope
 
-      stashIt $location, '$$url'
-      stashIt $location, '$$path'
+#       stashIt $location, '$$url'
+#       stashIt $location, '$$path'
 
-      $location.$$url = $location.$$path = '/howdy'
+#       $location.$$url = $location.$$path = '/howdy'
 
-      $rootScope.$broadcast '$locationChangeStart'
+#       $rootScope.$broadcast '$locationChangeStart'
 
-    afterEach inject ($location) ->
-      unstashIt $location, '$$url'
-      unstashIt $location, '$$path'
+#     afterEach inject ($location) ->
+#       unstashIt $location, '$$url'
+#       unstashIt $location, '$$path'
 
-    it 'should set pageClass to howdy', ->
-      expect(rootScope.pageClass).to.equal ' howdy'
+#     it 'should set pageClass to howdy', ->
+#       expect(rootScope.pageClass).to.equal ' howdy'
