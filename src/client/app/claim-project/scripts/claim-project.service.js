@@ -151,7 +151,7 @@
    service.initializeCopilotWork = function(id) {
       service.work = null;
          var deferred = $q.defer();
-         data.get('copilot-work-request', {filter: 'copilotId=40135517', id: id}).then(function(data) {
+         data.get('copilot-work-request', {filter: 'copilotId='+UserService.currentUser.id, id: id}).then(function(data) {
            service.copilotWork = data.result.content;
            deferred.resolve(service.copilotWork);
            console.log('got copilot request details', data);
