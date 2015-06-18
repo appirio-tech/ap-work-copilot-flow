@@ -1,9 +1,8 @@
 'use strict'
 
-ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, NavService, $state) ->
+ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, UserService, NavService, $state) ->
   $scope.activeState  = NavService.activeState
-  $scope.work         = ClaimProjectService.work
-  $scope.copilotWork = ClaimProjectService.copilotWork
+  $scope.work         = ClaimProjectService.work || ClaimProjectService.copilotWork
   $scope.completed    = NavService.completed
   $scope.asideService = getEstimate: ClaimProjectService.getEstimate
   # $scope.hideClaimButton = false
@@ -58,7 +57,10 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, NavS
     $rootScope.showCreateChallengesModal = true
 
   $scope.submitClaim = ->
-    ClaimProjectService.submitClaim($scope.work.id)
+    copilotId = UserService.currentUser.id
+    projectId = $scope.work['0'].id
+    console.log('scope work', $scope.work['0'].id)
+    ClaimProjectService.submitClaim(copilotId, projectId)
 
   # $scope.projectAvailable = ->
   #   ClaimProjectService.projectAvailable
@@ -90,7 +92,7 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, NavS
 
   activate()
 
-ClaimProjectController.$inject = ['$scope', '$rootScope', '$window','ClaimProjectService', 'NavService', '$state']
+ClaimProjectController.$inject = ['$scope', '$rootScope', '$window','ClaimProjectService', 'UserService', 'NavService', '$state']
 
 angular.module('app.claim-project').controller 'ClaimProjectController', ClaimProjectController
 

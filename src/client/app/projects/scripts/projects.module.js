@@ -15,7 +15,7 @@
 
     function Projects(ApiResource) {
       var config = {
-      url: 'copilots/:id/projects',
+      url: 'copilots/:copilotId/projects/',
       resource: 'copilot-assigned-projects',
       apiUrl: 'http://localhost:8010/'
     };

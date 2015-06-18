@@ -1,15 +1,4 @@
-//- h5 Available Projects
-//- table
-//-   tr
-//-     th Name
-//-     th Type
-//-     th Date Submitted
-//-   tr(ng-repeat= "project in vm.workRequests")
-//-     td {{project.name}}
-//-     td {{project.requestType}}
-//-     td {{project.createdAt}}
-//-     td
-//-       button(ui-sref='claim-project({ id: project.id })') Details
+
 ul
   li(ng-repeat= "project in vm.workRequests", ng-mouseenter="vm.hoverSelect($index)", ng-mouseleave="vm.hoverDeselect($index)")
     div(ng-class="{'hovered': $index == vm.active}")
@@ -21,4 +10,4 @@ ul
       br
       span.status {{project.createdAt}}
       br
-      button(ng-show="$index == vm.active", ui-sref='claim-project({ id: project.id })') View Details
+      button(ng-show="$index == vm.active", ui-sref='claim-project({id: project.id})') View Details
