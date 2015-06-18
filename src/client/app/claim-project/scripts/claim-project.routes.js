@@ -13,9 +13,8 @@
     return [{
       state: 'claim-project',
       config: {
-        url: '/claim-project/:id?/:projectId?',
+        url: '/claim-project/:id?/:projectId',
         title: 'Claim Project',
-        reloadOnSearch: false,
         // abstract: true,
         controller: 'ClaimProjectController',
         resolve: {
@@ -40,7 +39,6 @@
       state: 'claim-project.challenges',
       config: {
         url: '/challengeEstimates',
-        reloadOnSearch: false,
         templateUrl: 'claim-project/about-project/views/challenges.html',
         controller: 'SubmitChallengesController',
         controllerAs: 'vm',
@@ -76,12 +74,3 @@
     ];
   }
 })();
-// {
-//      state: 'claim-project.claim',
-//      config: {
-//        url: '',
-//        templateUrl: 'claim-project/about-project/views/claim.html',
-//        controller: 'SubmitClaimController',
-//        controllerAs: 'vm'
-//      }
-//    },

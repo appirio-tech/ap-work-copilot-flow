@@ -5,6 +5,7 @@
     .module('app.projects', [
       'app.core',
       'app.resource',
+      'app.user',
       'app.workRequest',
       'ngSanitize'
     ])
@@ -14,7 +15,7 @@
 
     function Projects(ApiResource) {
       var config = {
-      url: 'copilots/copilot-b/projects',
+      url: 'copilots/:copilotId/projects/',
       resource: 'copilot-assigned-projects',
       apiUrl: 'http://localhost:8010/'
     };

@@ -5,17 +5,18 @@
     .module('app.claim-project')
     .factory('ClaimProjectService', ClaimProjectService);
 
-  ClaimProjectService.$inject = ['$rootScope', '$q', 'data'];
+  ClaimProjectService.$inject = ['$rootScope', '$http', '$q', 'data', 'UserService'];
   /* @ngInject */
-  function ClaimProjectService($rootScope, $q, data) {
+  function ClaimProjectService($rootScope, $http, $q, data, UserService) {
     // local used by "save" function
     var created = false;
     var service = {
 
       // variables
-      work           : {},
+      work           : null,
       copilotWork : null,
       claimedProjectId: null,
+      copilotWorkId: null,
 
       // functions
       save           : null,
@@ -134,35 +135,51 @@
     };
 
     service.initializeWork = function(id) {
+      //reset 'work' for correct project details info
+      service.copilotWork = null;
       var deferred = $q.defer();
-      data.get('work-request', {id: id}).then(function(data) {
+      data.get('work-request', {filter: 'copilotId=unassigned', id: id}).then(function(data) {
         service.work = data.result.content;
         deferred.resolve(service.work);
-      });
+        console.log('got work request details', data.result.content);
+      }).catch(function(e) {
+        console.log('error on initialize work', e)
+      })
       return deferred.promise;
     };
 
-    service.initializeCopilotWork = function(id) {
-      var deferred = $q.defer();
-      data.get('copilot-assigned-projects', {id: id}).then(function(data) {
-        service.copilotWork = data.result.content;
-        deferred.resolve(service.copilotWork);
-      });
-      return deferred.promise;
-    };
+   service.initializeCopilotWork = function(id) {
+      service.work = null;
+         var deferred = $q.defer();
+         data.get('copilot-work-request', {filter: 'copilotId='+UserService.currentUser.id, id: id}).then(function(data) {
+           service.copilotWork = data.result.content;
+           deferred.resolve(service.copilotWork);
+           console.log('got copilot request details', data);
+         });
+         return deferred.promise;
+       };
 
-    service.submitClaim= function(projectId) {
-        data.create('copilot-assigned-projects').then(function(data) {
-          console.log('Updated project status', data)
-          //later change to dynamic copilot project id
-          service.claimedProjectId = 'project-2';
-        }).catch(function(e) {
-          service.claimedProjectId = 'project-2';
-          $rootScope.$emit('projectClaimed');
-          // service.projectAvailable= false;
-            console.log('error on project claim', e);
-            $q.reject(e);
-        });
+    service.submitClaim= function(copilotId, projectId) {
+      // console.log('things', copilotId, projectId)
+      //   data.create('copilot-assigned-projects', {copilotId: copilotId, "id": "900"}).then(function(data) {
+      //     console.log('Updated project status', data)
+      //     //later change to dynamic copilot project id
+      //     service.claimedProjectId = projectId;
+      //     $rootScope.$emit('projectClaimed');
+      //   }).catch(function(e) {
+      //     // service.projectAvailable= false;
+      //       console.log('error on project claim', e);
+      //       $q.reject(e);
+      //   });
+        $http.post('http://localhost:8010/copilots/'+copilotId+'/projects/', {"id": projectId}).
+          success(function(data, status, headers, config) {
+           console.log('Updated project status', data);
+           service.claimedProjectId = projectId;
+            $rootScope.$emit('projectClaimed');
+          }).
+          error(function(data, status, headers, config) {
+            console.log('error on project claim', data)
+          });
     };
 
    service.submitChallenges = function(projectId, challengesEstimate) {

@@ -12,7 +12,8 @@
       getUser: null,
       user: null,
       removeUser: null,
-      getCurrentUser: null
+      getCurrentUser: null,
+      currentUser: null
     };
 
     service.getCurrentUser = function() {
@@ -23,6 +24,7 @@
         service.getUser(decodedToken.userId).then(function(data) {
           if (data && data.result) {
             deferred.resolve(data.result.content);
+            service.currentUser = data.result.content;
           } else {
             deferred.reject('API Issue');
           }
@@ -30,7 +32,6 @@
       } else {
         deferred.reject('No User Id');
       }
-
       return deferred.promise;
     };
 

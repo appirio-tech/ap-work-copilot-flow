@@ -42,7 +42,7 @@
         if (!config.unnatural) {
           var orig = angular.copy(api.defaultConfig);
           params = angular.extend(orig, config.params);
-          url = config.url + '/:id';
+          url = config.url;
 
           // otherwise we have to declare the entire configuration.
         } else {

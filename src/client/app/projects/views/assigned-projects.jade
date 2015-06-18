@@ -1,15 +1,3 @@
-//- h5 My Projects
-//- table
-//-   tr
-//-     th Name
-//-     th Complexity
-//-     th Status
-//-   tr(ng-repeat= "project in vm.copilotAssignedProjects")
-//-     td {{project.id}}
-//-     td {{project.estimate.complexity}}
-//-     td {{project.status}}
-//-     td
-//-       button(ui-sref='claim-project({ id: "1432752374193:174bb0a0-ebd2-4640-9d35-c69b92e5ecec", projectId: project.id })') Details
 
 ul
   li(ng-repeat= "project in vm.copilotAssignedProjects", ng-mouseenter="vm.hoverSelect($index)", ng-mouseleave="vm.hoverDeselect($index)")
@@ -22,4 +10,4 @@ ul
       br
       span.status {{project.status}}
       br
-      button(ng-show="$index == vm.active", ui-sref='claim-project({ id: "1432752374193:174bb0a0-ebd2-4640-9d35-c69b92e5ecec", projectId: project.id })') View Details
+      button(ng-show="$index == vm.active", ui-sref='claim-project({id: project.id })') View Details
