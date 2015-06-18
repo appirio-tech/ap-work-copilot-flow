@@ -59,7 +59,6 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
   $scope.submitClaim = ->
     copilotId = UserService.currentUser.id
     projectId = $scope.work['0'].id
-    console.log('scope work', $scope.work['0'].id)
     ClaimProjectService.submitClaim(copilotId, projectId)
 
   # $scope.projectAvailable = ->

@@ -141,7 +141,7 @@
       data.get('work-request', {filter: 'copilotId=unassigned', id: id}).then(function(data) {
         service.work = data.result.content;
         deferred.resolve(service.work);
-        console.log('got work request details', data.result.content);
+        console.log('work request details', data.result.content);
       }).catch(function(e) {
         console.log('error on initialize work', e)
       })
@@ -154,15 +154,13 @@
          data.get('copilot-work-request', {filter: 'copilotId='+UserService.currentUser.id, id: id}).then(function(data) {
            service.copilotWork = data.result.content;
            deferred.resolve(service.copilotWork);
-           console.log('got copilot request details', data);
+           console.log('copilot request details', data);
          });
          return deferred.promise;
        };
 
     service.submitClaim= function(copilotId, projectId) {
-      // console.log('things', copilotId, projectId)
       //   data.create('copilot-assigned-projects', {copilotId: copilotId, "id": "900"}).then(function(data) {
-      //     console.log('Updated project status', data)
       //     //later change to dynamic copilot project id
       //     service.claimedProjectId = projectId;
       //     $rootScope.$emit('projectClaimed');
@@ -196,10 +194,6 @@
         $q.reject(e);
     });
    };
-
-   // service.allowCreateChallenges = function() {
-   //  return service.showCreateChallenges;
-   // }
 
     return service;
 
