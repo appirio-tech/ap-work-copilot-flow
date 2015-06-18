@@ -81,6 +81,9 @@ a.clean {
       text-align      : center;
     }
   }
+  &.login {
+    background-color: $white;
+  }
 
   main {
     padding: $padding-18 $padding-10;
