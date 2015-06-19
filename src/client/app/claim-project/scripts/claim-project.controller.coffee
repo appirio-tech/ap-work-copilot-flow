@@ -2,7 +2,7 @@
 
 ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, UserService, NavService, $state) ->
   $scope.activeState  = NavService.activeState
-  $scope.work         = ClaimProjectService.work || ClaimProjectService.copilotWork
+  $scope.work         =  ClaimProjectService.copilotWork
   $scope.completed    = NavService.completed
   $scope.asideService = getEstimate: ClaimProjectService.getEstimate
   # $scope.hideClaimButton = false
@@ -58,11 +58,11 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
 
   $scope.submitClaim = ->
     copilotId = UserService.currentUser.id
-    projectId = $scope.work['0'].id
+    projectId = $scope.work.id
     ClaimProjectService.submitClaim(copilotId, projectId)
 
-  # $scope.projectAvailable = ->
-  #   ClaimProjectService.projectAvailable
+  $scope.projectAvailable = ->
+    ClaimProjectService.projectAvailable($scope)
 
   $scope.revealCreateEstimatesButton = ->
     $scope.showCreateEstimatesButton = true

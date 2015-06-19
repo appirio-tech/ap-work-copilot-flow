@@ -2,7 +2,7 @@
 ul
   li(ng-repeat= "project in vm.copilotAssignedProjects", ng-mouseenter="vm.hoverSelect($index)", ng-mouseleave="vm.hoverDeselect($index)")
     div(ng-class="{'hovered': $index == vm.active}")
-      h5 {{project.id}}
+      h5 Name: {{project.name}}
 
       span.type {{project.estimate.complexity}}
       br

@@ -13,21 +13,21 @@
     return [{
       state: 'claim-project',
       config: {
-        url: '/claim-project/:id?/:projectId',
+        url: '/claim-project/:id?/',
         title: 'Claim Project',
         // abstract: true,
         controller: 'ClaimProjectController',
         resolve: {
-          work: ['$stateParams', 'ClaimProjectService', function($stateParams, ClaimProjectService) {
-            if ($stateParams.id) {
-              return ClaimProjectService.initializeWork($stateParams.id);
-            } else {
-              return false;
-            }
-          }],
+          // work: ['$stateParams', 'ClaimProjectService', function($stateParams, ClaimProjectService) {
+          //   if ($stateParams.id) {
+          //     return ClaimProjectService.initializeWork($stateParams.id);
+          //   } else {
+          //     return false;
+          //   }
+          // }],
           copilotWork: ['$stateParams', 'ClaimProjectService', function($stateParams, ClaimProjectService) {
-            if ($stateParams.projectId) {
-              return ClaimProjectService.initializeCopilotWork($stateParams.projectId);
+            if ($stateParams.id) {
+              return ClaimProjectService.initializeCopilotWork($stateParams.id);
             } else {
               return false;
             }

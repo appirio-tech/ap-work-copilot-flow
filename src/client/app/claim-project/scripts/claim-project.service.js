@@ -134,29 +134,48 @@
       service.work = angular.copy(defaultWork);
     };
 
-    service.initializeWork = function(id) {
-      //reset 'work' for correct project details info
-      service.copilotWork = null;
-      var deferred = $q.defer();
-      data.get('work-request', {filter: 'copilotId=unassigned', id: id}).then(function(data) {
-        service.work = data.result.content;
-        deferred.resolve(service.work);
-        console.log('work request details', data.result.content);
-      }).catch(function(e) {
-        console.log('error on initialize work', e)
-      })
-      return deferred.promise;
-    };
+    // service.initializeWork = function(id) {
+    //   //reset 'work' for correct project details info
+    //   service.copilotWork = null;
+    //   service.work = null;
+    //   var deferred = $q.defer();
+    //   data.get('work-request', {filter: 'copilotId=unassigned', id: id}).then(function(data) {
+    //     service.work = data.result.content;
+    //     deferred.resolve(service.work);
+    //     console.log('work request details', data.result.content);
+    //   }).catch(function(e) {
+    //     console.log('error on initialize work', e)
+    //   })
+    //   return deferred.promise;
+    // };
 
    service.initializeCopilotWork = function(id) {
-      service.work = null;
-         var deferred = $q.defer();
-         data.get('copilot-work-request', {filter: 'copilotId='+UserService.currentUser.id, id: id}).then(function(data) {
-           service.copilotWork = data.result.content;
-           deferred.resolve(service.copilotWork);
-           console.log('copilot request details', data);
-         });
-         return deferred.promise;
+      // service.work = null;
+      // service.copilotWork = null;
+      // console.log('PASSING ID', id)
+      //    var deferred = $q.defer();
+      //    //later change to dynamic copilot Id
+      //    data.get('work-request', {filter: 'copilotId=unassigned', id: id}).then(function(data) {
+      //      service.copilotWork = data.result.content;
+      //      deferred.resolve(service.copilotWork);
+      //      console.log('copilot request details', data.result.content);
+      //    });
+      //    return deferred.promise;
+      //  }
+      var deferred = $q.defer();
+      var req = {
+       method: 'GET',
+       url: 'https://api.topcoder-dev.com/v3/app-work-requests',
+       params: { filter: 'copilotId=unassigned&id='+id}
+      }
+      $http(req).success(function(data, status) {
+        console.log('got details', data.result.content[0])
+        service.copilotWork = data.result.content[0];
+        deferred.resolve(service.copilotWork);
+      }).error(function(data, status) {
+        console.log('error on project details', data)
+      })
+      return deferred.promise;
        };
 
     service.submitClaim= function(copilotId, projectId) {
