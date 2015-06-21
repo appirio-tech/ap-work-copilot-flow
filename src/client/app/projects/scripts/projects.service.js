@@ -31,28 +31,34 @@
     service.getAssignedProjects = function() {
       var deferred = $q.defer();
       data.get('copilot-assigned-projects', {copilotId: UserService.currentUser.id}).then(function(data) {
-          //  var req = {
-          //  method: 'GET',
-          //  url: 'https://api.topcoder-dev.com/v3/app-work-requests',
-          //  params: { filter: 'copilotId=unassigned&id='+project.id}
-          // }
-         var mapped = data.result.content.map(function(project) {
-          console.log('before', project)
-           $http( {
-           method: 'GET',
-           url: 'https://api.topcoder-dev.com/v3/app-work-requests',
-           params: { filter: 'copilotId=unassigned&id='+project.id}
-          }).success(function(projectData, status) {
-            project.name = projectData.result.content[0].name;
-            console.log('le mod proje', project)
-            return project;
-          })
-          })
-          // deferred.resolve(mod)
-      console.log('mapped', mapped)
-        });
-      return deferred.promise;
-    };
+           deferred.resolve(data.result.content);
+         }).catch(function(e) {
+               console.log('error on assigned projects', e);
+               $q.reject(e);
+           });
+           return deferred.promise;
+       };
+
+    //get names: 
+    // var que = $q.all(data.result.content.map(function(project) {
+    //       console.log('before', project)
+    //        $http({
+    //        method: 'GET',
+    //        url: 'https://api.topcoder-dev.com/v3/app-work-requests/',
+    //        params: { filter: 'copilotId=unassigned&id='+project.id}
+    //       }).success(function(projectData, status) {
+    //         console.log('map http data', projectData);
+    //         project.name = projectData.result.content[0].name;
+    //         console.log('le mod proje', project)
+    //         return project;
+    //         // deferred.resolve(project)
+    //       }).error(function(data) {
+    //         console.log('error on mapping', data)
+    //     })
+    //       }));
+    //       })
+    //   });
+
 
     service.getProjectName = function(project) {
       var deferred = $q.defer();
