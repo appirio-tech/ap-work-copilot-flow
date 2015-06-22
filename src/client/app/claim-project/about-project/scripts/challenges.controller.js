@@ -10,7 +10,7 @@
   function SubmitChallengesController($scope, $rootScope, $state, logger, ClaimProjectService) {
     var vm   = this;
     vm.title = 'Add Challenges';
-    vm.copilotWork = ClaimProjectService.copilotWork;
+    vm.copilotWork = ClaimProjectService.work;
     vm.estimatesSubmitted = false;
     vm.projectEstimateStatus = 'Create Project Estimate'
     vm.challengesEstimate = {};
@@ -44,8 +44,8 @@
       challengesEstimate.complexity = vm.overallDifficulty;
       challengesEstimate.difficultyExplanation = vm.difficultyExplanation;
       challengesEstimate.challengeEstimates = vm.challenges;
+      console.log('the challenges estimate', challengesEstimate);
       ClaimProjectService.submitChallenges(vm.copilotWork.id, challengesEstimate);
-      // console.log('the challenges estimate', challengesEstimate);
       // // ClaimProjectService.challenges = vm.challenges;
       // console.log('on submit challenge, copilot work', vm.copilotWork)
       // vm.showChallengesAdded = true;

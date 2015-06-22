@@ -1,46 +1,58 @@
 h5 {{vm.projectEstimateStatus}}
 
-form(name="challengeForm", ng-submit="vm.submit()", ng-hide="vm.estimatesSubmitted")
-  ng-form(name="challengesForm")
-    //- label Challenge Type
-    select(name = "Type", ng-model = "vm.challenge.challengeType")
-      option(value="", disabled, selected) Type of Challenge
-      option(value = "design") Design
-      option(value = "code") Code
+//- form(name="challengeForm", ng-submit="vm.submit()", ng-hide="vm.estimatesSubmitted")
+//-   ng-form(name="challengesForm")
+//-     //- label Challenge Type
+//-     select(name = "Type", ng-model = "vm.challenge.challengeType")
+//-       option(value="", disabled, selected) Type of Challenge
+//-       option(value = "design") Design
+//-       option(value = "code") Code
 
-    //- label Challenge Risk
-    select(name = "Count", ng-model = "vm.challenge.count")
-      option(value="", disabled, selected) How Many
-      option(value = 1) 1
-      option(value = 2) 2
-      option(value = 3) 3
-      option(value = 4) 4
-      option(value = 5) 5
+//-     //- label Challenge Risk
+//-     select(name = "Count", ng-model = "vm.challenge.count")
+//-       option(value="", disabled, selected) How Many
+//-       option(value = 1) 1
+//-       option(value = 2) 2
+//-       option(value = 3) 3
+//-       option(value = 4) 4
+//-       option(value = 5) 5
 
-    //- label Challenge Description
-    //- input(placeholder="Enter challenge description", ng-model = "challenge.description", required)
+//-     //- label Challenge Description
+//-     //- input(placeholder="Enter challenge description", ng-model = "challenge.description", required)
 
-   button(type="button", class="addButton", ng-click="vm.addChallenge(challenge)") +
-    //- button(type="button", ng-click="vm.removeChallenge($index)") Remove
+//-    button(type="button", class="addButton", ng-click="vm.addChallenge(challenge)") +
+//-     //- button(type="button", ng-click="vm.removeChallenge($index)") Remove
 
-  hr
-  div(ng-show="vm.challenges.length > 0")
-    ul
-      li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.requestType | request}} Challenges
-        a(ng-click="vm.removeChallenge($index)") remove
+//-   hr
+//-   div(ng-show="vm.challenges.length > 0")
+//-     ul
+//-       li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.requestType | request}} Challenges
+//-         a(ng-click="vm.removeChallenge($index)") remove
 
-  label Overall Project Difficulty
-  select(name = "Difficulty", ng-model = "vm.overallDifficulty", required=true)
-    option(value="", disabled, selected) Difficulty Level
-    option(value = "low") Low
-    option(value = "medium") Medium
-    option(value = "high") High
+//-   label Overall Project Difficulty
+//-   select(name = "Difficulty", ng-model = "vm.overallDifficulty", required=true)
+//-     option(value="", disabled, selected) Difficulty Level
+//-     option(value = "low") Low
+//-     option(value = "medium") Medium
+//-     option(value = "high") High
 
-  br
-  label Explain Complexity
-  textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation", required=true)
-  button(type="submit") Continue
+//-   br
+//-   label Explain Complexity
+//-   textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation", required=true)
+//-   button(type="submit") Continue
 
-div(ng-show="vm.estimatesSubmitted")
-  ul
-    li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.requestType | request}} Challenges
+//- div(ng-show="vm.estimatesSubmitted")
+//-   ul
+//-     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.requestType | request}} Challenges
+.dropdown
+  .dropdown-container
+    p.dropdown-button Click to Select
+
+    ul.dropdown-menu.dropdown-select
+      li Dropdown Menu Item
+
+      li Another Item
+
+      li Item Three
+
+      li The Last One
