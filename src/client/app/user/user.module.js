@@ -16,7 +16,7 @@
     var config = {
       url: 'users/:id',
       resource: 'user',
-      apiUrl: 'http://api.topcoder-dev.com/v3/'
+      apiUrl: 'https://api.topcoder-dev.com/v3/'
     };
 
     ApiResource.add(config);
