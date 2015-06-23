@@ -190,7 +190,7 @@
       //       console.log('error on project claim', e);
       //       $q.reject(e);
       //   });
-        $http.post('http://localhost:8010/copilots/'+copilotId+'/projects/', {"id": projectId}).
+        $http.post('http://api.topcoder-dev.com/v3/copilots/'+copilotId+'/projects/', {"id": projectId}).
           success(function(data, status, headers, config) {
            console.log('Updated project status', data);
            service.claimedProjectId = projectId;
@@ -221,7 +221,7 @@
    };
 
    service.projectAvailable = function(project, projectId) {
-    var claimedProjectStatuses = [  'awaiting_estimates',
+    var claimedProjectStatuses = ['awaiting_estimates',
     'awaiting_approval',
     'awaiting_challenge_creation',
     'launched']

@@ -17,7 +17,7 @@
       var config = {
       url: 'copilots/:copilotId/projects/',
       resource: 'copilot-assigned-projects',
-      apiUrl: 'http://localhost:8010/'
+      apiUrl: 'http://api.topcoder-dev.com/v3/'
     };
 
       ApiResource.add(config);
