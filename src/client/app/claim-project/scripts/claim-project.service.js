@@ -17,6 +17,7 @@
       copilotWork : null,
       claimedProjectId: null,
       copilotWorkId: null,
+      workDetails: {},
 
       // functions
       save           : null,
@@ -25,7 +26,9 @@
       resetWork      : null,
       initializeWork : null,
       submitChallenges: null,
-      submitClaim: null
+      submitClaim: null,
+      projectAvailable: null,
+      showCreateEstimatesButton: null,
     };
 
     // using a default helps with resetting after submit
@@ -134,30 +137,48 @@
       service.work = angular.copy(defaultWork);
     };
 
-    service.initializeWork = function(id) {
-      //reset 'work' for correct project details info
-      service.copilotWork = null;
-      var deferred = $q.defer();
-      data.get('work-request', {filter: 'copilotId=unassigned', id: id}).then(function(data) {
-        service.work = data.result.content;
-        deferred.resolve(service.work);
-        console.log('work request details', data.result.content);
-      }).catch(function(e) {
-        console.log('error on initialize work', e)
-      })
-      return deferred.promise;
-    };
+    // service.initializeWork = function(id) {
+    //   //reset 'work' for correct project details info
+    //   service.copilotWork = null;
+    //   service.work = null;
+    //   var deferred = $q.defer();
+    //   data.get('work-request', {filter: 'copilotId=unassigned', id: id}).then(function(data) {
+    //     service.work = data.result.content;
+    //     deferred.resolve(service.work);
+    //     console.log('work request details', data.result.content);
+    //   }).catch(function(e) {
+    //     console.log('error on initialize work', e)
+    //   })
+    //   return deferred.promise;
+    // };
 
-   service.initializeCopilotWork = function(id) {
-      service.work = null;
-         var deferred = $q.defer();
-         data.get('copilot-work-request', {filter: 'copilotId='+UserService.currentUser.id, id: id}).then(function(data) {
-           service.copilotWork = data.result.content;
-           deferred.resolve(service.copilotWork);
-           console.log('copilot request details', data);
-         });
-         return deferred.promise;
-       };
+   service.initializeCopilotWork = function(id, status) {
+      // service.work = null;
+      // service.copilotWork = null;
+      // console.log('PASSING ID', id)
+      //    var deferred = $q.defer();
+      //    //later change to dynamic copilot Id
+      //    data.get('work-request', {filter: 'copilotId=unassigned', id: id}).then(function(data) {
+      //      service.copilotWork = data.result.content;
+      //      deferred.resolve(service.copilotWork);
+      //      console.log('copilot request details', data.result.content);
+      //    });
+      //    return deferred.promise;
+      //  }
+      if (status) {
+        service.workDetails[id] = {};
+        service.workDetails[id].status = status;
+      }
+     var deferred = $q.defer();
+           data.get('copilot-work-request', {id: id}).then(function(data) {
+             service.work = data.result.content;
+             deferred.resolve(service.work);
+             console.log('work request details', data.result.content);
+           }).catch(function(e) {
+             console.log('error on initialize work', e)
+           })
+           return deferred.promise;
+         };
 
     service.submitClaim= function(copilotId, projectId) {
       //   data.create('copilot-assigned-projects', {copilotId: copilotId, "id": "900"}).then(function(data) {
@@ -169,10 +190,14 @@
       //       console.log('error on project claim', e);
       //       $q.reject(e);
       //   });
-        $http.post('http://localhost:8010/copilots/'+copilotId+'/projects/', {"id": projectId}).
+        $http.post('http://api.topcoder-dev.com/v3/copilots/'+copilotId+'/projects/', {"id": projectId}).
           success(function(data, status, headers, config) {
            console.log('Updated project status', data);
            service.claimedProjectId = projectId;
+           if (!service.workDetails[projectId]) {
+                service.workDetails[projectId] = {}
+                service.workDetails[projectId].status = 'awaiting_estimates';
+            }
             $rootScope.$emit('projectClaimed');
           }).
           error(function(data, status, headers, config) {
@@ -194,6 +219,24 @@
         $q.reject(e);
     });
    };
+
+   service.projectAvailable = function(project, projectId) {
+    var claimedProjectStatuses = ['awaiting_estimates',
+    'awaiting_approval',
+    'awaiting_challenge_creation',
+    'launched']
+    if (service.workDetails[projectId]) {
+      return claimedProjectStatuses.indexOf(service.workDetails[projectId].status) < 0
+    } else {
+    return project.status === 'Incomplete' || project.status === 'Submitted'
+    }
+   }
+
+   service.showCreateEstimatesButton = function(projectId) {
+    if (service.workDetails[projectId]) {
+            return service.workDetails[projectId].status === 'awaiting_estimates'
+    }
+   }
 
     return service;
 

@@ -1,5 +1,6 @@
 @import "../../core/styles/combined";
 @import "bourbon";
+@import "neat";
 
 form {
   label {
@@ -77,8 +78,10 @@ button {
   @include font-line(16);
 
   &.addButton {
-    height: 35px;
-    max-width: 35px;
+    height: 42px;
+    max-width: 42px;
+    float: right;
+    margin-top: 5px;
   }
 
   &.submit {
@@ -99,4 +102,7 @@ button {
     color           : initial;
     margin-top      : 0;
   }
+
+
 }
+

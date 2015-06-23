@@ -16,8 +16,8 @@ main
 
     h2{{ work.name }}
     div {{work.requestType | request}} Project
-    button(ng-if="projectAvailable", ng-click="submitClaim()") Claim Project
-    button(ng-if="showCreateEstimatesButton", ui-sref="claim-project.challenges") Create Estimates
+    button(ng-if="projectAvailable()", ng-click="submitClaim()") Claim Project
+    button(ng-if="showCreateEstimatesButton()", ui-sref="claim-project.challenges") Create Estimates
     button(ng-if="showCreateChallengesButton", ng-click="openCreateChallenges()") Create Challenges
     button(ng-if="showLaunchButton", ng-click="launchProject()") Launch Project
     br
@@ -42,3 +42,17 @@ main
     h5 Visual Elements
 
   aside(ui-view="")
+//- .dropdown
+//-  .dropdown-container
+//-     p.dropdown-button Click to Select
+
+//-     ul.dropdown-menu.dropdown-select
+//-         li Dropdown Menu Item
+
+//-         li Another Item
+
+//-         li Item Three
+
+//-         li The Last One
+
+
