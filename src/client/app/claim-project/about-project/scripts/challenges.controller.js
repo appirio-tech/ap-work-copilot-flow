@@ -12,7 +12,8 @@
     vm.title = 'Add Challenges';
     vm.showTypeMenu = false;
     vm.showCountMenu = false;
-    vm.copilotWork = ClaimProjectService.work;
+    vm.showCountMenu = false;
+    vm.work = ClaimProjectService.work;
     vm.estimatesSubmitted = false;
     vm.projectEstimateStatus = 'Create Project Estimate';
     vm.challengesEstimate = {};
@@ -35,28 +36,39 @@
   }
 
   vm.toggleCountMenu = function() {
-    vm.showTypeMenu = false;
     vm.showCountMenu = !vm.showCountMenu;
   }
 
-  vm.challengeTypes = [{type: 'design'}, {type: 'code'}];
-  vm.challengeCounts = [{count: 1}, {count: 2}, {count: 3}, {count: 4}]
+  vm.toggleDifficultyMenu = function() {
+    vm.showDifficultyMenu = !vm.showDifficultyMenu;
+  }
+
+  vm.challengeTypes = [{type: 'Design'}, {type: 'Code'}];
+  vm.challengeCounts = [{count: 1}, {count: 2}, {count: 3}, {count: 4}];
+  vm.challengeDifficulties = [{level: 'low'}, {level: 'medium'}, {level: 'high'}]
 
   vm.selectType = function(item) {
-    vm.challenge.challengeType = item.type;
+    vm.challenge.challengeType = item.type.charAt(0).toLowerCase() + item.type.slice(1)
     vm.toggleTypeMenu();
   }
 
   vm.selectCount= function(item) {
-    vm.challenge.challenge.count = item.count;
+    vm.challenge.count = item.count;
     console.log('le count', vm.challenge);
-    vm.toggleTypeMenu();
+    vm.toggleCountMenu();
+  }
+
+  vm.selectDifficulty= function(item) {
+    vm.overallDifficulty = item.level;
+    vm.toggleDifficultyMenu();
   }
 
     vm.addChallenge = function(challenge) {
+      if (vm.challenge.challengeType && vm.challenge.count) {
         var challengeId = vm.index++;
         vm.challenges.push(vm.challenge);
         vm.challenge = {id: vm.index, challengeType: null, count: null}
+      }
     }
 
     vm.removeChallenge = function(index) {
@@ -64,12 +76,13 @@
     }
 
     vm.submit = function(form) {
+      console.log('le work', vm.work)
       var challengesEstimate = {}
       challengesEstimate.complexity = vm.overallDifficulty;
       challengesEstimate.difficultyExplanation = vm.difficultyExplanation;
       challengesEstimate.challengeEstimates = vm.challenges;
       console.log('the challenges estimate', challengesEstimate);
-      ClaimProjectService.submitChallenges(vm.copilotWork.id, challengesEstimate);
+      ClaimProjectService.submitChallenges(vm.work.id, challengesEstimate);
       // // ClaimProjectService.challenges = vm.challenges;
       // console.log('on submit challenge, copilot work', vm.copilotWork)
       // vm.showChallengesAdded = true;
