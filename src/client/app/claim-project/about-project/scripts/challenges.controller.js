@@ -10,9 +10,11 @@
   function SubmitChallengesController($scope, $rootScope, $state, logger, ClaimProjectService) {
     var vm   = this;
     vm.title = 'Add Challenges';
+    vm.showTypeMenu = false;
+    vm.showCountMenu = false;
     vm.copilotWork = ClaimProjectService.work;
     vm.estimatesSubmitted = false;
-    vm.projectEstimateStatus = 'Create Project Estimate'
+    vm.projectEstimateStatus = 'Create Project Estimate';
     vm.challengesEstimate = {};
     vm.challenges = [];
     vm.overallDifficulty = null;
@@ -28,6 +30,28 @@
     vm.projectEstimateStatus = 'Project Estimate'
   })
 
+  vm.toggleTypeMenu = function() {
+    vm.showTypeMenu = !vm.showTypeMenu;
+  }
+
+  vm.toggleCountMenu = function() {
+    vm.showTypeMenu = false;
+    vm.showCountMenu = !vm.showCountMenu;
+  }
+
+  vm.challengeTypes = [{type: 'design'}, {type: 'code'}];
+  vm.challengeCounts = [{count: 1}, {count: 2}, {count: 3}, {count: 4}]
+
+  vm.selectType = function(item) {
+    vm.challenge.challengeType = item.type;
+    vm.toggleTypeMenu();
+  }
+
+  vm.selectCount= function(item) {
+    vm.challenge.challenge.count = item.count;
+    console.log('le count', vm.challenge);
+    vm.toggleTypeMenu();
+  }
 
     vm.addChallenge = function(challenge) {
         var challengeId = vm.index++;

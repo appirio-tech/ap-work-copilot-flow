@@ -44,9 +44,29 @@ h5 {{vm.projectEstimateStatus}}
 //- div(ng-show="vm.estimatesSubmitted")
 //-   ul
 //-     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.requestType | request}} Challenges
-.dropdown
+dropdown.dropdown
   .dropdown-container
-    p.dropdown-button Click to Select
+    p.dropdown-button.type(ng-click="vm.toggleTypeMenu()") Type of Challenge
+
+      ul.dropdown-menu.dropdown-select(ng-class="{'show-menu': vm.showTypeMenu}")
+        li(ng-repeat="challengeType in vm.challengeTypes", ng-click="vm.selectType(challengeType)") {{challengeType.type}}
+
+    p.dropdown-button.count(ng-click="vm.toggleCountMenu()") How Many
+
+    ul.dropdown-menu.dropdown-select(ng-class="{'show-menu': vm.showCountMenu}")
+      li(ng-repeat="number in vm.challengeCounts", ng-click="vm.selectCount(number)") {{number.count}}
+
+    button(type="button", class="addButton", ng-click="vm.addChallenge(challenge)") +
+
+    div(ng-show="vm.challenges.length > 0")
+      ul
+        li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.requestType | request}} Challenges
+          a(ng-click="vm.removeChallenge($index)") remove
+
+    //- h5 Overall Project Difficulty
+    br
+
+    p.dropdown-button.count Difficulty Level
 
     ul.dropdown-menu.dropdown-select
       li Dropdown Menu Item
@@ -56,3 +76,8 @@ h5 {{vm.projectEstimateStatus}}
       li Item Three
 
       li The Last One
+
+    h5 Explain Complexity
+    br
+    textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation")
+    button(ng-click="vm.submit()") Continue
