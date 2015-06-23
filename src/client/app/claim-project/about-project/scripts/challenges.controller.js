@@ -54,7 +54,6 @@
 
   vm.selectCount= function(item) {
     vm.challenge.count = item.count;
-    console.log('le count', vm.challenge);
     vm.toggleCountMenu();
   }
 
@@ -76,7 +75,6 @@
     }
 
     vm.submit = function(form) {
-      console.log('le work', vm.work)
       var challengesEstimate = {}
       challengesEstimate.complexity = vm.overallDifficulty;
       challengesEstimate.difficultyExplanation = vm.difficultyExplanation;
