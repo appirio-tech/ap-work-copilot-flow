@@ -8,7 +8,7 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
   # $scope.hideClaimButton = false
   $scope.showClaimedModal = false
   # $scope.showCreateEstimatesButton = false
-  $rootScope.showCreateChallengesModal = false
+  $scope.showCreateChallengesModal = false
   $scope.showCreateChallengesButton = false
   $scope.showLaunchButton = false
   # $scope.projectAvailable = true
@@ -54,7 +54,8 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
    # $scope.projectAvailable = false
 
    $rootScope.$on 'challengeEstimatesSubmitted', ->
-    $rootScope.showCreateChallengesModal = true
+    console.log 'rs working'
+    $scope.showCreateChallengesModal = true
 
   $scope.submitClaim = ->
     copilotId = UserService.currentUser.id
