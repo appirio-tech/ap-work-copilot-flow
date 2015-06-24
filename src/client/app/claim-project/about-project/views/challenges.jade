@@ -62,11 +62,11 @@ br
 h1
 
 .addedChallenges(ng-show="vm.challenges.length > 0")
- .challengesList
   ul
     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.challengeType.charAt(0).toUpperCase() +  challenge.challengeType.slice(1)}} Challenges
       a(ng-click="vm.removeChallenge($index)") remove
 br
+.projectDifficulty
 h5 Overall Project Difficulty
 br
 .dropdown
@@ -74,7 +74,7 @@ br
     p.dropdown-button.difficulty(ng-click="vm.toggleDifficultyMenu()", ng-bind="vm.overallDifficulty.charAt(0).toUpperCase() +  vm.overallDifficulty.slice(1) || 'Difficulty Level'")
 
       ul.dropdown-menu.dropdown-select.difficulty(ng-class="{'show-menu': vm.showDifficultyMenu}")
-        li(ng-repeat="difficulty in vm.challengeDifficulties", ng-click="vm.selectDifficulty(difficulty)") {{difficulty.level}}
+        li(ng-repeat="difficulty in vm.challengeDifficulties", ng-click="vm.selectDifficulty(difficulty)") {{difficulty.level.charAt(0).toUpperCase() +  difficulty.level.slice(1)}}
 
 
 h5 Explain Complexity

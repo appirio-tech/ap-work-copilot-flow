@@ -10,10 +10,14 @@
   function AssignedProjectsController(copilotAssignedProjects, ProjectsService, $state) {
     var vm = this;
     vm.title = 'View Projects';
+    vm.showTypeFilterMenu = false;
     vm.copilotAssignedProjects = [];
     vm.formatWorkRequests = null;
+    vm.selectedType = '';
     vm.id = 0;
     vm.active = null;
+
+    vm.typeFilters = ["design", "code", "designs"]
 
     vm.activate = function() {
       vm.copilotAssignedProjects = copilotAssignedProjects
@@ -25,6 +29,23 @@
 
     vm.hoverDeselect = function(index) {
       vm.active = null;
+    }
+
+    vm.toggleTypeFilterMenu = function() {
+      vm.showTypeFilterMenu = !vm.showTypeFilterMenu;
+    }
+
+    vm.selectType = function(item) {
+      vm.selectedType = item;
+    }
+
+    vm.typeFilter = function(data) {
+      // if (data.requestType ===  vm.selectedType) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
+      return true;
     }
 
 

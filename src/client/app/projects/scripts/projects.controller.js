@@ -13,25 +13,30 @@
     vm.highlightAssignedButton = true;
     vm.highlightOpenButton = false;
     vm.active = null;
-    vm.workRequests = [];
-    vm.formatWorkRequests = null;
+    vm.workRequests = workRequests;
+    vm.showTypeFilterMenu = false;
+    vm.reverse = false;
+    vm.selectedType = '';
+    vm.filterMatches = [];
 
     vm.activate = function() {
-      vm.workRequests = vm.formatWorkRequests(workRequests);
+      vm.workRequests = workRequests;
     };
 
-    vm.formatWorkRequests = function(requests) {
-      var typeDisplays = {
-        'design': 'Mobile: Design',
-        'code'  : 'Mobile: Code',
-        'design & code': 'Design & Code'
-      };
+    vm.typeFilters = ["design", "code", "design & code"];
 
-      return requests.map(function(work) {
-        work.requestType = typeDisplays[work.requestType];
-        return work;
-      });
-    };
+    // vm.formatWorkRequests = function(requests) {
+    //   var typeDisplays = {
+    //     'design': 'Mobile: Design',
+    //     'code'  : 'Mobile: Code',
+    //     'design & code': 'Design & Code'
+    //   };
+
+    //   return requests.map(function(work) {
+    //     work.requestType = typeDisplays[work.requestType];
+    //     return work;
+    //   });
+    // };
 
     vm.hoverSelect = function(index) {
       vm.active = index;
@@ -49,6 +54,28 @@
     vm.openButtonSelected = function() {
       vm.highlightAssignedButton = false;
       vm.highlightOpenButton = true;
+    }
+
+    vm.toggleTypeFilterMenu = function() {
+      vm.showTypeFilterMenu = !vm.showTypeFilterMenu;
+    }
+
+    vm.selectType = function(item) {
+      vm.selectedType = item;
+    }
+
+    vm.typeFilter = function(data) {
+    if (data.requestType ===  vm.selectedType || vm.selectedType === '') {
+      return true;
+    } else {
+      return false;
+    }
+    // return true;
+    }
+
+    vm.reverseOrder = function() {
+      console.log('reversing')
+      vm.reverse = !vm.reverse
     }
 
     vm.activate();
