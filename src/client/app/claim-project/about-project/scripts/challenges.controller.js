@@ -79,22 +79,14 @@
       challengesEstimate.complexity = vm.overallDifficulty;
       challengesEstimate.difficultyExplanation = vm.difficultyExplanation;
       challengesEstimate.challengeEstimates = vm.challenges;
-      console.log('the challenges estimate', challengesEstimate);
       ClaimProjectService.submitChallenges(vm.work.id, challengesEstimate);
       // // ClaimProjectService.challenges = vm.challenges;
       // console.log('on submit challenge, copilot work', vm.copilotWork)
       // vm.showChallengesAdded = true;
     };
 
-    vm.showCreateChallengesModal = function() {
-      return ClaimProjectService.allowCreateChallenges;
+    vm.showAddedChallenges = function() {
+      return ClaimProjectService.showCreateChallengesButton($scope.work.id);
     }
-
-    vm.hideCreateChallengesModal = function() {
-      ClaimProjectService.allowCreateChallenges = false;
-      vm.revealCreateChallengesButton();
-    }
-
-
   }
 })();

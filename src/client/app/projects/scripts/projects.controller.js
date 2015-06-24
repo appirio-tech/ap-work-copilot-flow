@@ -74,7 +74,6 @@
     }
 
     vm.reverseOrder = function() {
-      console.log('reversing')
       vm.reverse = !vm.reverse
     }
 

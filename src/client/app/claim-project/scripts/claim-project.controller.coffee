@@ -54,7 +54,6 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
    # $scope.projectAvailable = false
 
    $rootScope.$on 'challengeEstimatesSubmitted', ->
-    console.log 'rs working'
     $scope.showCreateChallengesModal = true
 
   $scope.submitClaim = ->
@@ -77,7 +76,7 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
     $window.open('https://www.topcoder.com/direct/home.action', '_blank')
     true
     $scope.showLaunchButton = true
-    $scope.showCreateChallengesButton = false
+    # $scope.showCreateChallengesButton = false
     $scope.showCreateChallengesModal = false
 
   $scope.hideCreateChallengesModal = ->
