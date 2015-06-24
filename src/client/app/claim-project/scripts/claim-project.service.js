@@ -206,18 +206,34 @@
     };
 
    service.submitChallenges = function(projectId, challengesEstimate) {
-    data.get('copilot-assigned-projects', {id: projectId}).then(function(data) {
-      data.result.content.estimate = challengesEstimate;
-      data.result.content.status = 'awaiting_approval';
-      data.$update({id: projectId});
-      $rootScope.$emit('challengeEstimatesSubmitted')
-      console.log('Updated project challenge estimates', data.result.content);
-      //show create challenges modal
-    }).catch(function(e) {
-      // $rootScope.$emit('challengeEstimatesSubmitted')
-        console.log('error on submit challenge', e)
-        $q.reject(e);
-    });
+    // data.get('copilot-assigned-projects', {id: projectId}).then(function(data) {
+    //   data.result.content.estimate = challengesEstimate;
+    //   data.result.content.status = 'awaiting_approval';
+    //   data.$update({id: projectId});
+    //   $rootScope.$emit('challengeEstimatesSubmitted')
+    //   console.log('Updated project challenge estimates', data.result.content);
+    //   //show create challenges modal
+    // }).catch(function(e) {
+    //   // $rootScope.$emit('challengeEstimatesSubmitted')
+    //     console.log('error on submit challenge', e)
+    //     $q.reject(e);
+    // });
+console.log('this is it', {"estimate": challengesEstimate})
+$http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id+'/projects/'+projectId+'', {"id": projectId, "estimate": challengesEstimate, "status": "awaiting_approval"}).
+  success(function(data, status, headers, config) {
+   console.log('Updated project estimates', data);
+   service.claimedProjectId = projectId;
+   if (!service.workDetails[projectId]) {
+        service.workDetails[projectId] = {}
+        service.workDetails[projectId].status = 'awaiting_approval';
+    }
+    $rootScope.$emit('estimatesSubmitted');
+  }).
+  error(function(data, status, headers, config) {
+    console.log('error on project claim', data)
+  });
+
+
    };
 
    service.projectAvailable = function(project, projectId) {

@@ -48,7 +48,7 @@
   vm.challengeDifficulties = [{level: 'low'}, {level: 'medium'}, {level: 'high'}]
 
   vm.selectType = function(item) {
-    vm.challenge.challengeType = item.type.charAt(0).toLowerCase() + item.type.slice(1)
+    vm.challenge.challengeType = item.type;
     vm.toggleTypeMenu();
   }
 
