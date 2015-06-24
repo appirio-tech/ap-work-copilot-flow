@@ -89,6 +89,9 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
   $scope.showCreateEstimatesButton = ->
     ClaimProjectService.showCreateEstimatesButton($scope.work.id);
 
+  $scope.showCreateChallengesButton = ->
+    ClaimProjectService.showCreateChallengesButton($scope.work.id);
+
   activate = ->
     # ClaimProjectService.resetWork() unless $scope.work
 

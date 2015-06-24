@@ -26,10 +26,10 @@
     vm.submit;
 
     //event listeners
-  $rootScope.$on('challengeEstimatesSubmitted', function() {
-    vm.estimatesSubmitted = true;
-    vm.projectEstimateStatus = 'Project Estimate'
-  })
+  // $rootScope.$on('challengeEstimatesSubmitted', function() {
+  //   vm.estimatesSubmitted = true;
+  //   vm.projectEstimateStatus = 'Project Estimate'
+  // })
 
   vm.toggleTypeMenu = function() {
     vm.showTypeMenu = !vm.showTypeMenu;

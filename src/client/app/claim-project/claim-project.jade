@@ -18,7 +18,7 @@ main
     div {{work.requestType | request}} Project
     button(ng-if="projectAvailable()", ng-click="submitClaim()") Claim Project
     button(ng-if="showCreateEstimatesButton()", ui-sref="claim-project.challenges") Create Estimates
-    button(ng-if="showCreateChallengesButton", ng-click="openCreateChallenges()") Create Challenges
+    button(ng-if="showCreateChallengesButton()", ng-click="openCreateChallenges()") Create Challenges
     button(ng-if="showLaunchButton", ng-click="launchProject()") Launch Project
     br
     br
