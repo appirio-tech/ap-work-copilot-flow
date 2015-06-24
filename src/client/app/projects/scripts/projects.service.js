@@ -39,7 +39,7 @@
            return deferred.promise;
        };
 
-    //get names: 
+    //get names:
     // var que = $q.all(data.result.content.map(function(project) {
     //       console.log('before', project)
     //        $http({
