@@ -26,18 +26,6 @@
 
     vm.typeFilters = ["All Project Types", "design", "code", "design & code"];
 
-    // vm.formatWorkRequests = function(requests) {
-    //   var typeDisplays = {
-    //     'design': 'Mobile: Design',
-    //     'code'  : 'Mobile: Code',
-    //     'design & code': 'Design & Code'
-    //   };
-
-    //   return requests.map(function(work) {
-    //     work.requestType = typeDisplays[work.requestType];
-    //     return work;
-    //   });
-    // };
 
     vm.hoverSelect = function(index) {
       vm.active = index;
@@ -67,12 +55,11 @@
     }
 
     vm.typeFilter = function(data) {
-    if (data.requestType ===  vm.selectedType ||  vm.selectedType === 'All Project Types') {
-      return true;
-    } else {
-      return false;
-    }
-    // return true;
+      if (data.requestType ===  vm.selectedType ||  vm.selectedType === 'All Project Types') {
+        return true;
+      } else {
+        return false;
+      }
     }
 
     vm.reverseOrder = function() {

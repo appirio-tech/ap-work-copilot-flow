@@ -9,7 +9,7 @@ p Sort By:
 ul
   li(class='layout-main.projects', ng-repeat= "project in filteredWorkRequests=(vm.copilotAssignedProjects | orderBy:'createdAt':vm.reverse | filter: vm.typeFilter)", ng-mouseenter="vm.hoverSelect($index)", ng-mouseleave="vm.hoverDeselect($index)")
     div(ng-class="{'hovered': $index == vm.active}")
-      h5 Name: {{project.name}}
+      h5 {{project.name}}
       h5 Type: {{project.requestType}}
 
       span.type {{project.estimate.complexity}}
