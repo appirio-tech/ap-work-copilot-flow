@@ -16,6 +16,7 @@ main
 
     h2{{ work.name }}
     div {{work.requestType | request}} Project
+    button(ui-sref="messaging({ id: threadId })") Message Client
     button(ng-if="projectAvailable()", ng-click="submitClaim()") Claim Project
     button(ng-if="showCreateEstimatesButton()", ui-sref="claim-project.challenges") Create Estimates
     button(ng-if="showCreateChallengesButton()", ng-click="openCreateChallenges()") Create Challenges

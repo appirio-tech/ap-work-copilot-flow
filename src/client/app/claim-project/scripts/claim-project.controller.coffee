@@ -1,6 +1,6 @@
 'use strict'
 
-ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, UserService, NavService, $state) ->
+ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, UserService, NavService, $state, ThreadsAPIService, UserV3Service) ->
   $scope.activeState  = NavService.activeState
   $scope.work         =  ClaimProjectService.work
   $scope.completed    = NavService.completed
@@ -13,6 +13,7 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
   $scope.showLaunchButton = false
   # $scope.projectAvailable = true
   $scope.claimedProjectId = ClaimProjectService.claimedProjectId;
+  $scope.threadId = null;
   # $scope.projectStatus = ClaimProjectService.currentStatus();
 
   # Watch service to set active state
@@ -92,11 +93,35 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
     ClaimProjectService.showCreateChallengesButton($scope.work.id);
 
   activate = ->
-    # ClaimProjectService.resetWork() unless $scope.work
+   getOrCreateThread = ->
+      #TODO: get rid of this call
+      UserV3Service.getCurrentUser (user) ->
+        publishers = [
+          user.id
+          $scope.work.ownerId
+        ]
+        # ThreadsAPIService.query subscriberId: user.id
+
+        params =
+          clientIdentifier: $scope.work.id
+          context         : 'work'
+          #project name
+          subject         : $scope.work.name
+          publishers      : publishers
+          subscribers     : publishers
+
+        thread  = new ThreadsAPIService params
+        resource = thread.$save()
+
+        resource.then (response) ->
+          $scope.threadId = response?.result?.content?.id
+
+
+    getOrCreateThread()
 
   activate()
 
-ClaimProjectController.$inject = ['$scope', '$rootScope', '$window','ClaimProjectService', 'UserService', 'NavService', '$state']
+ClaimProjectController.$inject = ['$scope', '$rootScope', '$window','ClaimProjectService', 'UserService', 'NavService', '$state', 'ThreadsAPIService', 'UserV3Service']
 
 angular.module('app.claim-project').controller 'ClaimProjectController', ClaimProjectController
 
