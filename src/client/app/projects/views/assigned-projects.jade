@@ -9,8 +9,8 @@ p Sort By:
 ul
   li(class='layout-main.projects', ng-repeat= "project in filteredWorkRequests=(vm.copilotAssignedProjects | orderBy:'createdAt':vm.reverse | filter: vm.typeFilter)", ng-mouseenter="vm.hoverSelect($index)", ng-mouseleave="vm.hoverDeselect($index)")
     div(ng-class="{'hovered': $index == vm.active}")
-      h5 Name: {{project.name}}
-      h5 Id: {{project.id}}
+      h5 {{project.name}}
+      h5 Type: {{project.requestType}}
 
       span.type {{project.estimate.complexity}}
       br
@@ -20,4 +20,4 @@ ul
       br
       button(ng-show="$index == vm.active", ui-sref='claim-project({id: project.id, status: project.status})') View Details
 .noProjectsMessage(ng-show="!filteredWorkRequests.length")
-  h1 Sorry, there are no available {{vm.selectedType}} projects at this time.
+  h1 Sorry, there are no claimed {{vm.selectedType}} projects at this time.

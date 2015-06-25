@@ -39,6 +39,5 @@ div(ng-hide="vm.showAddedChallenges()")
   button(ng-click="vm.submit()") Create Estimates
 
 div(ng-show="vm.showAddedChallenges()")
-  p Hello World
   ul
     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.challengeType.charAt(0).toUpperCase() +  challenge.challengeType.slice(1)}} Challenges

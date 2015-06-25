@@ -13,11 +13,13 @@
     vm.showTypeFilterMenu = false;
     vm.copilotAssignedProjects = [];
     vm.formatWorkRequests = null;
-    vm.selectedType = '';
+    vm.showTypeFilterMenu = false;
+    vm.selectedType = 'All Project Types';
+    vm.reverse = false;
     vm.id = 0;
     vm.active = null;
 
-    vm.typeFilters = ["design", "code", "designs"]
+    vm.typeFilters = ["All Project Types", "design", "code", "design & code"]
 
     vm.activate = function() {
       vm.copilotAssignedProjects = copilotAssignedProjects
@@ -40,12 +42,15 @@
     }
 
     vm.typeFilter = function(data) {
-      // if (data.requestType ===  vm.selectedType) {
-      //   return true;
-      // } else {
-      //   return false;
-      // }
+      if (data.requestType ===  vm.selectedType || vm.selectedType === 'All Project Types') {
       return true;
+      } else {
+        return false;
+     }
+    }
+
+    vm.reverseOrder = function() {
+      vm.reverse = !vm.reverse
     }
 
 

@@ -9,7 +9,6 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
   $scope.showClaimedModal = false
   # $scope.showCreateEstimatesButton = false
   $scope.showCreateChallengesModal = false
-  $scope.showCreateChallengesButton = false
   $scope.showLaunchButton = false
   # $scope.projectAvailable = true
   $scope.claimedProjectId = ClaimProjectService.claimedProjectId;
@@ -77,14 +76,12 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
     $window.open('https://www.topcoder.com/direct/home.action', '_blank')
     true
     $scope.showLaunchButton = true
-    # $scope.showCreateChallengesButton = false
     $scope.showCreateChallengesModal = false
 
   $scope.hideCreateChallengesModal = ->
     $scope.showCreateChallengesModal = false
     # $scope.projectAvailable = false
     # $scope.showCreateEstimatesButton = false
-    $scope.showCreateChallengesButton = true
 
   $scope.showCreateEstimatesButton = ->
     ClaimProjectService.showCreateEstimatesButton($scope.work.id);
