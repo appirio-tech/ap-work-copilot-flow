@@ -10,18 +10,4 @@
     'duScroll'
   ])
 
-  // .run(claimProject);
-
-  // claimProject.$inject = ['ApiResource'];
-
-  // function claimProject(ApiResource) {
-  //   var config = {
-  //   url: 'copilots/copilot-b/projects/',
-  //   resource: 'copilot-assigned-projects',
-  //   apiUrl: 'http://localhost:8010/'
-  // };
-
-  //   ApiResource.add(config);
-  // }
-
 })();

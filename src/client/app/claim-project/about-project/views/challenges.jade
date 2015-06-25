@@ -1,87 +1,44 @@
 h5 {{vm.projectEstimateStatus}}
 
-//- form(name="challengeForm", ng-submit="vm.submit()", ng-hide="vm.estimatesSubmitted")
-//-   ng-form(name="challengesForm")
-//-     //- label Challenge Type
-//-     select(name = "Type", ng-model = "vm.challenge.challengeType")
-//-       option(value="", disabled, selected) Type of Challenge
-//-       option(value = "design") Design
-//-       option(value = "code") Code
+div(ng-hide="vm.showAddedChallenges()")
+  dropdown.dropdown
+    .dropdown-container
+      p.dropdown-button.type(ng-click="vm.toggleTypeMenu()", ng-bind="vm.challenge.challengeType.charAt(0).toUpperCase() +  vm.challenge.challengeType.slice(1) || 'Type of Challenge'")
 
-//-     //- label Challenge Risk
-//-     select(name = "Count", ng-model = "vm.challenge.count")
-//-       option(value="", disabled, selected) How Many
-//-       option(value = 1) 1
-//-       option(value = 2) 2
-//-       option(value = 3) 3
-//-       option(value = 4) 4
-//-       option(value = 5) 5
+        ul.dropdown-menu.dropdown-select.type(ng-class="{'show-menu': vm.showTypeMenu}")
+          li(ng-repeat="challengeType in vm.challengeTypes", ng-click="vm.selectType(challengeType)") {{challengeType.type}}
 
-//-     //- label Challenge Description
-//-     //- input(placeholder="Enter challenge description", ng-model = "challenge.description", required)
+      p.dropdown-button.count(ng-click="vm.toggleCountMenu()", ng-bind="vm.challenge.count || 'How Many'")
 
-//-    button(type="button", class="addButton", ng-click="vm.addChallenge(challenge)") +
-//-     //- button(type="button", ng-click="vm.removeChallenge($index)") Remove
+      ul.dropdown-menu.dropdown-select.count(ng-class="{'show-menu': vm.showCountMenu}")
+        li(ng-repeat="number in vm.challengeCounts", ng-click="vm.selectCount(number)") {{number.count}}
 
-//-   hr
-//-   div(ng-show="vm.challenges.length > 0")
-//-     ul
-//-       li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.requestType | request}} Challenges
-//-         a(ng-click="vm.removeChallenge($index)") remove
+      button(type="button", class="addButton", ng-click="vm.addChallenge(challenge)") +
+  br
+  h1
 
-//-   label Overall Project Difficulty
-//-   select(name = "Difficulty", ng-model = "vm.overallDifficulty", required=true)
-//-     option(value="", disabled, selected) Difficulty Level
-//-     option(value = "low") Low
-//-     option(value = "medium") Medium
-//-     option(value = "high") High
+  .addedChallenges(ng-show="vm.challenges.length > 0")
+    ul
+      li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.challengeType.charAt(0).toUpperCase() +  challenge.challengeType.slice(1)}} Challenges
+        a(ng-click="vm.removeChallenge($index)") remove
+  br
+  .projectDifficulty
+  h5 Overall Project Difficulty
+  br
+  .dropdown
+    .dropdown-container
+      p.dropdown-button.difficulty(ng-click="vm.toggleDifficultyMenu()", ng-bind="vm.overallDifficulty.charAt(0).toUpperCase() +  vm.overallDifficulty.slice(1) || 'Difficulty Level'")
 
-//-   br
-//-   label Explain Complexity
-//-   textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation", required=true)
-//-   button(type="submit") Continue
+        ul.dropdown-menu.dropdown-select.difficulty(ng-class="{'show-menu': vm.showDifficultyMenu}")
+          li(ng-repeat="difficulty in vm.challengeDifficulties", ng-click="vm.selectDifficulty(difficulty)") {{difficulty.level.charAt(0).toUpperCase() +  difficulty.level.slice(1)}}
 
-//- div(ng-show="vm.estimatesSubmitted")
-//-   ul
-//-     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.requestType | request}} Challenges
 
-dropdown.dropdown
-  .dropdown-container
-    p.dropdown-button.type(ng-click="vm.toggleTypeMenu()", ng-bind="vm.challenge.challengeType.charAt(0).toUpperCase() +  vm.challenge.challengeType.slice(1) || 'Type of Challenge'")
+  h5 Explain Complexity
+  br
+  textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation")
+  button(ng-click="vm.submit()") Create Estimates
 
-      ul.dropdown-menu.dropdown-select.type(ng-class="{'show-menu': vm.showTypeMenu}")
-        li(ng-repeat="challengeType in vm.challengeTypes", ng-click="vm.selectType(challengeType)") {{challengeType.type}}
-
-    p.dropdown-button.count(ng-click="vm.toggleCountMenu()", ng-bind="vm.challenge.count || 'How Many'")
-
-    ul.dropdown-menu.dropdown-select.count(ng-class="{'show-menu': vm.showCountMenu}")
-      li(ng-repeat="number in vm.challengeCounts", ng-click="vm.selectCount(number)") {{number.count}}
-
-    button(type="button", class="addButton", ng-click="vm.addChallenge(challenge)") +
-br
-h1
-
-.addedChallenges(ng-show="vm.challenges.length > 0")
+div(ng-show="vm.showAddedChallenges()")
+  p Hello World
   ul
     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.challengeType.charAt(0).toUpperCase() +  challenge.challengeType.slice(1)}} Challenges
-      a(ng-click="vm.removeChallenge($index)") remove
-br
-.projectDifficulty
-h5 Overall Project Difficulty
-br
-.dropdown
-  .dropdown-container
-    p.dropdown-button.difficulty(ng-click="vm.toggleDifficultyMenu()", ng-bind="vm.overallDifficulty.charAt(0).toUpperCase() +  vm.overallDifficulty.slice(1) || 'Difficulty Level'")
-
-      ul.dropdown-menu.dropdown-select.difficulty(ng-class="{'show-menu': vm.showDifficultyMenu}")
-        li(ng-repeat="difficulty in vm.challengeDifficulties", ng-click="vm.selectDifficulty(difficulty)") {{difficulty.level.charAt(0).toUpperCase() +  difficulty.level.slice(1)}}
-
-
-h5 Explain Complexity
-br
-textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation")
-button(ng-click="vm.submit()") Create Estimates
-
-//- div(ng-show="vm.estimatesSubmitted")
-//-   ul
-//-     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.challengeType.charAt(0).toUpperCase() +  challenge.challengeType.slice(1)}} Challenges

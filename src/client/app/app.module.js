@@ -8,7 +8,8 @@
     'app.auth',
     'app.user',
     'app.claim-project',
-    'app.projects'
+    'app.projects',
+    'appirio-tech-messaging'
   ]).config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode(false);
   }]);

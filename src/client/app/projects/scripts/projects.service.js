@@ -32,6 +32,7 @@
       var deferred = $q.defer();
       data.get('copilot-assigned-projects', {copilotId: UserService.currentUser.id}).then(function(data) {
            deferred.resolve(data.result.content);
+           //q.all mapped objs
          }).catch(function(e) {
                console.log('error on assigned projects', e);
                $q.reject(e);
@@ -39,15 +40,13 @@
            return deferred.promise;
        };
 
-    //get names:
-    // var que = $q.all(data.result.content.map(function(project) {
-    //       console.log('before', project)
+    // get names:
+    // data.result.content.map(function(project) {
     //        $http({
     //        method: 'GET',
     //        url: 'https://api.topcoder-dev.com/v3/app-work-requests/',
     //        params: { filter: 'copilotId=unassigned&id='+project.id}
     //       }).success(function(projectData, status) {
-    //         console.log('map http data', projectData);
     //         project.name = projectData.result.content[0].name;
     //         console.log('le mod proje', project)
     //         return project;

@@ -241,13 +241,19 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
     if (service.workDetails[projectId]) {
       return claimedProjectStatuses.indexOf(service.workDetails[projectId].status) < 0
     } else {
-    return project.status === 'Incomplete' || project.status === 'Submitted'
+    return project.status === 'Incomplete' || project.status === 'Submitted';
     }
    }
 
    service.showCreateEstimatesButton = function(projectId) {
     if (service.workDetails[projectId]) {
-            return service.workDetails[projectId].status === 'awaiting_estimates'
+            return service.workDetails[projectId].status === 'awaiting_estimates';
+    }
+   }
+
+   service.showCreateChallengesButton = function(projectId) {
+    if (service.workDetails[projectId]) {
+      return service.workDetails[projectId].status === 'awaiting_approval';
     }
    }
 

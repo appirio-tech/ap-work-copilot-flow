@@ -54,6 +54,13 @@
           }]
         }
       }
+    }, {
+      state: 'messaging',
+      config: {
+        url: '/messaging/:id',
+        templateUrl: 'claim-project/about-project/views/messaging.html',
+        controller: 'ClaimProjectController'
+      }
     },
     {
       state: 'claim-project.createChallenges',
