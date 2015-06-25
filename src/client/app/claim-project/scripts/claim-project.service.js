@@ -222,8 +222,9 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
   success(function(data, status, headers, config) {
    if (!service.workDetails[projectId]) {
         service.workDetails[projectId] = {}
-        service.workDetails[projectId].status = 'awaiting_approval';
     }
+    service.workDetails[projectId].status = 'awaiting_approval';
+    service.workDetails[projectId].estimate = challengesEstimate;
     $rootScope.$emit('challengeEstimatesSubmitted');
   }).
   error(function(data, status, headers, config) {
@@ -232,6 +233,20 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
 
 
    };
+
+   service.launchProject = function(projectId) {
+    $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id+'/projects/'+projectId+'', {"id": projectId, "estimate": service.workDetails[projectId].estimate, "status": "launched"}).
+      success(function(data, status, headers, config) {
+       if (!service.workDetails[projectId]) {
+            service.workDetails[projectId] = {}
+        }
+        service.workDetails[projectId].status = 'launched';
+        $rootScope.$emit('projectLaunched');
+      }).
+      error(function(data, status, headers, config) {
+        console.log('error on project launch', data)
+      });
+   }
 
    service.projectAvailable = function(project, projectId) {
     var claimedProjectStatuses = ['awaiting_estimates',
@@ -251,10 +266,28 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
     }
    }
 
+   service.showAwaitingApproval = function(projectId) {
+    if (service.workDetails[projectId]) {
+      return service.workDetails[projectId].status ==='awaiting_approval';
+    }
+   }
+
    service.showCreateChallengesButton = function(projectId) {
     if (service.workDetails[projectId]) {
-      return service.workDetails[projectId].status === 'awaiting_approval';
+        return service.workDetails[projectId].status === 'awaiting_challenge_creation';
+      }
+   }
+
+   service.openCreateChallenges = function(projectId) {
+    if (service.workDetails[projectId]) {
+      service.workDetails[projectId].status ='awaiting_launch';
     }
+   }
+
+   service.showLaunchButton = function(projectId) {
+    if (service.workDetails[projectId]) {
+        return service.workDetails[projectId].status === 'awaiting_launch';
+       }
    }
 
     return service;

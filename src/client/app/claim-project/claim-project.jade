@@ -7,21 +7,21 @@ main
         br
         a(ng-click="revealCreateEstimatesButton()") I'll do it later
 
-    .statusModal(ng-show="showCreateChallengesModal")
-        span Estimate Created.
-        br
-        button(ng-click="openCreateChallenges()") Create Challenges
-        br
-        a(ng-click="hideCreateChallengesModal()") I'll do it later
+    //- .statusModal(ng-show="showCreateChallengesModal")
+    //-     span Estimate Created.
+    //-     br
+    //-     button(ng-click="openCreateChallenges()") Create Challenges
+    //-     br
+    //-     a(ng-click="hideCreateChallengesModal()") I'll do it later
 
     h2{{ work.name }}
     div {{work.requestType | request}} Project
-    button(ui-sref="messaging({ id: threadId })") Message Client
+    button(ng-if="!projectAvailable()", ui-sref="messaging({ id: threadId })") Message Client
     button(ng-if="projectAvailable()", ng-click="submitClaim()") Claim Project
     button(ng-if="showCreateEstimatesButton()", ui-sref="claim-project.challenges") Create Estimates
+    p.awaitingApproval(ng-if="showAwaitingApproval()") Project estimate complete. Awaiting client approval.
     button(ng-if="showCreateChallengesButton()", ng-click="openCreateChallenges()") Create Challenges
-    button(ng-if="showLaunchButton", ng-click="launchProject()") Launch Project
-    br
+    button(ng-if="showLaunchButton()", ng-click="launchProject()") Launch Project
     br
     hr
 
@@ -36,7 +36,6 @@ main
     p {{work.usageDescription}}
 
     h5 Features
-    //- p {{work.features}}
     ul
       li(ng-repeat="feature in work.features") {{feature.name}}: {{feature.description}}
 

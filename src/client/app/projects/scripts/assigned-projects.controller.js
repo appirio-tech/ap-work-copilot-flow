@@ -15,14 +15,14 @@
     vm.formatWorkRequests = null;
     vm.showTypeFilterMenu = false;
     vm.selectedType = 'All Project Types';
-    vm.reverse = false;
+    vm.reverse = true;
     vm.id = 0;
     vm.active = null;
 
     vm.typeFilters = ["All Project Types", "design", "code", "design & code"]
 
     vm.activate = function() {
-      vm.copilotAssignedProjects = copilotAssignedProjects
+      vm.copilotAssignedProjects = copilotAssignedProjects;
     };
 
     vm.hoverSelect = function(index) {

@@ -15,7 +15,7 @@
     vm.showCountMenu = false;
     vm.work = ClaimProjectService.work;
     vm.estimatesSubmitted = false;
-    vm.projectEstimateStatus = 'Create Project Estimate';
+    vm.projectEstimateStatus = 'Create Project Estimate'
     vm.challengesEstimate = {};
     vm.challenges = [];
     vm.overallDifficulty = null;
@@ -86,7 +86,8 @@
     };
 
     vm.showAddedChallenges = function() {
-      return ClaimProjectService.showCreateChallengesButton(vm.work.id);
+      return ClaimProjectService.showAwaitingApproval(vm.work.id);
     }
-  }
+
+    }
 })();

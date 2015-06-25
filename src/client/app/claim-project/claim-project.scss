@@ -4,6 +4,11 @@
 
 .layout-main.claim-project {
 
+
+  .awaitingApproval {
+    color: $apple;
+  }
+
   .statusModal {
     position: absolute;
     background: $black;
@@ -11,6 +16,7 @@
     opacity: 0.8;
     width: 100%;
     text-align: center;
+    z-index: 999;
     span {
       color: white;
       width: 100%
@@ -183,7 +189,7 @@
       position: absolute;
       top: $dropdown-distance-from-menu;
       width: 228px;
-      z-index: 99999;
+      z-index: 5;
 
       &:before {
         @include position(absolute, 0 1em 0 0);
@@ -241,5 +247,6 @@
       float: right;
     }
   }
+
 
 }
