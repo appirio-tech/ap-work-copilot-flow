@@ -15,15 +15,16 @@
     vm.active = null;
     vm.workRequests = workRequests;
     vm.showTypeFilterMenu = false;
+    vm.typeFilterValue = null;
     vm.reverse = false;
-    vm.selectedType = '';
+    vm.selectedType = 'All Project Types';
     vm.filterMatches = [];
 
     vm.activate = function() {
       vm.workRequests = workRequests;
     };
 
-    vm.typeFilters = ["design", "code", "design & code"];
+    vm.typeFilters = ["All Project Types", "design", "code", "design & code"];
 
     // vm.formatWorkRequests = function(requests) {
     //   var typeDisplays = {
@@ -62,10 +63,11 @@
 
     vm.selectType = function(item) {
       vm.selectedType = item;
+      vm.typeFilterValue = item;
     }
 
     vm.typeFilter = function(data) {
-    if (data.requestType ===  vm.selectedType || vm.selectedType === '') {
+    if (data.requestType ===  vm.selectedType ||  vm.selectedType === 'All Project Types') {
       return true;
     } else {
       return false;
