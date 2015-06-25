@@ -17,7 +17,7 @@
     vm.id = 0;
     vm.active = null;
 
-    vm.typeFilters = ["design", "code", "designs"]
+    vm.typeFilters = ["design", "code", "design & code"]
 
     vm.activate = function() {
       vm.copilotAssignedProjects = copilotAssignedProjects
@@ -40,12 +40,11 @@
     }
 
     vm.typeFilter = function(data) {
-      // if (data.requestType ===  vm.selectedType) {
-      //   return true;
-      // } else {
-      //   return false;
-      // }
+      if (data.requestType ===  vm.selectedType || vm.selectedType === '') {
       return true;
+      } else {
+        return false;
+     }
     }
 
 

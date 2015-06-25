@@ -86,7 +86,7 @@
     };
 
     vm.showAddedChallenges = function() {
-      return ClaimProjectService.showCreateChallengesButton($scope.work.id);
+      return ClaimProjectService.showCreateChallengesButton(vm.work.id);
     }
   }
 })();
