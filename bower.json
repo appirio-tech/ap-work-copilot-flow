@@ -28,12 +28,12 @@
     "angular-scroll": "~0.6.5",
     "jquery": "~2.1.0",
     "font-awesome": "~4.2.0",
-    "moment": "~2.6.0",
+    "moment": "2.10.x",
     "angular-ui-router": "~0.2.12",
     "toastr": "~2.1.0",
     "auth0-angular": "4.x.x",
     "a0-angular-storage": "~0.0.9",
     "angular-jwt": "~0.0.6",
-    "appirio-tech-messaging": "git@github.com:appirio-tech/messaging#master"
+    "appirio-tech-messaging": "git@github.com:appirio-tech/messaging#1.x.x"
   }
 }
