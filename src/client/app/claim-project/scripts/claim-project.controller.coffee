@@ -9,7 +9,7 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
   $scope.showClaimedModal = false
   # $scope.showCreateEstimatesButton = false
   $scope.showCreateChallengesModal = false
-  $scope.showLaunchButton = false
+  # $scope.showLaunchButton = false
   # $scope.projectAvailable = true
   $scope.claimedProjectId = ClaimProjectService.claimedProjectId;
   $scope.threadId = null;
@@ -75,8 +75,7 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
   $scope.openCreateChallenges = ->
     $window.open('https://www.topcoder.com/direct/home.action', '_blank')
     true
-    $scope.showLaunchButton = true
-    $scope.showCreateChallengesModal = false
+    ClaimProjectService.openCreateChallenges($scope.work.id);
 
   $scope.hideCreateChallengesModal = ->
     $scope.showCreateChallengesModal = false
@@ -87,7 +86,16 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
     ClaimProjectService.showCreateEstimatesButton($scope.work.id);
 
   $scope.showCreateChallengesButton = ->
-    ClaimProjectService.showCreateChallengesButton($scope.work.id);
+    ClaimProjectService.showCreateChallengesButton($scope.work.id)&& !ClaimProjectService.showLaunchButton($scope.work.id);
+
+  $scope.showAwaitingApproval = ->
+    ClaimProjectService.showAwaitingApproval($scope.work.id) && !ClaimProjectService.showCreateChallengesButton($scope.work.id);
+
+  $scope.showLaunchButton = ->
+    ClaimProjectService.showLaunchButton($scope.work.id);
+
+  $scope.launchProject = ->
+    ClaimProjectService.launchProject($scope.work.id);
 
   activate = ->
    getOrCreateThread = ->

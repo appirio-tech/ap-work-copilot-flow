@@ -16,7 +16,7 @@
     vm.workRequests = workRequests;
     vm.showTypeFilterMenu = false;
     vm.typeFilterValue = null;
-    vm.reverse = false;
+    vm.reverse = true;
     vm.selectedType = 'All Project Types';
     vm.filterMatches = [];
 
