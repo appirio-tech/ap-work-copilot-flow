@@ -224,7 +224,6 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
     }
     service.workDetails[projectId].status = 'awaiting_approval';
     service.workDetails[projectId].estimate = challengesEstimate;
-    console.log('the estimate', service.workDetails[projectId].estimate)
     $rootScope.$emit('challengeEstimatesSubmitted');
   }).
   error(function(data, status, headers, config) {
