@@ -11,6 +11,10 @@
     .submitEstimates {
     margin-top: 10px;
   }
+  textarea {
+    background-color: $mercury;
+    margin-top: 0;
+  }
 }
 .projectEstimate {
   h5 {
