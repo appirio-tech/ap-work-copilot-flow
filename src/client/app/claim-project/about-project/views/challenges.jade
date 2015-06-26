@@ -1,6 +1,6 @@
-h5(ng-hide="vm.showAddedChallenges()") {{vm.projectEstimateStatus}}
 
-div(ng-hide="vm.showAddedChallenges()")
+div(class="challengesContainer", ng-hide="vm.showAddedChallenges()")
+  h5(ng-hide="vm.showAddedChallenges()") {{vm.projectEstimateStatus}}
   dropdown.dropdown
     .dropdown-container
       p.dropdown-button.type(ng-click="vm.toggleTypeMenu()", ng-bind="vm.challenge.challengeType.charAt(0).toUpperCase() +  vm.challenge.challengeType.slice(1) || 'Type of Challenge'")
@@ -17,6 +17,7 @@ div(ng-hide="vm.showAddedChallenges()")
   br
   h1
 
+  hr
   .addedChallenges(ng-show="vm.challenges.length > 0")
     ul
       li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.challengeType.charAt(0).toUpperCase() +  challenge.challengeType.slice(1)}} Challenges
@@ -36,9 +37,9 @@ div(ng-hide="vm.showAddedChallenges()")
   h5 Explain Complexity
   br
   textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation")
-  button(ng-click="vm.submit()") Create Estimates
+  button(class="submitEstimates", ng-click="vm.submit()") Create Estimates
 
-div(ng-show="vm.showAddedChallenges()")
+div(class="projectEstimate", ng-show="vm.showAddedChallenges()")
   h5 Project Estimate
   ul
     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.challengeType.charAt(0).toUpperCase() +  challenge.challengeType.slice(1)}} Challenges

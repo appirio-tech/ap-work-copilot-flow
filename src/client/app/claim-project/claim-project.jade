@@ -1,11 +1,11 @@
 main
+  .statusModal(ng-show="showClaimedModal")
+    span Congratulations! You have claimed this project.
+    br
+    button(class="modalButton", ng-click="revealProjectEstimates()", ui-sref="claim-project.challenges") Create Estimates
+    br
+    a(ng-click="revealCreateEstimatesButton()") I'll do it later
   .detailsContainer
-    .statusModal(ng-show="showClaimedModal")
-        span Congratulations! You have claimed this project.
-        br
-        button(ng-click="revealProjectEstimates()", ui-sref="claim-project.challenges") Create Estimates
-        br
-        a(ng-click="revealCreateEstimatesButton()") I'll do it later
 
     //- .statusModal(ng-show="showCreateChallengesModal")
     //-     span Estimate Created.
@@ -15,17 +15,17 @@ main
     //-     a(ng-click="hideCreateChallengesModal()") I'll do it later
 
     h2{{ work.name | cutOff}}
-    div
-        h3 {{work.requestType | requestType}} Project
-    button(ng-if="!projectAvailable()", ui-sref="messaging({ id: threadId })") Message Client
+    h3 {{work.requestType | requestType}} Project
+    br
     button(ng-if="projectAvailable()", ng-click="submitClaim()") Claim Project
     button(ng-if="showCreateEstimatesButton()", ui-sref="claim-project.challenges") Create Estimates
     p.awaitingApproval(ng-if="showAwaitingApproval()") Project estimate complete. Awaiting client approval.
     button(ng-if="showCreateChallengesButton()", ng-click="openCreateChallenges()") Create Challenges
     button(ng-if="showLaunchButton()", ng-click="launchProject()") Launch Project
+    button(ng-if="!projectAvailable()", ui-sref="messaging({ id: threadId })") Message Client
+    br
     br
     hr
-
     .summary
         h5 Project Description
         p {{work.summary}}
