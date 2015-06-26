@@ -20,7 +20,9 @@
   h5 {
     @include font-line(24)
   }
-  
+  p {
+    @include font-line(24)
+  }
 }
 h2 {
 @include source-sans-light();
@@ -43,6 +45,8 @@ p {
 
   .awaitingApproval, .launchMessage {
       color: $apple;
+      font-size: 20px;
+      line-height: 53px;
   }
 
   .summary {
@@ -187,6 +191,10 @@ p {
       position: relative;
       text-align: center;
       width: 100%;
+
+      &.difficulty {
+        margin-bottom: 10px;
+      }
     }
 
     .dropdown-button {
