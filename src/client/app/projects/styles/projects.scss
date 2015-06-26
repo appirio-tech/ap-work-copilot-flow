@@ -78,7 +78,12 @@
       width: 220px;
       height: 100%;
       background-color: $white;
+      padding-top: 15px;
       text-align: center;
+
+      &.created {
+        margin-top: 10px;
+      }
 
       header {
 
@@ -90,13 +95,18 @@
           float: left;
         }
 
+      }
         span.type {
           margin-top: $margin-10;
-          float: right;
           @include source-sans();
-          font-size: 12px;
+          @include font-line(17);
+          font-weight: bold;
         }
-      }
+
+        span.created {
+         @include font-line(15);
+         font-weight: bold;
+        }
 
       .middle {
         height: 48%;
@@ -138,6 +148,7 @@
           font-weight: bold;
           color: white;
           display: inline-block;
+          margin-top: $margin-8;
           margin-bottom: $margin-8;
         }
 
@@ -156,5 +167,8 @@
   .noProjectsMessage {
     text-align: center;
   }
+  img.faded {
+          opacity: 0.1;
+        }
 }
 
