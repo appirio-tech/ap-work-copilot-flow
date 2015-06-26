@@ -22,6 +22,7 @@ main
     p.awaitingApproval(ng-if="showAwaitingApproval()") Project estimate complete. Awaiting client approval.
     button(ng-if="showCreateChallengesButton()", ng-click="openCreateChallenges()") Create Challenges
     button(ng-if="showLaunchButton()", ng-click="launchProject()") Launch Project
+    p.launchMessage(ng-if="showLaunchMessage()") Your project has been launchd!
     button(ng-if="!projectAvailable()", ui-sref="messaging({ id: threadId })") Message Client
     br
     br

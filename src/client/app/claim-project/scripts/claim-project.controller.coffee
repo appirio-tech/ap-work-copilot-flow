@@ -97,6 +97,9 @@ ClaimProjectController = ($scope, $rootScope, $window, ClaimProjectService, User
   $scope.launchProject = ->
     ClaimProjectService.launchProject($scope.work.id);
 
+  $scope.showLaunchMessage = ->
+    ClaimProjectService.showLaunchMessage($scope.work.id)
+
   activate = ->
    getOrCreateThread = ->
       #TODO: get rid of this call
