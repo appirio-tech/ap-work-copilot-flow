@@ -76,12 +76,15 @@ a.clean {
     h2 {
       @include font-line(30)
     }
-    button { 
+    button {
       margin-top: 20px;
       background-color: $metallic-gray;
     }
     &.backButton {
       margin-top: 20px;
+    }
+    .attach {
+      float: left;
     }
   }
 
