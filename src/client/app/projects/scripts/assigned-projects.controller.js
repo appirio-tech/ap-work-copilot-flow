@@ -19,7 +19,8 @@
     vm.id = 0;
     vm.active = null;
 
-    vm.typeFilters = ["All Project Types", "design", "code", "design & code"]
+    vm.typeFilters = ["All Project Types", "Design", "Development", "Design & Development"]
+    vm.filteredRequests = {"code": "Development", "design": "Design", "both": "Design & Development" }
 
     vm.activate = function() {
       vm.copilotAssignedProjects = copilotAssignedProjects;
@@ -42,7 +43,7 @@
     }
 
     vm.typeFilter = function(data) {
-      if (data.requestType ===  vm.selectedType || vm.selectedType === 'All Project Types') {
+      if (vm.filteredRequests[data.requestType] ===  vm.selectedType || vm.selectedType === 'All Project Types') {
       return true;
       } else {
         return false;

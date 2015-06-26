@@ -4,9 +4,72 @@
 
 .layout-main.claim-project {
 
+.challengesContainer {
+  width: 100%;
+  margin-top: 33%;
+  padding: 10px;
+    .submitEstimates {
+    margin-top: 10px;
+  }
+  textarea {
+    background-color: $mercury;
+    margin-top: 0;
+  }
+}
+.projectEstimate {
+  h5 {
+    @include font-line(24)
+  }
+  
+}
+h2 {
+@include source-sans-light();
+@include font-line(37);
+}
+
+h3 {
+  @include font-line(22)
+}
+
+p {
+  color: $text-gray;
+  @include font-line(15)
+}
+
+.detailsContainer {
+  height: 700px;
+  padding-left: 10px;
+}
 
   .awaitingApproval {
-    color: $apple;
+      color: $apple;
+  }
+
+  .summary {
+    overflow: scroll;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    width: 100%
+  }
+
+  .similarApps {
+    margin-bottom: 10px;
+    width: 100%
+  }
+  .usersDescription{
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .features{
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .visualElements {
+    margin-bottom: 10px;
+    width: 100%;
   }
 
   .statusModal {
@@ -17,6 +80,8 @@
     width: 100%;
     text-align: center;
     z-index: 999;
+    vertical-align: middle;
+    line-height: 44px;
     span {
       color: white;
       width: 100%
@@ -241,6 +306,8 @@
 
   .addedChallenges {
     width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
     a {
       text-decoration: underline;

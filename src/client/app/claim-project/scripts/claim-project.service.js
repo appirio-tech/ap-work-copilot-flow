@@ -273,6 +273,16 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
    }
 
    service.showCreateChallengesButton = function(projectId) {
+    // $http.get('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id+'/projects/', {"id": projectId}).
+    //          success(function(data, status, headers, config) {
+    //          console.log('show create data', data);
+    //        });
+             //  if (!service.workDetails[projectId]) {
+             //       service.workDetails[projectId] = {}
+             //       service.workDetails[projectId].status = 'awaiting_estimates';
+             //   }
+             //   $rootScope.$emit('projectClaimed');
+             // }).
     if (service.workDetails[projectId]) {
         return service.workDetails[projectId].status === 'awaiting_challenge_creation';
       }

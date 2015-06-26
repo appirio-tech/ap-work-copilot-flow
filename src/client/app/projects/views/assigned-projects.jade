@@ -7,17 +7,17 @@ dropdown.dropdown(ng-hide="!vm.copilotAssignedProjects.length")
 //- p Sort By:
 //-   a(ng-click="vm.reverseOrder()") Start Date
 ul
-  li(class='layout-main.projects', ng-repeat= "project in filteredWorkRequests=(vm.copilotAssignedProjects | orderBy:'createdAt':vm.reverse | filter: vm.typeFilter)", ng-mouseenter="vm.hoverSelect($index)", ng-mouseleave="vm.hoverDeselect($index)")
-    div(ng-class="{'hovered': $index == vm.active}")
-      h5 {{project.name}}
-      h5 Type: {{project.requestType}}
-
-      span.type {{project.estimate.complexity}}
+  li(class='projectLi', ng-repeat= "project in filteredWorkRequests=(vm.copilotAssignedProjects | orderBy:'createdAt':vm.reverse | filter: vm.typeFilter)", ng-mouseenter="vm.hoverSelect($index)", ng-mouseleave="vm.hoverDeselect($index)")
+    div(class="tile", ng-class="{'hovered': $index == vm.active, 'grey': project.requestType === 'code'}")
+      h5 {{project.name | cutOff}}
       br
-      //- img(src="manage/images/missing-image.svg", class="missing")
+      img(src="projects/images/dev-project-icon.png", ng-class="{'faded': $index == vm.active}")
       br
-      span.status {{project.status}}
+      span.type {{project.requestType | requestType | uppercase }}
       br
-      button(ng-show="$index == vm.active", ui-sref='claim-project({id: project.id, status: project.status})') View Details
+      br
+      span.created {{project.status | request}}
+      br
+      button(ng-show="$index == vm.active", ui-sref='claim-project({id: project.id})') {{project.status | statusButton}}
 .noProjectsMessage(ng-show="!filteredWorkRequests.length")
   h1 You have no claimed {{vm.selectedType}} projects at this time.
