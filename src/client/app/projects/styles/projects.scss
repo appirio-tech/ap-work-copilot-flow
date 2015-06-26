@@ -4,16 +4,6 @@
 
 .layout-main.projects {
 
-  .messagingContainer {
-    margin-top: 35px;
-    button {
-      margin-top: 20px;
-    }
-    &.backButton {
-      margin-top: 20px;
-    }
-  }
-
   @include outer-container;
   padding: 0px $padding-15;
 

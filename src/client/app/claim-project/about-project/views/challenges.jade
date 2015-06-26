@@ -25,15 +25,15 @@ div(class="challengesContainer", ng-hide="vm.showAddedChallenges()")
   br
   .projectDifficulty
   h5 Overall Project Difficulty
-  br
   .dropdown
-    .dropdown-container
+    .dropdown-container.difficulty
       p.dropdown-button.difficulty(ng-click="vm.toggleDifficultyMenu()", ng-bind="vm.overallDifficulty.charAt(0).toUpperCase() +  vm.overallDifficulty.slice(1) || 'Difficulty Level'")
 
         ul.dropdown-menu.dropdown-select.difficulty(ng-class="{'show-menu': vm.showDifficultyMenu}")
           li(ng-repeat="difficulty in vm.challengeDifficulties", ng-click="vm.selectDifficulty(difficulty)") {{difficulty.level.charAt(0).toUpperCase() +  difficulty.level.slice(1)}}
 
-
+  br
+  br
   h5 Explain Complexity
   br
   textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation")
