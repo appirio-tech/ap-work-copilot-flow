@@ -4,9 +4,53 @@
 
 .layout-main.claim-project {
 
+h2 {
+@include source-sans-light();
+@include font-line(37);
+}
+
+h3 {
+  @include font-line(22)
+}
+
+p {
+  color: $text-gray;
+  @include font-line(15)
+}
+
+.detailsContainer {
+  height: 700px;
+}
 
   .awaitingApproval {
     color: $apple;
+  }
+
+  .summary {
+    overflow: scroll;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    width: 100%
+  }
+
+  .similarApps {
+    margin-bottom: 10px;
+    width: 100%
+  }
+  .usersDescription{
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .features{
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .visualElements {
+    margin-bottom: 10px;
+    width: 100%;
   }
 
   .statusModal {

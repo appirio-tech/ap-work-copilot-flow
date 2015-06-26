@@ -11,7 +11,7 @@
     return function(input) {
      input = input || '';
      if (input.length >= 20) {
-      return input.substr(0, 20) + "..."
+      return input.substr(0, 20)
      } else {
       return input;
      }
