@@ -105,6 +105,7 @@ a.clean {
   .projectsHeading {
     height: 150px;
     background-color: $white;
+    border-top: 30px solid $charcoal-gray;
 
     h1 {
       @include font-line(31);
@@ -112,7 +113,7 @@ a.clean {
     }
     div {
       text-align: center;
-      margin-top: 38px;
+      margin-top: 8px;
     }
     button {
       border-radius: 0px;
