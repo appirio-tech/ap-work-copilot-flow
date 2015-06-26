@@ -173,7 +173,6 @@
            data.get('copilot-work-request', {id: id}).then(function(data) {
              service.work = data.result.content;
              deferred.resolve(service.work);
-             console.log('work request details', data.result.content);
            }).catch(function(e) {
              console.log('error on initialize work', e)
            })
@@ -196,8 +195,8 @@
            service.claimedProjectId = projectId;
            if (!service.workDetails[projectId]) {
                 service.workDetails[projectId] = {}
-                service.workDetails[projectId].status = 'awaiting_estimates';
             }
+                service.workDetails[projectId].status = 'awaiting_estimates';
             $rootScope.$emit('projectClaimed');
           }).
           error(function(data, status, headers, config) {
@@ -252,6 +251,7 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
     var claimedProjectStatuses = ['awaiting_estimates',
     'awaiting_approval',
     'awaiting_challenge_creation',
+    'awaiting_launch',
     'launched']
     if (service.workDetails[projectId]) {
       return claimedProjectStatuses.indexOf(service.workDetails[projectId].status) < 0
@@ -262,13 +262,13 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
 
    service.showCreateEstimatesButton = function(projectId) {
     if (service.workDetails[projectId]) {
-            return service.workDetails[projectId].status === 'awaiting_estimates';
+            return service.workDetails[projectId].status == 'awaiting_estimates';
     }
    }
 
    service.showAwaitingApproval = function(projectId) {
     if (service.workDetails[projectId]) {
-      return service.workDetails[projectId].status ==='awaiting_approval';
+      return service.workDetails[projectId].status == 'awaiting_approval';
     }
    }
 
@@ -297,6 +297,12 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
    service.showLaunchButton = function(projectId) {
     if (service.workDetails[projectId]) {
         return service.workDetails[projectId].status === 'awaiting_launch';
+       }
+   }
+
+   service.showLaunchMessage = function(projectId) {
+    if (service.workDetails[projectId]) {
+        return service.workDetails[projectId].status === 'launched';
        }
    }
 

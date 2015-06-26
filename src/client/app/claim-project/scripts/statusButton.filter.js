@@ -14,6 +14,7 @@
        'awaiting_estimates': 'Estimates Required',
        'awaiting_approval'  : 'View Details',
        'awaiting_challenge_creation': 'Create Challenges',
+       'awaiting_launch': 'Ready to Launch',
        'launched': 'View Details'
      };
 

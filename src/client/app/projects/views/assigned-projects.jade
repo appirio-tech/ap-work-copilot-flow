@@ -18,6 +18,6 @@ ul
       br
       span.created {{project.status | request}}
       br
-      button(ng-show="$index == vm.active", ui-sref='claim-project({id: project.id})') {{project.status | statusButton}}
+      button(ng-show="$index == vm.active", ui-sref='claim-project({id: project.id, status: project.status})') {{project.status | statusButton}}
 .noProjectsMessage(ng-show="!filteredWorkRequests.length")
   h1 You have no claimed {{vm.selectedType}} projects at this time.
