@@ -11,9 +11,10 @@
     return function(input) {
      input = input || '';
      var typeDisplays = {
-       'design': 'Mobile Design',
-       'code'  : 'Mobile Code',
-       'design & code': 'Design & Code'
+       'awaiting_estimates': 'Awaiting Estimates',
+       'awaiting_approval'  : 'Awaiting Approval',
+       'awaiting_challenge_creation': 'Approved',
+       'launched': 'Launched'
      };
 
      return typeDisplays[input]

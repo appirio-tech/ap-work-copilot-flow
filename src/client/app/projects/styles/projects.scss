@@ -56,7 +56,7 @@
     }
   }
 
-  li {
+  .projectLi{
 
     @include span-columns(3);
     @include omega(4n);
@@ -170,5 +170,8 @@
   img.faded {
           opacity: 0.1;
         }
+  .grey {
+    background-color: $mild-gray;
+  }
 }
 

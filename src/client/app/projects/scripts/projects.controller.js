@@ -24,8 +24,8 @@
       vm.workRequests = workRequests;
     };
 
-    vm.typeFilters = ["All Project Types", "design", "code", "design & code"];
-
+   vm.typeFilters = ["All Project Types", "Design", "Development", "Design & Development"]
+   vm.filteredRequests = {"code": "Development", "design": "Design", "both": "Design & Development" }
 
     vm.hoverSelect = function(index) {
       vm.active = index;
@@ -55,11 +55,11 @@
     }
 
     vm.typeFilter = function(data) {
-      if (data.requestType ===  vm.selectedType ||  vm.selectedType === 'All Project Types') {
-        return true;
+      if (vm.filteredRequests[data.requestType] ===  vm.selectedType || vm.selectedType === 'All Project Types') {
+      return true;
       } else {
         return false;
-      }
+     }
     }
 
     vm.reverseOrder = function() {
