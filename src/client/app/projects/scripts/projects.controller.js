@@ -51,7 +51,11 @@
 
     vm.selectType = function(item) {
       vm.selectedType = item;
-      vm.typeFilterValue = item;
+      if (item === 'Design & Development') {
+        vm.typeFilterValue = 'Design & Dev';
+      } else {
+        vm.typeFilterValue = item;
+      }
     }
 
     vm.typeFilter = function(data) {
