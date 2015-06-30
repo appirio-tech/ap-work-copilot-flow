@@ -11,9 +11,9 @@
     return function(input) {
      input = input || '';
      var typeDisplays = {
-       'awaiting_estimates': 'Awaiting Estimates',
-       'awaiting_approval'  : 'Awaiting Approval',
-       'awaiting_challenge_creation': 'Approved',
+       'claimed': 'Claimed',
+       'estimated'  : 'Estimated',
+       'approved': 'Approved',
        'launched': 'Launched'
      };
 

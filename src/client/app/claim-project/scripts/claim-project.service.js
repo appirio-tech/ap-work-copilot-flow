@@ -137,34 +137,7 @@
       service.work = angular.copy(defaultWork);
     };
 
-    // service.initializeWork = function(id) {
-    //   //reset 'work' for correct project details info
-    //   service.copilotWork = null;
-    //   service.work = null;
-    //   var deferred = $q.defer();
-    //   data.get('work-request', {filter: 'copilotId=unassigned', id: id}).then(function(data) {
-    //     service.work = data.result.content;
-    //     deferred.resolve(service.work);
-    //     console.log('work request details', data.result.content);
-    //   }).catch(function(e) {
-    //     console.log('error on initialize work', e)
-    //   })
-    //   return deferred.promise;
-    // };
-
    service.initializeCopilotWork = function(id, status) {
-      // service.work = null;
-      // service.copilotWork = null;
-      // console.log('PASSING ID', id)
-      //    var deferred = $q.defer();
-      //    //later change to dynamic copilot Id
-      //    data.get('work-request', {filter: 'copilotId=unassigned', id: id}).then(function(data) {
-      //      service.copilotWork = data.result.content;
-      //      deferred.resolve(service.copilotWork);
-      //      console.log('copilot request details', data.result.content);
-      //    });
-      //    return deferred.promise;
-      //  }
       if (status) {
         service.workDetails[id] = {};
         service.workDetails[id].status = status;
@@ -180,15 +153,6 @@
          };
 
     service.submitClaim= function(copilotId, projectId) {
-      //   data.create('copilot-assigned-projects', {copilotId: copilotId, "id": "900"}).then(function(data) {
-      //     //later change to dynamic copilot project id
-      //     service.claimedProjectId = projectId;
-      //     $rootScope.$emit('projectClaimed');
-      //   }).catch(function(e) {
-      //     // service.projectAvailable= false;
-      //       console.log('error on project claim', e);
-      //       $q.reject(e);
-      //   });
         $http.post('https://api.topcoder-dev.com/v3/copilots/'+copilotId+'/projects/', {"id": projectId}).
           success(function(data, status, headers, config) {
            console.log('Updated project status', data);
@@ -196,7 +160,7 @@
            if (!service.workDetails[projectId]) {
                 service.workDetails[projectId] = {}
             }
-                service.workDetails[projectId].status = 'awaiting_estimates';
+                service.workDetails[projectId].status = 'claimed';
             $rootScope.$emit('projectClaimed');
           }).
           error(function(data, status, headers, config) {
@@ -205,30 +169,18 @@
     };
 
    service.submitChallenges = function(projectId, challengesEstimate) {
-    // data.get('copilot-assigned-projects', {id: projectId}).then(function(data) {
-    //   data.result.content.estimate = challengesEstimate;
-    //   data.result.content.status = 'awaiting_approval';
-    //   data.$update({id: projectId});
-    //   $rootScope.$emit('challengeEstimatesSubmitted')
-    //   console.log('Updated project challenge estimates', data.result.content);
-    //   //show create challenges modal
-    // }).catch(function(e) {
-    //   // $rootScope.$emit('challengeEstimatesSubmitted')
-    //     console.log('error on submit challenge', e)
-    //     $q.reject(e);
-    // });
-$http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id+'/projects/'+projectId+'', {"id": projectId, "estimate": challengesEstimate, "status": "awaiting_approval"}).
-  success(function(data, status, headers, config) {
-   if (!service.workDetails[projectId]) {
-        service.workDetails[projectId] = {}
-    }
-    service.workDetails[projectId].status = 'awaiting_approval';
-    service.workDetails[projectId].estimate = challengesEstimate;
-    $rootScope.$emit('challengeEstimatesSubmitted');
-  }).
-  error(function(data, status, headers, config) {
-    console.log('error on submit estimates', data)
-  });
+    $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id+'/projects/'+projectId+'', {"id": projectId, "estimate": challengesEstimate, "status": "estimated"}).
+      success(function(data, status, headers, config) {
+       if (!service.workDetails[projectId]) {
+            service.workDetails[projectId] = {}
+        }
+        service.workDetails[projectId].status = 'estimated';
+        service.workDetails[projectId].estimate = challengesEstimate;
+        $rootScope.$emit('challengeEstimatesSubmitted');
+      }).
+      error(function(data, status, headers, config) {
+        console.log('error on submit estimates', data)
+      });
 
 
    };
@@ -248,9 +200,10 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
    }
 
    service.projectAvailable = function(project, projectId) {
-    var claimedProjectStatuses = ['awaiting_estimates',
-    'awaiting_approval',
-    'awaiting_challenge_creation',
+    var claimedProjectStatuses = [
+    'claimed',
+    'estimated',
+    'approved',
     'awaiting_launch',
     'launched']
     if (service.workDetails[projectId]) {
@@ -262,29 +215,19 @@ $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id
 
    service.showCreateEstimatesButton = function(projectId) {
     if (service.workDetails[projectId]) {
-            return service.workDetails[projectId].status == 'awaiting_estimates';
+            return service.workDetails[projectId].status == 'claimed';
     }
    }
 
    service.showAwaitingApproval = function(projectId) {
     if (service.workDetails[projectId]) {
-      return service.workDetails[projectId].status == 'awaiting_approval';
+      return service.workDetails[projectId].status == 'estimated';
     }
    }
 
    service.showCreateChallengesButton = function(projectId) {
-    // $http.get('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id+'/projects/', {"id": projectId}).
-    //          success(function(data, status, headers, config) {
-    //          console.log('show create data', data);
-    //        });
-             //  if (!service.workDetails[projectId]) {
-             //       service.workDetails[projectId] = {}
-             //       service.workDetails[projectId].status = 'awaiting_estimates';
-             //   }
-             //   $rootScope.$emit('projectClaimed');
-             // }).
     if (service.workDetails[projectId]) {
-        return service.workDetails[projectId].status === 'awaiting_challenge_creation';
+        return service.workDetails[projectId].status === 'approved';
       }
    }
 
