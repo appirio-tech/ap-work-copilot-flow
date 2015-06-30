@@ -11,8 +11,8 @@
     return function(input) {
      input = input || '';
      var typeDisplays = {
-       'claimed': 'Awaiting Estimates',
-       'estimated'  : 'Awaiting Approval',
+       'claimed': 'Claimed',
+       'estimated'  : 'Estimated',
        'approved': 'Approved',
        'launched': 'Launched'
      };

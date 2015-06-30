@@ -11,9 +11,9 @@
     return function(input) {
      input = input || '';
      var typeDisplays = {
-       'awaiting_estimates': 'Estimates Required',
-       'awaiting_approval'  : 'View Details',
-       'awaiting_challenge_creation': 'Create Challenges',
+       'claimed': 'Estimates Required',
+       'estimated'  : 'View Details',
+       'approved': 'Create Challenges',
        'awaiting_launch': 'Ready to Launch',
        'launched': 'View Details'
      };

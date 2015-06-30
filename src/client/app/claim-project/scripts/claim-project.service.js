@@ -169,7 +169,7 @@
     };
 
    service.submitChallenges = function(projectId, challengesEstimate) {
-    $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id+'/projects/'+projectId+'', {"id": projectId, "estimate": challengesEstimate, "status": "awaiting_approval"}).
+    $http.put('https://api.topcoder-dev.com/v3/copilots/'+UserService.currentUser.id+'/projects/'+projectId+'', {"id": projectId, "estimate": challengesEstimate, "status": "estimated"}).
       success(function(data, status, headers, config) {
        if (!service.workDetails[projectId]) {
             service.workDetails[projectId] = {}
