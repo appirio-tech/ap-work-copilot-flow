@@ -78,24 +78,59 @@ p {
 
   .statusModal {
     position: absolute;
-    background: $black;
+    background: rgba(0, 0, 0, 0.8);
     height: 20%;
-    opacity: 0.8;
     width: 100%;
     text-align: center;
     z-index: 999;
     vertical-align: middle;
     line-height: 44px;
-    span {
+    &.success {
+      background: rgba(56, 180, 73, 0.8)
+    }
+    span, h3 {
       color: white;
       width: 100%
     }
     a {
       color: white;
     }
+    .exit {
+      height: 50px;
+      width: 50px;
+      a {
+        text-decoration: none;
+        @include font-line(22);
+      }
+    }
     button {
       background-color: white;
       color: $black
+    }
+    img.checkmark-green {
+    height: 43px;
+    top: 15px;
+    right: 10px;
+    position: relative;
+  }
+  }
+
+  .message {
+    background: #38b449;
+    line-height: 25px;
+    vertical-align: middle;
+    padding-left: 20px;
+    margin-bottom: 15px;
+    span {
+      color: white;
+      position: relative;
+      bottom: 12px;
+    }
+    img.checkmark-green {
+      height: 43px;
+      top: 3px;
+      right: 10px;
+      position: relative;
     }
   }
 
@@ -105,56 +140,6 @@ p {
 
   main {
     background-color: $white;
-
-    .starting-line {
-      min-height      : 1px;
-      margin-bottom   : 200px;
-      margin-top      : -100px;
-    }
-
-    article {
-      opacity   : 0;
-
-      > * {
-        margin-top: $margin-30;
-      }
-
-      @include transition(opacity 0.3s ease-in 0s);
-
-      &.state-active {
-        opacity: 1;
-        @include transition(opacity 0.3s ease-in 0s);
-      }
-
-      form {
-        button.submit {
-          width: 280px;
-          // Need to fix this due to button being in next tag
-          margin-top: 30px;
-        }
-      }
-
-      > button {
-        width: 280px;
-      }
-
-      p {
-        color: $mild-gray;
-      }
-    }
-
-    button.launch {
-      opacity: 0;
-      height: 70px;
-      margin-bottom: 800px; /* allows scrolling for large screens, need a better solution */
-      @include font-line(24);
-      @include transition(opacity 0.3s ease-in 0s);
-
-      &.active {
-        opacity: 1;
-        @include transition(opacity 0.3s ease-in 0s);
-      }
-    }
   }
   div {
     @include outer-container;

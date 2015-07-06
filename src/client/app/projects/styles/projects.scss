@@ -11,25 +11,6 @@
     margin: 20px 0;
   }
 
-  .message {
-    background: #38b449;
-    line-height: 25px;
-    vertical-align: middle;
-    padding-left: 20px;
-    margin-bottom: 15px;
-    span {
-      color: white;
-      position: relative;
-      bottom: 12px;
-    }
-    img.checkmark-green {
-      height: 43px;
-      top: 3px;
-      right: 10px;
-      position: relative;
-    }
-  }
-
   .projectsHeading {
     height: 150px;
     background-color: $white;
@@ -57,7 +38,7 @@
     }
   }
 
-  .projectLi{
+  .projectLi {
 
     @include span-columns(3);
     @include omega(4n);

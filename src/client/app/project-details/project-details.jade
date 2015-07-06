@@ -2,9 +2,19 @@ main
   .statusModal(ng-show="vm.showClaimedModal")
     span Congratulations! You have claimed this project.
     br
-    button(class="modalButton", ng-click="hideClaimedModal()", ui-sref="project-details.challenges") Create Estimates
+    button(class="modalButton", ng-click="vm.hideClaimedModal()", ui-sref="project-details.challenges") Create Estimates
     br
     a(ng-click="vm.hideClaimedModal()") I'll do it later
+
+  .statusModal.success(ng-if="vm.showStatusComponent('estimated')")
+    .exit
+      a(ng-click="hideEstimatedModal") &times;
+    img.checkmark-green(src="projects/images/check-solid-green.svg")
+    h3 Project estimate complete. Awaiting client approval.
+
+  .statusModal.success(ng-if="vm.showStatusComponent('launched')")
+    img.checkmark-green(src="projects/images/check-solid-green.svg")
+    h3 Your project has been launched!
 
   .detailsContainer
     h2{{ vm.work.name | cutOff}}
@@ -12,10 +22,8 @@ main
     br
     button(ng-if="vm.projectAvailable()", ng-click="vm.submitClaim()") Claim Project
     button(ng-if="vm.showStatusComponent('claimed')", ui-sref="project-details.challenges") Create Estimates
-    p.awaitingApproval(ng-if="vm.showStatusComponent('estimated')") Project estimate complete. Awaiting client approval.
     button(ng-if="vm.showStatusComponent('approved')", ng-click="vm.openCreateChallenges()") Create Challenges
     button(ng-if="vm.showStatusComponent('awaiting_launch')", ng-click="vm.launchProject()") Launch Project
-    p.launchMessage(ng-if="vm.showStatusComponent('launched')") Your project has been launched!
     button(ng-if="!vm.projectAvailable()", ui-sref="messaging({ id: vm.threadId })") Message Client
     br
     br
