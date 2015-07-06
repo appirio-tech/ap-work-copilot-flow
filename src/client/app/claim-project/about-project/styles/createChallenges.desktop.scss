@@ -1,9 +1,0 @@
-@import "../../../core/styles/combined";
-
-.layout-main.claim-project .brief {
-  @include main-restricted-desktop();
-
-  > form {
-    width: 350px;
-  }
-}

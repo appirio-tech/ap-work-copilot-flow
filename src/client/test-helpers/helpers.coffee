@@ -14,7 +14,7 @@ window.context = window.describe
 
 beforeEach ->
   module 'app.layout'
-  module 'app.claim-project'
+  module 'app.project-details'
   module 'app.core'
   module 'app.projects'
   module 'app.auth'

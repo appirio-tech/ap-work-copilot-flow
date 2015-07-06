@@ -36,12 +36,6 @@
       data.get('copilot-assigned-projects', {copilotId: UserService.currentUser.id}).then(function(copilotData) {
         service.openPromises = copilotData.result.content;
         var promises = copilotData.result.content.map(function(project) {
-       //   return $http({
-       //     method: 'GET',
-       //     url: 'https://api.topcoder-dev.com/v3/app-work-requests/',
-       //     params: { filter: 'copilotId=unassigned&id='+project.id}
-       //      })
-       // });
         return data.get('copilot-work-request', {id: project.id}).then(function(workData) {
           return workData.result.content;
         });
