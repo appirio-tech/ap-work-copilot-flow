@@ -6,26 +6,16 @@
     .controller('ProjectsController', ProjectsController);
 
   ProjectsController.$inject = ['workRequests', '$state'];
-  /* @ngInject */
   function ProjectsController(workRequests, $state) {
-    var vm = this;
-    vm.title = 'View Projects';
-    vm.highlightAssignedButton = true;
-    vm.highlightOpenButton = false;
-    vm.active = null;
-    vm.workRequests = workRequests;
-    vm.showTypeFilterMenu = false;
-    vm.typeFilterValue = null;
-    vm.reverse = true;
-    vm.selectedType = 'All Project Types';
-    vm.filterMatches = [];
-
-    vm.activate = function() {
-      vm.workRequests = workRequests;
-    };
-
-   vm.typeFilters = ["All Project Types", "Design", "Development", "Design & Development"]
-   vm.filteredRequests = {"code": "Development", "design": "Design", "both": "Design & Development" }
+   var vm = this;
+   vm.workRequests = workRequests;
+   vm.title = 'View Projects';
+   vm.active = null;
+   vm.showTypeFilterMenu = false;
+   vm.typeFilterValue = null;
+   vm.selectedType = 'All Project Types';
+   vm.typeFilters = ["All Project Types", "Design", "Development", "Design & Development"];
+   vm.filteredRequests = {"code": "Development", "design": "Design", "both": "Design & Development" };
 
     vm.hoverSelect = function(index) {
       vm.active = index;
@@ -33,16 +23,6 @@
 
     vm.hoverDeselect = function(index) {
       vm.active = null;
-    }
-
-    vm.assignedButtonSelected = function() {
-      vm.highlightOpenButton = false;
-      vm.highlightAssignedButton = true;
-    }
-
-    vm.openButtonSelected = function() {
-      vm.highlightAssignedButton = false;
-      vm.highlightOpenButton = true;
     }
 
     vm.toggleTypeFilterMenu = function() {
@@ -66,11 +46,16 @@
      }
     }
 
-    vm.reverseOrder = function() {
-      vm.reverse = !vm.reverse
+    vm.showDetailSpan = function(state) {
+      return $state.current.name === state
     }
 
-    vm.activate();
-
+    vm.viewProjectDetails = function(project) {
+      if ($state.current.name === 'view-projects.assigned') {
+        $state.go('project-details', {id: project.id, status: project.status})
+      } else if ($state.current.name === 'view-projects.open') {
+        $state.go('project-details', {id: project.id})
+      }
+    }
   }
 })();

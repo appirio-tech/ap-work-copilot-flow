@@ -3,30 +3,7 @@
 @import "neat";
 
 .layout-main.projects {
-  // .dropdown-menu li {
-  //   border-bottom: $dropdown-inner-border;
-  //   color: $dropdown-color;
-  //   list-style: none;
-  //   padding: $dropdown-padding / 2;
-  // }
-
-  // .dropdown-menu li:hover {
-  //   background: $dropdown-background-hover;
-  // }
-
-  // .dropdown-menu li:first-child {
-  //   border-top-left-radius: $base-border-radius;
-  //   border-top-right-radius: $base-border-radius;
-  // }
-
-  // .dropdown-menu li:last-child {
-  //   border: none;
-  //   border-bottom-left-radius: $base-border-radius;
-  //   border-bottom-right-radius: $base-border-radius;
-  // }
-
-
-  .projectLI {
+  .projectLi {
     @include span-columns(3);
     @include omega(4n);
     height: 220px;

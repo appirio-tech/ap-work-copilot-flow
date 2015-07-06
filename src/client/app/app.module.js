@@ -7,7 +7,7 @@
     'app.getting-started',
     'app.auth',
     'app.user',
-    'app.claim-project',
+    'app.project-details',
     'app.projects',
     'appirio-tech-messaging'
   ]).config(['$locationProvider', function($locationProvider) {

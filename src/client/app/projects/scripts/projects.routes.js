@@ -4,10 +4,10 @@
   angular
     .module('app.projects').run(runApp);
 
-  runApp.$inject = ['routerHelper', 'ProjectsService', 'ClaimProjectService'];
+  runApp.$inject = ['routerHelper', 'ProjectsService', 'ProjectDetailsService'];
   /* @ngInject */
   function runApp(routerHelper) {
-    routerHelper.configureStates(getStates());
+    routerHelper.configureStates(getStates(), "/projects");
   }
 
   function getStates() {
@@ -16,30 +16,21 @@
         state: 'view-projects',
         config: {
           url: '/projects',
-          templateUrl: 'projects/views/projects.html',
-          controller: 'ProjectsController',
+          templateUrl: 'projects/views/projectTabs.html',
+          controller: 'ProjectsTabController',
           controllerAs: 'vm',
           title: 'View Projects',
           abstract: true,
-          settings: {},
-          params: {
-            save: {}
-          },
-          resolve: {
-            workRequests: ['ProjectsService', function(ProjectsService) {
-              return ProjectsService.getWorkRequests();
-            }]
-          }
         }
       }, {
         state: 'view-projects.assigned',
         config: {
         url: '',
-        templateUrl: 'projects/views/assigned-projects.html',
-        controller: 'AssignedProjectsController',
+        templateUrl: 'projects/views/projects.html',
+        controller: 'ProjectsController',
         controllerAs: 'vm',
         resolve: {
-          copilotAssignedProjects: ['ProjectsService', function(ProjectsService) {
+          workRequests: ['ProjectsService', function(ProjectsService) {
             return ProjectsService.getAssignedProjects();
           }]
         }
@@ -48,7 +39,7 @@
         state: 'view-projects.open',
         config: {
           url: '',
-          templateUrl: 'projects/views/open-projects.html',
+          templateUrl: 'projects/views/projects.html',
           controller: 'ProjectsController',
           controllerAs: 'vm',
           resolve: {
@@ -60,4 +51,5 @@
         }
     ];
   }
+
 })();
