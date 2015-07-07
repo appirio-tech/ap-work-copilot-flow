@@ -76,7 +76,7 @@ p {
     width: 100%;
   }
 
-  status-modal {
+  .statusModal {
     position: absolute;
     background: rgba(0, 0, 0, 0.8);
     top: 50px;
@@ -87,7 +87,7 @@ p {
     vertical-align: middle;
     line-height: 44px;
     &.success {
-      background: rgba(56, 180, 73, 0.8)
+      background: rgba(56, 180, 73, 0.8);
     }
     span, h3 {
       color: white;
@@ -96,9 +96,12 @@ p {
     a {
       color: white;
     }
+    .imageContainer, .messageContainer {
+      width: 100%;
+    }
     .exit {
-      height: 50px;
-      width: 50px;
+      height: 30px;
+      width: 30px;
       a {
         text-decoration: none;
         @include font-line(22);
@@ -112,7 +115,6 @@ p {
     height: 43px;
     top: 15px;
     right: 10px;
-    position: relative;
   }
   }
 

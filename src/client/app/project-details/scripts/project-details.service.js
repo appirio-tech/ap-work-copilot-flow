@@ -87,6 +87,20 @@
       });
     }
 
+   service.projectAvailable = function(project, projectId) {
+    var claimedProjectStatuses =
+    ['claimed',
+    'estimated',
+    'approved',
+    'awaiting_launch',
+    'launched']
+    if (service.workDetails[projectId]) {
+      return claimedProjectStatuses.indexOf(service.workDetails[projectId].status) < 0
+    } else {
+    return project.status === 'Incomplete' || project.status === 'Submitted';
+    }
+   }
+
    service.showStatusComponent = function(projectId, status) {
     if (service.workDetails[projectId]) {
             return service.workDetails[projectId].status === status;
