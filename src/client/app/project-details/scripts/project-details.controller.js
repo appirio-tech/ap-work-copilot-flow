@@ -5,8 +5,6 @@ angular
   .module('app.project-details')
   .controller('ProjectDetailsController', ProjectDetailsController);
 
-ProjectDetailsController.$inject = ['$scope', '$rootScope', '$window','ProjectDetailsService', 'UserService', '$state', 'ThreadsAPIService', 'UserV3Service']
-
 function ProjectDetailsController($scope, $rootScope, $window, ProjectDetailsService, UserService, $state, ThreadsAPIService, UserV3Service) {
   var vm = this;
   vm.work  =  ProjectDetailsService.work;
@@ -80,4 +78,5 @@ function ProjectDetailsController($scope, $rootScope, $window, ProjectDetailsSer
   vm.activate()
 
 }
+ProjectDetailsController.$inject = ['$scope', '$rootScope', '$window','ProjectDetailsService', 'UserService', '$state', 'ThreadsAPIService', 'UserV3Service']
 })();
