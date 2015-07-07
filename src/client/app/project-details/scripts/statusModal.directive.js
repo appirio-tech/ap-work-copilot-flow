@@ -11,8 +11,8 @@
       }
       scope.nextState = function() {
         scope.hideModal();
-        if (attrs.next-view) {
-          $state.go(attrs.nextView);
+        if (attrs.nextState) {
+          $state.go(attrs.nextState);
         }
       }
     };
