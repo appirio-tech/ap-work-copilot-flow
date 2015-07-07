@@ -26,6 +26,7 @@ function ProjectDetailsController($scope, $rootScope, $window, ProjectDetailsSer
   }
 
   vm.projectAvailable = function() {
+    //TODO: Eliminate incomplete once only submitted return
     return ProjectDetailsService.projectAvailable(vm.work, vm.work.id);
   }
 
