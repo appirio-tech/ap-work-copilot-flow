@@ -13,6 +13,7 @@ function ProjectDetailsController($scope, $rootScope, $window, ProjectDetailsSer
   vm.showClaimedModal = false;
   vm.showCreateChallengesModal = false;
   vm.threadId = null;
+  vm.hideModal = false;
 
   //event listener for displaying modal
   $rootScope.$on('projectClaimed', function() {
@@ -26,7 +27,8 @@ function ProjectDetailsController($scope, $rootScope, $window, ProjectDetailsSer
   }
 
   vm.projectAvailable = function() {
-    return ProjectDetailsService.projectAvailable(vm.work, vm.work.id);
+    //TODO: Eliminate incomplete once only submitted return
+    return vm.work.status === 'Incomplete' || vm.work.status === 'Submitted';
   }
 
   vm.hideClaimedModal = function() {

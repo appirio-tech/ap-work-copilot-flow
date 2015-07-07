@@ -76,9 +76,10 @@ p {
     width: 100%;
   }
 
-  .statusModal {
+  status-modal {
     position: absolute;
     background: rgba(0, 0, 0, 0.8);
+    top: 50px;
     height: 20%;
     width: 100%;
     text-align: center;
@@ -107,7 +108,7 @@ p {
       background-color: white;
       color: $black
     }
-    img.checkmark-green {
+    img{
     height: 43px;
     top: 15px;
     right: 10px;

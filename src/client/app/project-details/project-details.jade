@@ -1,20 +1,22 @@
 main
-  .statusModal(ng-show="vm.showClaimedModal")
+  .statusModal(ng-if="vm.showClaimedModal")
     span Congratulations! You have claimed this project.
     br
     button(class="modalButton", ng-click="vm.hideClaimedModal()", ui-sref="project-details.challenges") Create Estimates
     br
     a(ng-click="vm.hideClaimedModal()") I'll do it later
 
-  .statusModal.success(ng-if="vm.showStatusComponent('estimated')")
-    .exit
-      a(ng-click="hideEstimatedModal") &times;
-    img.checkmark-green(src="projects/images/check-solid-green.svg")
+  status-modal.success(type="successModal", ng-if="vm.showStatusComponent('estimated')")
     h3 Project estimate complete. Awaiting client approval.
 
-  .statusModal.success(ng-if="vm.showStatusComponent('launched')")
-    img.checkmark-green(src="projects/images/check-solid-green.svg")
-    h3 Your project has been launched!
+  //- status-modal.success(ng-if="vm.showStatusComponent('launched')")
+  //-   h3 Your project has been launched!
+
+  //- .statusModal.success(ng-if="vm.showStatusComponent('launched')")
+  //-   img.checkmark-green(src="projects/images/check-solid-green.svg")
+  //-   h3 Your project has been launched!
+
+  //- div(ng-modal=true)
 
   .detailsContainer
     h2{{ vm.work.name | cutOff}}
