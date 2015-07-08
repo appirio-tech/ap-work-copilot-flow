@@ -12,12 +12,10 @@
      input = input || '';
      var typeDisplays = {
        'Assigned': 'Claimed',
-       'Estimate'  : 'Estimated',
-       'Approved': 'Approved',
-       'Launched': 'Launched'
+       'Estimate'  : 'Estimated'
      };
 
-     return typeDisplays[input]
+     return typeDisplays[input] || input;
     };
   }
 })();
