@@ -41,6 +41,7 @@
 
     function loginSuccess() {
       vm.error = false;
+      console.log('LOGIN SUCCESS')
 
       // Redirect to a url sent in
       var urlToken = $location.search();

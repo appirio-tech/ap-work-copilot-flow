@@ -198,6 +198,7 @@ module.exports = function () {
       files: [].concat(
         bowerFiles,
         './bower_components/auto-config-fake-server/dist/auto-config-fake-server.js',
+        'bower_components/appirio-tech-ng-auth/dist/main.js',
         config.specHelpers,
         client    + 'mock-api/*.coffee',
         client    + 'test-helpers/*.coffee',

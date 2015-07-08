@@ -25,7 +25,7 @@
       }, {
         state: 'view-projects.assigned',
         config: {
-        url: '',
+        url: '/assigned',
         templateUrl: 'projects/views/projects.html',
         controller: 'ProjectsController',
         controllerAs: 'vm',
@@ -38,7 +38,7 @@
       }, {
         state: 'view-projects.open',
         config: {
-          url: '',
+          url: '/open',
           templateUrl: 'projects/views/projects.html',
           controller: 'ProjectsController',
           controllerAs: 'vm',
