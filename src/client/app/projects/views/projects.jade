@@ -19,6 +19,6 @@ ul
       span.created(ng-show="vm.showDetailSpan('view-projects.open')") Project Created - {{project.createdAt | date:'MM/dd/yyyy'}}
       span.created(ng-show="vm.showDetailSpan('view-projects.assigned')") {{project.status | status}}
       br
-      button(ng-show="$index === vm.active", ng-click="vm.viewProjectDetails(project)") View Details
+      button(ng-show="$index === vm.active", ng-click="vm.viewProjectDetails(project)") {{project.status | statusButton}}
 .noProjectsMessage(ng-show="!filteredWorkRequests.length")
   h1 Sorry, there are no available {{vm.selectedType}} projects at this time.

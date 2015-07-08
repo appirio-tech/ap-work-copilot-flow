@@ -66,7 +66,7 @@
     };
 
     vm.showAddedChallenges = function() {
-      return ProjectDetailsService.showStatusComponent(vm.work.id, 'estimated');
+      return ProjectDetailsService.showStatusComponent(vm.work.id, 'Estimate');
     }
 
     }

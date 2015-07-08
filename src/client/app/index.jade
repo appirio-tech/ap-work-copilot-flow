@@ -47,16 +47,16 @@
 - scripts.push('/src/client/app/getting-started/scripts/getting-started.controller')
 
 //- Auth
-- scripts.push("/src/client/app/auth/scripts/auth.module")
+- scripts.push("auth/scripts/auth.module")
 - scripts.push("/src/client/app/auth/scripts/auth.routes")
-- scripts.push("/src/client/app/auth/scripts/auth.service")
-- scripts.push("/src/client/app/auth/scripts/token.service")
 - scripts.push("/src/client/app/auth/scripts/login.controller")
 - scripts.push("/src/client/app/auth/scripts/login.directive")
+- scripts.push("/src/client/app/auth/scripts/register.controller")
 
 //- user
 - scripts.push("/src/client/app/user/user.module")
 - scripts.push("/src/client/app/user/user.service")
+
 
 //- work request
 - scripts.push("/src/client/app/work-request/work-request.module")
@@ -78,6 +78,8 @@ include project-details/includes
 - landscapeCSS = landscapeCSS.concat(landscapeFiles)
 - desktopCSS   = desktopCSS.concat(desktopFiles)
 
+//- //- ng auth
+//- - scripts.push('/bower_components/appirio-tech-ng-auth/dist/main')
 
 include bowers
 

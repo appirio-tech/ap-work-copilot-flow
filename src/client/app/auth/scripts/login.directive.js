@@ -8,11 +8,12 @@
 
   function loginDirective() {
     var directive = {
-      restrict    : 'EA',
-      templateUrl : 'auth/views/login-directive.html',
-      controller: LoginDirectiveController,
-      controllerAs: 'vm',
-      bindToController: true
+      restrict        : 'EA',
+      templateUrl     : 'auth/views/login-directive.html',
+      controller      : LoginDirectiveController,
+      controllerAs    : 'vm',
+      bindToController: true,
+      scope           : true
     };
 
     return directive;
@@ -33,6 +34,7 @@
     function activate() {
       $rootScope.$on('logout', function() {
         vm.handle = null;
+        updateDisplay();
       });
 
       $rootScope.$on('authenticated', function() {
@@ -50,7 +52,7 @@
     }
 
     function setUser(user) {
-      vm.handle = user.handle;
+      vm.handle = user.handle
     }
 
     function setUserError(reason) {

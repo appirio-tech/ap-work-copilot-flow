@@ -1,4 +1,4 @@
-/*jshint maxlen:120 */
+//*jshint maxlen:120 */
 /*jshint -W079 */
 var mockUser = (function () {
   return {
@@ -17,7 +17,7 @@ var mockUser = (function () {
         success: true,
         status: 200,
         metadata: null,
-        content: mockWorkRequest[callback]()
+        content: mockUser[callback]()
       }
     };
   }

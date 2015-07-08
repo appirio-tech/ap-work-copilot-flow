@@ -12,15 +12,17 @@ function ProjectDetailsController ($scope, $rootScope, $window, ProjectDetailsSe
   vm.work  =  ProjectDetailsService.work;
   vm.showClaimedModal = false;
   vm.showCreateChallengesModal = false;
+  vm.showEstimatesButton = false;
   vm.threadId = null;
 
   //event listener for displaying modal
   $rootScope.$on('projectClaimed', function() {
    vm.showClaimedModal = true;
+   vm.showEstimatesButton = true;
   });
 
   vm.submitClaim = function() {
-    var copilotId = UserService.currentUser.id;
+    var copilotId = UserService.getCurrentUser().id;
     var projectId = vm.work.id;
     ProjectDetailsService.submitClaim(copilotId, projectId);
   }

@@ -11,13 +11,11 @@
     return function(input) {
      input = input || '';
      var typeDisplays = {
-       'claimed': 'Claimed',
-       'estimated'  : 'Estimated',
-       'approved': 'Approved',
-       'launched': 'Launched'
+       'Assigned': 'Claimed',
+       'Estimate'  : 'Estimated'
      };
 
-     return typeDisplays[input]
+     return typeDisplays[input] || input;
     };
   }
 })();
