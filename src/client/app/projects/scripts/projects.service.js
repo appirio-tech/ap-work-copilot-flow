@@ -27,40 +27,19 @@
       }).catch(function(e) {
             console.log('Error on open projects', e);
             $q.reject(e);
-        });
+      });
         return deferred.promise;
     };
 
     service.getAssignedProjects = function() {
-      console.log('im here')
       var deferred = $q.defer();
       UserV3Service.getCurrentUser(function(user) {
-      data.get('copilot-assigned-projects', {copilotId: user.id}).then(function(copilotData) {
-        console.log('ughhhhhh', copilotData);
-        service.openPromises = copilotData.result.content;
-        var promises = copilotData.result.content.map(function(project) {
-        return data.get('copilot-work-request', {id: project.id}).then(function(workData) {
-          return workData.result.content;
+        data.get('work-request', {filter: 'copilotId='+user.id}).then(function(copilotData) {
+          deferred.resolve(copilotData.result.content)
         });
-        })
-        $q.all(promises)
-        .then(function(data) {
-          data.forEach(function(dataProject) {
-            service.openPromises.forEach(function(project) {
-              if (project.id === dataProject.id) {
-                project.name = dataProject.name;
-                project.createdAt = dataProject.createdAt;
-                project.requestType = dataProject.requestType;
-              }
-            })
-          })
-          deferred.resolve(service.openPromises)
-         })
-        })
-
-        })
-        return deferred.promise;
-       }
+      });
+      return deferred.promise;
+    }
 
     return service;
 

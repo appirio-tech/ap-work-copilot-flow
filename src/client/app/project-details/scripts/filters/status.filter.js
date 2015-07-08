@@ -11,10 +11,10 @@
     return function(input) {
      input = input || '';
      var typeDisplays = {
-       'claimed': 'Claimed',
-       'estimated'  : 'Estimated',
-       'approved': 'Approved',
-       'launched': 'Launched'
+       'Assigned': 'Claimed',
+       'Estimate'  : 'Estimated',
+       'Approved': 'Approved',
+       'Launched': 'Launched'
      };
 
      return typeDisplays[input]

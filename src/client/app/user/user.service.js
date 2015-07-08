@@ -47,7 +47,6 @@
 
       function getUserComplete(data) {
         service.user = data.result.content;
-        console.log('getting USER', data.result.content)
       }
     };
 

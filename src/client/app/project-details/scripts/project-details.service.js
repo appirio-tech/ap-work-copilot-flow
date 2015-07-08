@@ -5,9 +5,9 @@
     .module('app.project-details')
     .factory('ProjectDetailsService', ProjectDetailsService);
 
-  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'data', 'UserService', 'apiUrl'];
+  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'data', 'UserService', 'apiUrl', 'UserV3Service'];
 
-  function ProjectDetailsService($rootScope, $http, $q, data, UserService, apiUrl) {
+  function ProjectDetailsService($rootScope, $http, $q, data, UserService, apiUrl, UserV3Service) {
     var service = {
 
       // variables
@@ -30,7 +30,6 @@
         service.workDetails[id] = {};
         service.workDetails[id].status = status;
       }
-      service.currentUserId = UserService.currentUser.id
        var deferred = $q.defer();
          data.get('copilot-work-request', {id: id}).then(function(data) {
            service.work = data.result.content;
@@ -43,57 +42,64 @@
     };
 
     service.submitClaim= function(copilotId, projectId) {
-      $http.post(apiUrl+'/copilots/'+copilotId+'/projects/',
-        {"id": projectId}
-        ).success(function(data, status, headers, config) {
-         console.log('Updated project status', data);
-         $rootScope.$emit('projectClaimed');
-         if (!service.workDetails[projectId]) {
-            service.workDetails[projectId] = {}
-          }
-            service.workDetails[projectId].status = 'claimed';
-        }).
-        error(function(data, status, headers, config) {
-          console.log('error on project claim', data)
+
+      UserV3Service.getCurrentUser(function(user) {
+        $http.post(apiUrl+'copilots/'+user.id+'/projects/',
+          {"id": projectId}
+          ).success(function(data, status, headers, config) {
+           console.log('Updated project status', data);
+           $rootScope.$emit('projectClaimed');
+           if (!service.workDetails[projectId]) {
+              service.workDetails[projectId] = {}
+            }
+              service.workDetails[projectId].status = 'Assigned';
+          }).
+          error(function(data, status, headers, config) {
+            console.log('error on project claim', data)
+          });
         });
     };
 
    service.submitChallenges = function(projectId, challengesEstimate) {
-    $http.put(apiUrl+'copilots/'+service.currentUserId+'/projects/'+projectId+'',
+    UserV3Service.getCurrentUser(function(user) {
+    $http.put(apiUrl+'copilots/'+user.id+'/projects/'+projectId+'',
       {"id": projectId, "estimate": challengesEstimate, "status": "estimated"}
       ). success(function(data, status, headers, config) {
        if (!service.workDetails[projectId]) {
             service.workDetails[projectId] = {}
         }
-        service.workDetails[projectId].status = 'estimated';
+        service.workDetails[projectId].status = 'Estimate';
         service.workDetails[projectId].estimate = challengesEstimate;
       }).
       error(function(data, status, headers, config) {
         console.log('error on submit estimates', data)
       });
+    });
     };
 
    service.launchProject = function(projectId) {
-    $http.put(apiUrl+'/copilots/'+service.currentUserId+'/projects/'+projectId+'',
+    UserV3Service.getCurrentUser(function(user) {
+    $http.put(apiUrl+'/copilots/'+user.id+'/projects/'+projectId+'',
       {"id": projectId, "estimate": service.workDetails[projectId].estimate, "status": "launched"}
       ).success(function(data, status, headers, config) {
        if (!service.workDetails[projectId]) {
             service.workDetails[projectId] = {}
         }
-        service.workDetails[projectId].status = 'launched';
+        service.workDetails[projectId].status = 'Launched';
       }).
       error(function(data, status, headers, config) {
         console.log('error on project launch', data)
       });
+    });
     }
 
    service.projectAvailable = function(project, projectId) {
     var claimedProjectStatuses =
-    ['claimed',
-    'estimated',
-    'approved',
+    ['Assigned',
+    'Estimate',
+    'Approved',
     'awaiting_launch',
-    'launched']
+    'Launched']
     if (service.workDetails[projectId]) {
       return claimedProjectStatuses.indexOf(service.workDetails[projectId].status) < 0
     } else {
