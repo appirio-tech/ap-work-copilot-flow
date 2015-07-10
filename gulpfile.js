@@ -293,20 +293,20 @@ gulp.task('optimize', ['inject', 'templatecache'], function () {
     .pipe(cssLibFilter.restore())
     // Get the custom javascript
     .pipe(jsAppFilter)
-    .pipe($.uglify({ mangle: true, compress: true }))
+    .pipe($.uglify({ mangle: false, compress: false, output: { beautify: true } }))
     .pipe(getHeader())
     .pipe(jsAppFilter.restore())
     // Get the vendor javascript
     .pipe(jslibFilter)
-    .pipe($.uglify({ mangle: true, compress: true }))
+    .pipe($.uglify({ mangle: false, compress: false, output: { beautify: true } }))
     .pipe(jslibFilter.restore())
     // Take inventory of the file names for future rev numbers
-    .pipe($.rev())
+    // .pipe($.rev())
     // Apply the concat and file replacement with useref
     .pipe(assets.restore())
     .pipe($.useref())
     // Replace the file names in the html with rev numbers
-    .pipe($.revReplace(replaceOptions))
+    // .pipe($.revReplace(replaceOptions))
     // minimize html
     .pipe(htmlFilter)
     .pipe($.removeCode({ production: true }))
