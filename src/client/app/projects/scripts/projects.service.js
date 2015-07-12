@@ -5,15 +5,14 @@
     .module('app.projects')
     .factory('ProjectsService', ProjectsService);
 
-  ProjectsService.$inject = ['$q', '$http', 'data', 'UserService', 'UserV3Service'];
+  ProjectsService.$inject = ['$q', '$http', 'data', 'UserV3Service'];
   /* @ngInject */
-  function ProjectsService($q, $http, data, UserService, UserV3Service) {
+  function ProjectsService($q, $http, data, UserV3Service) {
 
     var service = {
 
       openPromises: [],
       promises: [],
-
       // functions
       getWorkRequests        : null,
 
@@ -33,11 +32,10 @@
 
     service.getAssignedProjects = function() {
       var deferred = $q.defer();
-      UserV3Service.getCurrentUser(function(user) {
+      var user = UserV3Service.getCurrentUser();
         data.get('work-request', {filter: 'copilotId='+user.id}).then(function(copilotData) {
           deferred.resolve(copilotData.result.content)
         });
-      });
       return deferred.promise;
     }
 

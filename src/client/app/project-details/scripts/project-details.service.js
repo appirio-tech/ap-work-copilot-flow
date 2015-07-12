@@ -5,9 +5,9 @@
     .module('app.project-details')
     .factory('ProjectDetailsService', ProjectDetailsService);
 
-  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'data', 'UserService', 'apiUrl', 'UserV3Service'];
+  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'data', 'apiUrl', 'UserV3Service'];
 
-  function ProjectDetailsService($rootScope, $http, $q, data, UserService, apiUrl, UserV3Service) {
+  function ProjectDetailsService($rootScope, $http, $q, data, apiUrl, UserV3Service) {
     var service = {
 
       // variables
@@ -41,26 +41,25 @@
        return deferred.promise;
     };
 
-    service.submitClaim= function(copilotId, projectId) {
-      UserV3Service.getCurrentUser(function(user) {
-        $http.post(apiUrl+'copilots/'+user.id+'/projects/',
-          {"id": projectId}
-          ).success(function(data, status, headers, config) {
-           console.log('Updated project status', data);
-           $rootScope.$emit('projectClaimed');
-           if (!service.workDetails[projectId]) {
-              service.workDetails[projectId] = {}
-            }
-              service.workDetails[projectId].status = 'Assigned';
-          }).
-            error(function(data, status, headers, config) {
-              console.log('error on project claim', data);
-          });
-      });
+    service.submitClaim= function(projectId) {
+      var user = UserV3Service.getCurrentUser();
+      $http.post(apiUrl+'copilots/'+user.id+'/projects/',
+        {"id": projectId}
+        ).success(function(data, status, headers, config) {
+         console.log('Updated project status', data);
+         $rootScope.$emit('projectClaimed');
+         if (!service.workDetails[projectId]) {
+            service.workDetails[projectId] = {}
+          }
+            service.workDetails[projectId].status = 'Assigned';
+        }).
+          error(function(data, status, headers, config) {
+            console.log('error on project claim', data);
+        });
      };
 
    service.submitChallenges = function(projectId, challengesEstimate) {
-    UserV3Service.getCurrentUser(function(user) {
+    var user = UserV3Service.getCurrentUser();
     $http.put(apiUrl+'copilots/'+user.id+'/projects/'+projectId+'',
       {"id": projectId, "estimate": challengesEstimate, "status": "estimated"}
       ). success(function(data, status, headers, config) {
@@ -73,11 +72,10 @@
       error(function(data, status, headers, config) {
         console.log('error on submit estimates', data);
       });
-    });
     };
 
    service.launchProject = function(projectId) {
-    UserV3Service.getCurrentUser(function(user) {
+    var user = UserV3Service.getCurrentUser();
     $http.put(apiUrl+'/copilots/'+user.id+'/projects/'+projectId+'',
       {"id": projectId, "estimate": service.workDetails[projectId].estimate, "status": "launched"}
       ).success(function(data, status, headers, config) {
@@ -89,7 +87,6 @@
       error(function(data, status, headers, config) {
         console.log('error on project launch', data);
       });
-    });
     }
 
    service.projectAvailable = function(project, projectId) {
