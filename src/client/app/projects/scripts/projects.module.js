@@ -5,7 +5,6 @@
     .module('app.projects', [
       'app.core',
       'app.resource',
-      'app.user',
       'app.workRequest',
       'ngSanitize'
     ])

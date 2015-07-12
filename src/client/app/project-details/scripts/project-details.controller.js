@@ -5,9 +5,9 @@ angular
   .module('app.project-details')
   .controller('ProjectDetailsController', ProjectDetailsController);
 
-ProjectDetailsController.$inject = ['$scope', '$rootScope', '$window', 'ProjectDetailsService', 'UserService', '$state', 'ThreadsAPIService', 'UserV3Service'];
+ProjectDetailsController.$inject = ['$scope', '$rootScope', '$window', 'ProjectDetailsService', '$state', 'ThreadsAPIService', 'UserV3Service'];
 
-function ProjectDetailsController ($scope, $rootScope, $window, ProjectDetailsService, UserService, $state, ThreadsAPIService, UserV3Service) {
+function ProjectDetailsController ($scope, $rootScope, $window, ProjectDetailsService, $state, ThreadsAPIService, UserV3Service) {
   var vm = this;
   vm.work  =  ProjectDetailsService.work;
   vm.showClaimedModal = false;
@@ -22,9 +22,8 @@ function ProjectDetailsController ($scope, $rootScope, $window, ProjectDetailsSe
   });
 
   vm.submitClaim = function() {
-    var copilotId = UserService.getCurrentUser().id;
     var projectId = vm.work.id;
-    ProjectDetailsService.submitClaim(copilotId, projectId);
+    ProjectDetailsService.submitClaim(projectId);
   }
 
   vm.projectAvailable = function() {
@@ -54,29 +53,8 @@ function ProjectDetailsController ($scope, $rootScope, $window, ProjectDetailsSe
   }
 
   vm.activate = function() {
- //create threadId for messaging
-   var getOrCreateThread = function() {
-      UserV3Service.getCurrentUser(function(user) {
-        var params, publishers, resource, thread;
-        publishers = [user.id, vm.work.ownerId];
-        params = {
-          clientIdentifier: vm.work.id,
-          context: 'work',
-          subject: vm.work.name,
-          publishers: publishers,
-          subscribers: publishers
-        };
-        thread = new ThreadsAPIService(params);
-        resource = thread.$save();
-        resource.then(function(response) {
-          var ref, ref1;
-          if (response.result.content.id) {
-            vm.threadId = response.result.content.id;
-          }
-        });
-      });
-   }
-    getOrCreateThread()
+  //instantiate userId for messaging's subscriberId
+  vm.userId = UserV3Service.getCurrentUser().id;
   }
 
   vm.activate()
