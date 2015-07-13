@@ -3,17 +3,9 @@
 
   angular.module('app.project-details').run(appRun);
 
-  appRun.$inject = ['routerHelper', 'ApiResource'];
+  appRun.$inject = ['routerHelper'];
   /* @ngInject */
-  function appRun(routerHelper, ApiResource) {
-    //assigned projects
-    var configCopilot = {
-      url: 'app-work-requests/:id',
-      resource: 'copilot-work-request'
-    }
-
-    ApiResource.add(configCopilot);
-
+  function appRun(routerHelper) {
     routerHelper.configureStates(getStates());
   }
 

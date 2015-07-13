@@ -162,15 +162,16 @@ html(ng-app='app')
 
     script(src="//cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js", type="text/javascript")
 
-    // build:js js/app.js
-    each path in scripts
-      script(src=path + ".js", type="text/javascript")
-    // endinject
-    // endbuild
-
     // build:js js/copilot-app.js
     each path in scripts2Build
       script(src=path + ".js", type="text/javascript")
     // inject:templates:js
     // endinject
     // endbuild
+
+    // build:js js/app.js
+    each path in scripts
+      script(src=path + ".js", type="text/javascript")
+    // endinject
+    // endbuild
+
