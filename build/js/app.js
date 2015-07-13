@@ -611,12 +611,7 @@ angular.module("app.constants", []).constant("apiUrl", "/v3/").constant("auth0Cl
             url: "app-work-requests",
             resource: "work-request"
         };
-        var configCopilot = {
-            url: "app-work-requests/:id",
-            resource: "copilot-work-request"
-        };
         ApiResource.add(config);
-        ApiResource.add(configCopilot);
     }
 })();
 
@@ -671,8 +666,13 @@ angular.module("app.constants", []).constant("apiUrl", "/v3/").constant("auth0Cl
 (function() {
     "use strict";
     angular.module("app.project-details").run(appRun);
-    appRun.$inject = [ "routerHelper" ];
-    function appRun(routerHelper) {
+    appRun.$inject = [ "routerHelper", "ApiResource" ];
+    function appRun(routerHelper, ApiResource) {
+        var configCopilot = {
+            url: "app-work-requests/:id",
+            resource: "copilot-work-request"
+        };
+        ApiResource.add(configCopilot);
         routerHelper.configureStates(getStates());
     }
     function getStates() {

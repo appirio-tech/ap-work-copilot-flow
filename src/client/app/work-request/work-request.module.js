@@ -18,13 +18,6 @@
       resource: 'work-request'
     };
 
-    //assigned projects
-    var configCopilot = {
-      url: 'app-work-requests/:id',
-      resource: 'copilot-work-request'
-    }
-
     ApiResource.add(config);
-    ApiResource.add(configCopilot);
   }
 })();
