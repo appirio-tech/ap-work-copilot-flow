@@ -7,7 +7,7 @@
  */
 (function() {
     "use strict";
-    angular.module("app", [ "app.core", "app.layout", "app.getting-started", "app.auth", "app.user", "app.project-details", "app.projects", "appirio-tech-messaging" ]).config([ "$locationProvider", function($locationProvider) {
+    angular.module("app", [ "app.core", "app.layout", "app.getting-started", "app.auth", "app.project-details", "app.projects", "appirio-tech-ng-auth", "appirio-tech-messaging" ]).config([ "$locationProvider", function($locationProvider) {
         $locationProvider.html5Mode(false);
     } ]);
 })();
@@ -521,8 +521,8 @@ angular.module("app.constants", []).constant("apiUrl", "/v3/").constant("auth0Cl
         };
         return directive;
     }
-    LoginDirectiveController.$inject = [ "$scope", "$rootScope", "$state", "UserService", "AuthService", "logger" ];
-    function LoginDirectiveController($scope, $rootScope, $state, UserService, AuthService, logger) {
+    LoginDirectiveController.$inject = [ "$scope", "$rootScope", "$state", "UserV3Service", "AuthService", "logger" ];
+    function LoginDirectiveController($scope, $rootScope, $state, UserV3Service, AuthService, logger) {
         var vm = this;
         vm.handle = null;
         vm.isLoggedIn = AuthService.isAuthenticated();
@@ -530,26 +530,22 @@ angular.module("app.constants", []).constant("apiUrl", "/v3/").constant("auth0Cl
         vm.signin = null;
         activate();
         function activate() {
-            $rootScope.$on("logout", function() {
+            if (!AuthService.isLoggedIn()) {
                 vm.handle = null;
-                updateDisplay();
-            });
-            $rootScope.$on("authenticated", function() {
-                updateDisplay();
-            });
+            }
             updateDisplay();
         }
         function updateDisplay() {
-            vm.isLoggedIn = AuthService.isAuthenticated();
-            var promise = UserService.getCurrentUser();
-            promise.then(setUser, setUserError);
-        }
-        function setUser(user) {
-            vm.handle = user.handle;
-        }
-        function setUserError(reason) {
-            vm.handle = null;
-            logger.error(reason);
+            $scope.$watch(UserV3Service.getCurrentUser, function() {
+                var user = UserV3Service.getCurrentUser();
+                if (user) {
+                    vm.handle = user.handle;
+                    vm.isLoggedIn = true;
+                } else {
+                    vm.isLoggedIn = false;
+                    vm.handle = null;
+                }
+            });
         }
         vm.signin = function() {
             $state.go("login");
@@ -565,8 +561,8 @@ angular.module("app.constants", []).constant("apiUrl", "/v3/").constant("auth0Cl
 (function() {
     "use strict";
     angular.module("app.auth").controller("RegisterController", RegisterController);
-    RegisterController.$inject = [ "$state", "AuthService", "UserService", "logger" ];
-    function RegisterController($state, AuthService, UserService, logger) {
+    RegisterController.$inject = [ "$state", "AuthService", "UserV3Service", "logger" ];
+    function RegisterController($state, AuthService, UserV3Service, logger) {
         var vm = this;
         vm.title = "Register";
         vm.username = "";
@@ -582,7 +578,7 @@ angular.module("app.constants", []).constant("apiUrl", "/v3/").constant("auth0Cl
                 password: vm.password,
                 email: vm.email
             };
-            UserService.createUser(registerOptions).then(registerSuccess, registerError);
+            UserV3Service.createUser(registerOptions, registerSuccess, registerError);
         };
         function activate() {
             logger.log("Activated Registration View");
@@ -590,7 +586,6 @@ angular.module("app.constants", []).constant("apiUrl", "/v3/").constant("auth0Cl
         function registerError(error) {
             vm.error = true;
             vm.errorMessage = error;
-            logger.error(error);
         }
         function registerSuccess() {
             vm.error = false;
@@ -604,104 +599,6 @@ angular.module("app.constants", []).constant("apiUrl", "/v3/").constant("auth0Cl
                 $state.go("view-projects.assigned");
             }
         }
-    }
-})();
-
-(function() {
-    "use strict";
-    angular.module("app.user", [ "blocks.exception", "blocks.logger", "app.resource", "app.constants", "app.auth" ]).run(UserModule);
-    UserModule.$inject = [ "$rootScope", "ApiResource", "TokenService", "UserService" ];
-    function UserModule($rootScope, ApiResource, TokenService, UserService) {
-        var config = {
-            url: "users/:id",
-            resource: "user"
-        };
-        ApiResource.add(config);
-        function LoginComplete() {
-            var decodedToken = TokenService.decodeToken();
-            if (decodedToken.userId) {
-                UserService.getUser(decodedToken.userId);
-            }
-        }
-        function LogOutComplete() {
-            UserService.removeUser();
-        }
-        $rootScope.$on("logout", LogOutComplete);
-    }
-})();
-
-(function() {
-    "use strict";
-    angular.module("app.user").factory("UserService", UserService);
-    UserService.$inject = [ "$q", "data", "logger", "TokenService" ];
-    function UserService($q, data, logger, TokenService) {
-        var service = {
-            getUser: null,
-            user: null,
-            removeUser: null,
-            getCurrentUser: null,
-            createUser: null
-        };
-        service.getCurrentUser = function() {
-            var deferred = $q.defer();
-            var decodedToken = TokenService.decodeToken();
-            if (decodedToken.userId) {
-                service.getUser(decodedToken.userId).then(function(data) {
-                    if (data && data.result) {
-                        deferred.resolve(data.result.content);
-                    } else {
-                        deferred.reject("API Issue");
-                    }
-                });
-            } else {
-                deferred.reject("No User Id");
-            }
-            return deferred.promise;
-        };
-        service.removeUser = function() {
-            service.user = null;
-        };
-        service.getUser = function(id) {
-            var promise = data.get("user", {
-                id: id
-            });
-            promise.then(getUserComplete);
-            return promise;
-            function getUserComplete(data) {
-                service.user = data.result.content;
-            }
-        };
-        service.createUser = function(options) {
-            var deferred = $q.defer();
-            if (!options.handle || !options.email || !options.password) {
-                deferred.reject("Required Fields not filled out");
-            }
-            var userData = {
-                param: {
-                    handle: options.handle,
-                    email: options.email,
-                    utmSource: options.utmSource || "asp",
-                    utmMedium: options.utmMedium || "",
-                    utmCampaign: options.utmCampaign || "",
-                    firstName: options.firstname,
-                    lastName: options.lastname,
-                    credential: {
-                        password: options.password
-                    }
-                }
-            };
-            data.create("user", userData).then(createUserCompleted, createUserError);
-            function createUserCompleted(res) {
-                logger.log("user created", res);
-                deferred.resolve(res);
-            }
-            function createUserError(res) {
-                logger.log("User Creation Error", res);
-                deferred.reject(res.data.result.content);
-            }
-            return deferred.promise;
-        };
-        return service;
     }
 })();
 
