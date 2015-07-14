@@ -1,6 +1,6 @@
 /* jshint -W117, -W030 */
 'use strict';
-describe.only('ChallengesController', function () {
+describe('ChallengesController', function () {
   var controller, flush
 
   beforeEach(function () {
@@ -74,6 +74,5 @@ describe.only('ChallengesController', function () {
         expect(controller.challenges).to.eql([{id: 0, challengeType: 'code', count: 1}])
       })
     })
-
   });
 });
