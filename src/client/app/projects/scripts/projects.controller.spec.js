@@ -1,41 +1,55 @@
 // /* jshint -W117, -W030 */
-// describe('ManageController', function () {
-//   var controller, scope;
+'use strict';
+describe('ProjectsController', function () {
+  var controller, flush, scope, stateSpy, state, workRequests;
 
-//   beforeEach(function () {
-//     bard.inject(this, '$controller', '$log', '$rootScope', '$q', 'ApiResource');
-//   });
+  beforeEach(function () {
+    bard.inject(this, '$q', '$controller', '$rootScope', 'ProjectsService', '$state');
+    flush = function() {$rootScope.$apply()}
+    scope = $rootScope.$new();
 
-//   beforeEach(function () {
-//     scope = $rootScope.$new();
+    bard.mockService(ProjectsService, {
+      _default: $q.when({})
+    });
+    bard.mockService($state, {
+      _default: $q.when({})
+    });
 
-//     controller = $controller('ManageController', {
-//       $scope: scope,
-//       workRequests: mockWorkRequest.getResponse('WorkRequests').result.content
-//     });
+    controller = $controller('ProjectsController');
+    flush();
+  });
 
-//     $rootScope.$apply();
-//   });
+  bard.verifyNoOutstandingHttpRequests();
 
-//   bard.verifyNoOutstandingHttpRequests();
+  describe('Projects Controller', function () {
+    it('should be created successfully', function () {
+      expect(controller).to.be.defined;
+    });
 
-//   describe('View Work Multiple controller', function () {
-//     it('should be created successfully', function () {
-//       expect(controller).to.be.defined;
-//     });
+    it ('should select projects by type', function() {
+      controller.selectType('Design')
+      expect(controller.typeFilterValue).to.equal('Design')
+    })
 
-//     describe('after activate', function () {
-//       it('should have title of "Work Requests', function () {
-//         expect(controller.title).to.equal('Work Requests');
-//       });
+    it ('should filter projects by type', function() {
+      controller.selectedType = 'Development'
+      expect(controller.typeFilter({requestType: 'code'})).to.equal(true);
+    })
 
-//       it('should have logged "Activated"', function () {
-//         expect($log.info.logs).to.match(/Activated/);
-//       });
+  context('when current state is "assigned"', function() {
+    it ('should include project status in route', function() {
+      $state.current.name = 'view-projects.assigned'
+      controller.viewProjectDetails({id: '123', status: 'approved'})
+      expect($state.go).to.have.been.calledWith('project-details', {id: '123', status: 'approved'});
+    })
+  });
 
-//       it('should have an array of Work Requests', function() {
-//         expect(controller.workRequest).to.be.array;
-//       });
-//     });
-//   });
-// });
+  context('when current state is "open"', function() {
+    it ('should not include project status in route', function() {
+      $state.current.name = 'view-projects.open'
+      controller.viewProjectDetails({id: '123', status: 'approved'})
+      expect($state.go).to.have.been.calledWith('project-details', {id: '123'});
+    })
+  });
+  });
+});

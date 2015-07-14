@@ -5,9 +5,9 @@
     .module('app.project-details')
     .controller('ChallengesController', ChallengesController);
 
-  ChallengesController.$inject = ['$scope', '$rootScope', '$state', 'logger', 'ProjectDetailsService'];
+  ChallengesController.$inject = [ '$rootScope', 'ProjectDetailsService'];
 
-  function ChallengesController($scope, $rootScope, $state, logger, ProjectDetailsService) {
+  function ChallengesController($rootScope, ProjectDetailsService) {
     var vm   = this;
     vm.work = ProjectDetailsService.work;
     vm.title = 'Challenge Estimates';

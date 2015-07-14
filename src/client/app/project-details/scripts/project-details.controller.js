@@ -5,9 +5,9 @@ angular
   .module('app.project-details')
   .controller('ProjectDetailsController', ProjectDetailsController);
 
-ProjectDetailsController.$inject = ['$scope', '$rootScope', '$window', 'ProjectDetailsService', '$state', 'ThreadsAPIService', 'UserV3Service'];
+ProjectDetailsController.$inject = ['$rootScope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service'];
 
-function ProjectDetailsController ($scope, $rootScope, $window, ProjectDetailsService, $state, ThreadsAPIService, UserV3Service) {
+function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $state, UserV3Service) {
   var vm = this;
   vm.work  =  ProjectDetailsService.work;
   vm.showClaimedModal = false;
