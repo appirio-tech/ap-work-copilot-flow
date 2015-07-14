@@ -5,10 +5,10 @@
     .module('app.projects')
     .controller('ProjectsController', ProjectsController);
 
-  ProjectsController.$inject = ['workRequests', '$state'];
-  function ProjectsController(workRequests, $state) {
+  ProjectsController.$inject = ['ProjectsService', '$state'];
+  function ProjectsController(ProjectsService, $state) {
    var vm = this;
-   vm.workRequests = workRequests;
+   vm.workRequests = ProjectsService.projects;
    vm.title = 'View Projects';
    vm.active = null;
    vm.showTypeFilterMenu = false;
