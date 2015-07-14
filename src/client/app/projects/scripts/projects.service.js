@@ -18,7 +18,6 @@
 
     };
 
-
     service.getWorkRequests = function() {
       var deferred = $q.defer();
       data.get('work-request', {filter: 'copilotId=unassigned'}).then(function(data) {
