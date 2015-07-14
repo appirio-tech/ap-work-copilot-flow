@@ -21,7 +21,7 @@
     service.getWorkRequests = function() {
       var deferred = $q.defer();
       data.get('work-request', {filter: 'copilotId=unassigned'}).then(function(data) {
-        data.projects = data.result.content;
+        service.projects = data.result.content;
         deferred.resolve(data.result.content);
       }).catch(function(e) {
             console.log('Error on open projects', e);
@@ -34,7 +34,7 @@
       var deferred = $q.defer();
       var user = UserV3Service.getCurrentUser();
         data.get('work-request', {filter: 'copilotId='+user.id}).then(function(copilotData) {
-          data.projects = data.result.content;
+          service.projects = copilotData.result.content;
           deferred.resolve(copilotData.result.content)
         });
       return deferred.promise;

@@ -1,6 +1,6 @@
 // /* jshint -W117, -W030 */
 'use strict';
-describe.only('ProjectsController', function () {
+describe('ProjectsController', function () {
   var controller, flush, scope, stateSpy, state, workRequests;
 
   beforeEach(function () {
