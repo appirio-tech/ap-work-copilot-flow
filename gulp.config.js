@@ -59,9 +59,12 @@ module.exports = function () {
     jade: clientApp + '**/!(index)+(.jade)',
     jadeIndex: clientApp + '**/index.jade',
     htmltemplates: [
-      clientApp + '**/*.html',
       temp + '**/*.html',
-      '!' + temp + '/index.html'
+      '!' + temp + '/index.html',
+      '!' + temp + '/getting-started/**/*',
+      '!' + temp + '/auth/**/*',
+      '!' + temp + '/layout/**/*',
+      '!' + temp + '/bowers.html'
     ],
     images: client + '**/images/**/*.*',
     index: temp + 'index.html',

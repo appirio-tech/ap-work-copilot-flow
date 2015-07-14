@@ -10,7 +10,6 @@ logs
 .tmp
 bower_components
 node_modules
-build
 report
 .sass-cache
 test-results.xml

@@ -1,4 +1,5 @@
 - var scripts = []
+- var scripts2Build = []
 - scripts.push('/src/client/app/app.module')
 - scripts.push('constants')
 - scripts.push('/src/client/app/blocks/exception/exception.module')
@@ -17,9 +18,12 @@
 - scripts.push('/src/client/app/core/core.constants')
 - scripts.push('/src/client/app/core/core.route')
 
-- var css = []
-- var landscapeCSS = []
-- var desktopCSS = []
+- var css                = []
+- var css2Build          = []
+- var landscapeCSS       = []
+- var landscapeCSS2Build = []
+- var desktopCSS         = []
+- var desktopCSS2Build   = []
 
 //- Layout
 - scripts.push('/src/client/app/layout/scripts/modal.directive')
@@ -59,19 +63,22 @@
 //- projects
 include projects/projects-includes
 
-- scripts      = scripts.concat(jsFiles)
-- css          = css.concat(cssFiles)
-- landscapeCSS = landscapeCSS.concat(landscapeFiles)
-- desktopCSS   = desktopCSS.concat(desktopFiles)
+- scripts2Build      = scripts2Build.concat(jsFiles)
+- css2Build          = css2Build.concat(cssFiles)
+- landscapeCSS2Build = landscapeCSS2Build.concat(landscapeFiles)
+- desktopCSS2Build   = desktopCSS2Build.concat(desktopFiles)
+- scripts.push("/src/client/app/projects/scripts/projects.routes")
 
 
 //- project details
 include project-details/includes
 
-- scripts      = scripts.concat(jsFiles)
-- css          = css.concat(cssFiles)
-- landscapeCSS = landscapeCSS.concat(landscapeFiles)
-- desktopCSS   = desktopCSS.concat(desktopFiles)
+- scripts2Build      = scripts2Build.concat(jsFiles)
+- css2Build          = css2Build.concat(cssFiles)
+- landscapeCSS2Build = landscapeCSS2Build.concat(landscapeFiles)
+- desktopCSS2Build   = desktopCSS2Build.concat(desktopFiles)
+- scripts.push("/src/client/app/project-details/scripts/project-details.routes")
+
 
 //- //- ng auth
 //- - scripts.push('/bower_components/appirio-tech-ng-auth/dist/main')
@@ -120,13 +127,28 @@ html(ng-app='app')
       link(href=path + ".css", rel="stylesheet")
     // endbuild
 
+    // build:css styles/co-pilot-app.css
+    each path in css2Build
+      link(href=path + ".css", rel="stylesheet")
+    // endbuild
+
     // build:css styles/mobile-landscape.css media="(min-width: 568px)"
     each path in landscapeCSS
       link(href=path + ".css", rel="stylesheet", media="(min-width: 568px)")
     // endbuild
 
+    // build:css styles/co-pilot-mobile-landscape.css media="(min-width: 568px)"
+    each path in landscapeCSS2Build
+      link(href=path + ".css", rel="stylesheet", media="(min-width: 568px)")
+    // endbuild
+
     // build:css styles/desktop.css media="(min-width: 767px)"
     each path in desktopCSS
+      link(href=path + ".css", rel="stylesheet", media="(min-width: 767px)")
+    // endbuild
+
+    // build:css styles/co-pilot-desktop.css media="(min-width: 767px)"
+    each path in desktopCSS2Build
       link(href=path + ".css", rel="stylesheet", media="(min-width: 767px)")
     // endbuild
 
@@ -140,9 +162,16 @@ html(ng-app='app')
 
     script(src="//cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js", type="text/javascript")
 
-    // build:js js/app.js
-    each path in scripts
+    // build:js js/copilot-app.js
+    each path in scripts2Build
       script(src=path + ".js", type="text/javascript")
     // inject:templates:js
     // endinject
     // endbuild
+
+    // build:js js/app.js
+    each path in scripts
+      script(src=path + ".js", type="text/javascript")
+    // endinject
+    // endbuild
+

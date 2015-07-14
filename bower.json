@@ -1,5 +1,5 @@
 {
-  "name": "np-front-end-reference",
+  "name": "ap-copilot",
   "version": "0.0.1",
   "description": "Appiro Work Platform",
   "authors": [
@@ -7,11 +7,8 @@
   ],
   "license": "",
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "**/*",
+    "!build/**/*"
   ],
   "devDependencies": {
     "angular-mocks": "1.4.x",
