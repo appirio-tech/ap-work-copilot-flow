@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('app.projects')
+    .module('ap-copilot-flow.projects')
     .controller('ProjectsTabController', ProjectsTabController);
 
   ProjectsTabController.$inject = [];

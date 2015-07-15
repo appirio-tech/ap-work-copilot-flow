@@ -4,6 +4,7 @@ describe('ProjectsController', function () {
   var controller, flush, scope, stateSpy, state, workRequests;
 
   beforeEach(function () {
+    // bard.appModule('ap-copilot-flow.projects')
     bard.inject(this, '$q', '$controller', '$rootScope', 'ProjectsService', '$state');
     flush = function() {$rootScope.$apply()}
     scope = $rootScope.$new();

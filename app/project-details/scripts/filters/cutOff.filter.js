@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('app.project-details')
+    .module('ap-copilot-flow.project-details')
     .filter('cutOff', CutOffFilter);
 
   CutOffFilter.$inject = [];

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('app.projects', [
+    .module('ap-copilot-flow.projects', [
       'app.core',
       'app.resource',
       'app.workRequest',

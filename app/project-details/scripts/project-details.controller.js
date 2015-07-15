@@ -2,7 +2,7 @@
 'use strict';
 
 angular
-  .module('app.project-details')
+  .module('ap-copilot-flow.project-details')
   .controller('ProjectDetailsController', ProjectDetailsController);
 
 ProjectDetailsController.$inject = ['$rootScope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service'];

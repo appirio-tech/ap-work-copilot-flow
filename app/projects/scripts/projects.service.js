@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('app.projects')
+    .module('ap-copilot-flow.projects')
     .factory('ProjectsService', ProjectsService);
 
   ProjectsService.$inject = ['$q', '$http', 'data', 'UserV3Service'];

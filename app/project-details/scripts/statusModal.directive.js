@@ -31,5 +31,5 @@
 
   directive.$inject = ['$state'];
 
-  angular.module('app.project-details').directive('statusModal', directive);
+  angular.module('ap-copilot-flow.project-details').directive('statusModal', directive);
 })();

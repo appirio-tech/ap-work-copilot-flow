@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('app.project-details', [
+  angular.module('ap-copilot-flow.project-details', [
     'app.core',
     'app.constants',
     'app.resource',

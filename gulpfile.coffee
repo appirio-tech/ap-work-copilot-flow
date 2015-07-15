@@ -1,10 +1,10 @@
 configs =
-  coffeeFiles     : ['src/**/*.coffee', 'example/**/*.coffee']
-  jadeFiles       : ['src/**/*.jade', 'example/**/*.jade']
-  scssFiles       : ['src/**/*.scss', 'example/**/*.scss']
+  coffeeFiles     : ['app/**/*.coffee', 'example/**/*.coffee']
+  jadeFiles       : ['app/**/*.jade', 'example/**/*.jade']
+  # scssFiles       : ['app/**/**/*.*.scss']
   scssIncludePaths: require('appirio-work-styles').includePaths
   tempFolder      : '.tmp'
-  appFolder       : 'src'
+  appFolder       : 'app'
   exampleFolder   : 'example'
   distFolder      : 'dist'
 
@@ -18,21 +18,14 @@ configs.karma =
     'bower_components/angular/angular.js'
     'bower_components/angular-mocks/angular-mocks.js'
     'bower_components/angular-resource/angular-resource.js'
-    'bower_components/angular-ui-router/release/angular-ui-router.js'
     'bower_components/auto-config-fake-server/dist/auto-config-fake-server.js'
-    'bower_components/angular-scroll/angular-scroll.js'
-    'bower_components/moment/moment.js'
-    'bower_components/appirio-tech-ng-auth/dist/main.js'
-    'bower_components/a0-angular-storage/dist/angular-storage.js'
-    'bower_components/angular-jwt/dist/angular-jwt.js'
-    'bower_components/auth0.js/build/auth0.js'
-    'bower_components/auth0-angular/build/auth0-angular.js'
-    'tests/specs/helper.coffee'
+    'bower_components/bardjs/dist/bard.js'
+    'app/ap-copilot-flow.module.js'
+    'app/tests/helper.coffee'
     '.tmp/scripts/constants.js'
-    'app/scripts/**/*.module.coffee'
+    'app/**/scripts/*.module.js'
     '.tmp/scripts/templates.js'
-    'app/**/*.coffee'
-    'tests/specs/**/*.coffee'
+    'app/tests/*.js'
   ]
 
 configs.fixtureFiles = [
@@ -49,7 +42,7 @@ configs.constants =
 
 configs.templateCache =
   files : [
-    '.tmp/views/**/*.html'
+    '.tmp/**/views/*.html', '.tmp/**/**/*.html'
   ]
   root  : ''
   module: 'ap-copilot-flow'
@@ -61,6 +54,8 @@ configs.coverageReporter =
 configs.buildFiles =
   concat:
     'main.js': [
+      'app/ap-copilot-flow.module.js'
+      'app/projects/scripts/projects.module.js'
       'app/project-details/scripts/project-details.module.js'
       'app/project-details/scripts/project-details.routes.js'
       'app/project-details/scripts/project-details.service.js'
@@ -72,7 +67,6 @@ configs.buildFiles =
       'app/project-details/scripts/filters/status.filter.js'
       'app/project-details/scripts/filters/statusButton.filter.js'
       'app/project-details/scripts/statusModal.directive.js'
-      'app/projects/scripts/projects.module.js'
       'app/projects/scripts/projects.routes.js'
       'app/projects/scripts/projects.service.js'
       'app/projects/scripts/projectsTab.controller.js'
