@@ -126,7 +126,7 @@
       service.workDetails[id].status = status;
     }
      var deferred = $q.defer();
-       data.get('work-request', {id: id}).then(function(data) {
+       $http.get(apiUrl+'app-work-requests/' + id).then(function(data) {
          service.work = data.result.content;
          console.log('work request details', service.work);
          deferred.resolve(service.work);
