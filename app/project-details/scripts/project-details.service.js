@@ -31,7 +31,8 @@
       service.workDetails[id].status = status;
     }
      var deferred = $q.defer();
-       $http.get(apiUrl+'app-work-requests/' + id).then(function(data) {
+     console.log('url', apiUrl+'app-work-requests/' + id + '')
+       $http.get(apiUrl+'app-work-requests/' + id + '').then(function(data) {
          service.work = data.result.content;
          console.log('work request details', service.work);
          deferred.resolve(service.work);
