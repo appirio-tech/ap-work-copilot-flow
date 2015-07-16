@@ -13,10 +13,8 @@
 
   angular
     .module('ap-copilot-flow.projects', [
-      'app.core',
       'app.resource',
-      'app.workRequest',
-      'ngSanitize'
+      'app.workRequest'
     ])
     .run(Projects);
 
@@ -37,11 +35,8 @@
   'use strict';
 
   angular.module('ap-copilot-flow.project-details', [
-    'app.core',
-    'app.constants',
     'app.resource',
-    'app.workRequest',
-    'duScroll'
+    'app.workRequest'
   ])
 
 })();
