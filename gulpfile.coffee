@@ -60,7 +60,7 @@ configs.buildFiles =
       'app/project-details/scripts/project-details.routes.js'
       'app/project-details/scripts/project-details.service.js'
       'app/project-details/scripts/project-details.controller.js'
-      'app/project-details/details-features/challenges.controller.js'
+      'app/project-details/details-features/scripts/challenges.controller.js'
       'app/project-details/scripts/filters/capitalize.filter.js'
       'app/project-details/scripts/filters/cutOff.filter.js'
       'app/project-details/scripts/filters/requestType.filter.js'
