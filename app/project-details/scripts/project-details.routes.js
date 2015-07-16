@@ -39,7 +39,7 @@
         controllerAs: 'vm'
       }
     }, {
-      state: 'messaging',
+      state: 'copilot-messaging',
       config: {
         url: '/messaging/:id',
         templateUrl: 'project-details/details-features/views/messaging.html',
