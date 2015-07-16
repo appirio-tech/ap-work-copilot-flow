@@ -1,4 +1,4 @@
-@import "../../core/styles/combined";
+@import "work-styles";
 @import "bourbon";
 @import "neat";
 
@@ -12,7 +12,7 @@
     margin-top: 10px;
   }
   textarea {
-    background-color: $mercury;
+    // background-color: $mercury;
     margin-top: 0;
   }
 }
@@ -34,7 +34,7 @@ h3 {
 }
 
 p {
-  color: $text-gray;
+  color: #626262;
   @include font-line(15)
 }
 
@@ -44,7 +44,7 @@ p {
 }
 
   .awaitingApproval, .launchMessage {
-      color: $apple;
+      color: green;
       font-size: 20px;
       line-height: 53px;
   }
@@ -107,7 +107,7 @@ p {
     }
     button {
       background-color: white;
-      color: $black
+      color: black;
     }
     img{
     height: 43px;
@@ -136,11 +136,11 @@ p {
   }
 
   header {
-    background-color: $black;
+    background-color: black;
   }
 
   main {
-    background-color: $white;
+    background-color: white;
   }
   div {
     @include outer-container;
@@ -273,7 +273,7 @@ p {
 
     .dropdown-menu li {
       border-bottom: $dropdown-inner-border;
-      color: $dropdown-color; 
+      color: $dropdown-color;
       list-style: none;
       padding: $dropdown-padding / 2;
     }

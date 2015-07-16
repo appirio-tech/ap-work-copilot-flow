@@ -1,7 +1,7 @@
 configs =
   coffeeFiles     : ['app/**/*.coffee', 'example/**/*.coffee']
   jadeFiles       : ['app/**/*.jade', 'example/**/*.jade']
-  # scssFiles       : ['app/**/**/*.scss']
+  scssFiles       : ['app/**/**/*.scss']
   scssIncludePaths: require('appirio-work-styles').includePaths
   tempFolder      : '.tmp'
   appFolder       : 'app'
@@ -74,7 +74,8 @@ configs.buildFiles =
       '.tmp/scripts/templates.js'
     ]
     'main.css': [
-      '.tmp/styles/**/*.css'
+      '.tmp/project-details/**/*.css',
+      '.tmp/projects/**/*.css'
     ]
 
 ##

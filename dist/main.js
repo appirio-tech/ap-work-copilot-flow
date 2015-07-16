@@ -126,14 +126,11 @@
       service.workDetails[id].status = status;
     }
      var deferred = $q.defer();
-     console.log('url', apiUrl+'app-work-requests/' + id + '')
-       $http.get(apiUrl+'app-work-requests/' + id + '')
-       .sucess(function(data, status, headers, config) {
+       data.get('work-request', {id: id}).then(function(data) {
          service.work = data.result.content;
-         deferred.resolve(data.result.content);
          console.log('work request details', service.work);
          deferred.resolve(service.work);
-       }).error(function(data, status, headers, config) {
+       }).catch(function(e) {
          console.log('error on initialize work', e);
        });
        return deferred.promise;

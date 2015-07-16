@@ -1,4 +1,4 @@
-
+@import "work-styles";
 @import "bourbon";
 @import "neat";
 
@@ -7,13 +7,13 @@
     @include span-columns(3);
     @include omega(4n);
     height: 220px;
-    margin-bottom: $margin-15;
+    margin-bottom: 15px;
     div.hovered {
-      background-color: $charcoal-gray;
+      background-color: #454545;
     }
     button {
       border: 1px solid white;
-      background-color: $charcoal-gray;
+      background-color: #454545;
       border-radius: 10px;
       color: white
     }

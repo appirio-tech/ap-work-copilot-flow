@@ -1,11 +1,11 @@
-
+@import "work-styles";
 @import "bourbon";
 @import "neat";
 
 .layout-main.projects {
 
   @include outer-container;
-  padding: 0px $padding-15;
+  padding: 0px 15px;
 
   hr {
     margin: 20px 0;
@@ -13,7 +13,7 @@
 
   .projectsHeading {
     height: 150px;
-    background-color: $white;
+    background-color: white;
     > * {
       vertical-align: middle;
     }
@@ -43,11 +43,11 @@
     @include span-columns(3);
     @include omega(4n);
     height: 220px;
-    margin-bottom: $margin-15;
+    margin-bottom: 15px;
 
     button {
       border: 1px solid white;
-      background-color: $charcoal-gray;
+      background-color: #454545;
       border-radius: 10px;
       color: white;
     }
@@ -59,7 +59,7 @@
 
       width: 220px;
       height: 100%;
-      background-color: $white;
+      background-color: white;
       padding-top: 15px;
       text-align: center;
 
@@ -70,16 +70,16 @@
       header {
 
         height: 17%;
-        padding: $padding-3;
+        padding: 3px;
 
         h4 {
-          margin-top: $margin-8;
+          margin-top: 8px;
           float: left;
         }
 
       }
         span.type {
-          margin-top: $margin-10;
+          margin-top: 10px;
           @include source-sans();
           @include font-line(17);
           font-weight: bold;
@@ -104,7 +104,7 @@
         height: 35%;
         font-family: sans-serif;
         text-align: center;
-        padding: $padding-12;
+        padding: 12px;
 
         img.checkmark {
           margin-top: -43px;
@@ -123,15 +123,15 @@
         }
 
         div.hovered {
-          background-color: $charcoal-gray;
+          background-color: #454545;
         }
 
         span.status {
           font-weight: bold;
           color: white;
           display: inline-block;
-          margin-top: $margin-8;
-          margin-bottom: $margin-8;
+          margin-top: 8px;
+          margin-bottom: 8px;
         }
 
         span.action, span.action a {
@@ -153,7 +153,7 @@
           opacity: 0.1;
         }
   .grey {
-    background-color: $mild-gray;
+    background-color: #F1F1F1;
   }
 }
 
