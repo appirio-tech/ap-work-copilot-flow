@@ -44,58 +44,6 @@
 (function () {
   'use strict';
 
-  angular.module('ap-copilot-flow.project-details').run(appRun);
-
-  appRun.$inject = ['routerHelper'];
-  /* @ngInject */
-  function appRun(routerHelper) {
-    routerHelper.configureStates(getStates());
-  }
-
-  function getStates() {
-    return [{
-      state: 'project-details',
-      config: {
-        url: '/project-details/:id?/:status?',
-        title: 'Claim Project',
-        controller: 'ProjectDetailsController',
-        controllerAs: 'vm',
-        resolve: {
-          copilotWork: ['$stateParams', 'ProjectDetailsService', function($stateParams, ProjectDetailsService) {
-            if ($stateParams.id && $stateParams.status) {
-              return ProjectDetailsService.initializeCopilotWork($stateParams.id, $stateParams.status);
-            } else if ($stateParams.id) {
-                return ProjectDetailsService.initializeCopilotWork($stateParams.id);
-            } else {
-              return false;
-            }
-          }]
-        },
-        templateUrl: 'project-details/project-details.html'
-      }
-    },{
-      state: 'project-details.challenges',
-      config: {
-        url: '/challengeEstimates',
-        templateUrl: 'project-details/details-features/views/challenges.html',
-        controller: 'ChallengesController',
-        controllerAs: 'vm'
-      }
-    }, {
-      state: 'copilot-messaging',
-      config: {
-        url: '/messaging/:id',
-        templateUrl: 'project-details/details-features/views/messaging.html',
-        controller: 'ProjectDetailsController',
-        controllerAs: 'vm'
-      }
-    }
-    ];
-  }
-})();
-(function () {
-  'use strict';
-
   angular
     .module('ap-copilot-flow.project-details')
     .factory('ProjectDetailsService', ProjectDetailsService);
@@ -489,61 +437,6 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
   angular.module('ap-copilot-flow.project-details').directive('statusModal', directive);
 })();
 
-(function () {
-  'use strict';
-
-  angular
-    .module('ap-copilot-flow.projects').run(runApp);
-
-  runApp.$inject = ['routerHelper', 'ProjectsService', 'ProjectDetailsService'];
-  /* @ngInject */
-  function runApp(routerHelper) {
-    routerHelper.configureStates(getStates(), "/projects");
-  }
-
-  function getStates() {
-    return [
-      {
-        state: 'view-projects',
-        config: {
-          url: '/projects',
-          templateUrl: 'projects/views/projectTabs.html',
-          controller: 'ProjectsTabController',
-          controllerAs: 'vm',
-          title: 'View Projects',
-          abstract: true,
-        }
-      }, {
-        state: 'view-projects.assigned',
-        config: {
-        url: '/assigned',
-        templateUrl: 'projects/views/projects.html',
-        controller: 'ProjectsController',
-        controllerAs: 'vm',
-        resolve: {
-          workRequests: ['ProjectsService', function(ProjectsService) {
-            return ProjectsService.getAssignedProjects();
-          }]
-        }
-        }
-      }, {
-        state: 'view-projects.open',
-        config: {
-          url: '/open',
-          templateUrl: 'projects/views/projects.html',
-          controller: 'ProjectsController',
-          controllerAs: 'vm',
-          resolve: {
-            workRequests: ['ProjectsService', function(ProjectsService) {
-              return ProjectsService.getWorkRequests();
-            }]
-          }
-          }
-        }
-    ];
-  }
-
-})();
 (function () {
   'use strict';
 
