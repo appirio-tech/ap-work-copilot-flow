@@ -31,7 +31,7 @@
     "auth0-angular": "4.x.x",
     "a0-angular-storage": "~0.0.9",
     "angular-jwt": "~0.0.6",
-    "appirio-tech-ng-auth": "git@github.com:appirio-tech/ng-auth#1.x.x",
-    "appirio-tech-messaging": "git@github.com:appirio-tech/messaging#2.x.x"
+    "appirio-tech-ng-auth": "1.x.x",
+    "appirio-tech-ng-messaging": "2.x.x"
   }
 }
