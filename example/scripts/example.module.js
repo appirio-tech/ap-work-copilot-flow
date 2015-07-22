@@ -1,3 +1,12 @@
-'use strict';
-var dependencies = ['ui.router', 'ngResource', 'app.constants', 'ap-copilot-flow'];
-angular.module('example', dependencies);
+
+(function () {
+  'use strict';
+
+  angular.module('example',
+    [ 'ui.router',
+    'app.constants',
+     'ap-copilot-flow',
+    'ngResource',
+   ])
+
+})();

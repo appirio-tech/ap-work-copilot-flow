@@ -17,29 +17,22 @@ angular.module("app.constants", [])
 .constant("AUTH0_TOKEN_NAME", "userJWTToken")
 
 ;
-angular.module("ap-copilot-flow").run(["$templateCache", function($templateCache) {$templateCache.put("views/challenges.html","<div ng-hide=\"vm.showAddedChallenges()\" class=\"challengesContainer\"><h5 ng-hide=\"vm.showAddedChallenges()\">Create Project Estimate</h5><dropdown class=\"dropdown\"><div class=\"dropdown-container\"><p ng-click=\"vm.toggleMenu(\'showTypeMenu\')\" ng-bind=\"vm.challenge.challengeType.charAt(0).toUpperCase() +  vm.challenge.challengeType.slice(1) || \'Type of Challenge\'\" class=\"dropdown-button type\"><ul ng-class=\"{\'show-menu\': vm.showTypeMenu}\" class=\"dropdown-menu dropdown-select type\"><li ng-repeat=\"type in vm.challengeTypes\" ng-click=\"vm.selectType(type)\">{{type}}</li></ul></p><p ng-click=\"vm.toggleMenu(\'showCountMenu\')\" ng-bind=\"vm.challenge.count || \'How Many\'\" class=\"dropdown-button count\"></p><ul ng-class=\"{\'show-menu\': vm.showCountMenu}\" class=\"dropdown-menu dropdown-select count\"><li ng-repeat=\"number in vm.challengeCounts\" ng-click=\"vm.selectCount(number)\">{{number}}</li></ul><button type=\"button\" ng-click=\"vm.addChallenge(challenge)\" class=\"addButton\">+</button></div></dropdown><br/><h1></h1><hr/><div ng-show=\"vm.challenges.length &gt; 0\" class=\"addedChallenges\"><ul><li ng-repeat=\"challenge in vm.challenges track by challenge.id\">{{challenge.count}} {{challenge.challengeType | capitalize}} Challenges<a ng-click=\"vm.removeChallenge($index)\">remove</a></li></ul></div><br/><div class=\"projectDifficulty\"></div><h5>Overall Project Difficulty</h5><div class=\"dropdown\"><div class=\"dropdown-container difficulty\"><p ng-click=\"vm.toggleMenu(\'showDifficultyMenu\')\" ng-bind=\"vm.overallDifficulty.charAt(0).toUpperCase() +  vm.overallDifficulty.slice(1) || \'Difficulty Level\'\" class=\"dropdown-button difficulty\"><ul ng-class=\"{\'show-menu\': vm.showDifficultyMenu}\" class=\"dropdown-menu dropdown-select difficulty\"><li ng-repeat=\"difficulty in vm.challengeDifficulties\" ng-click=\"vm.selectDifficulty(difficulty)\">{{difficulty | capitalize}}</li></ul></p></div></div><br/><br/><h5>Explain Complexity</h5><br/><textarea name=\"difficultyExplanation\" ng-model=\"vm.difficultyExplanation\"></textarea><button ng-click=\"vm.submit()\" class=\"submitEstimates\">Create Estimates</button></div><div ng-show=\"vm.showAddedChallenges()\" class=\"projectEstimate\"><h5>Project Estimate</h5><ul><li ng-repeat=\"challenge in vm.challenges track by challenge.id\">{{challenge.count}} {{challenge.challengeType | capitalize}} Challenges</li></ul></div>");
-$templateCache.put("views/messaging.html","<br/><br/><br/><button ui-sref=\"project-details\" class=\"backButton\">Go Back</button><br/><div class=\"messagingContainer\"><h2>Messaging With Customer</h2><messaging thread-id=\"{{ vm.work.id }}\" subscriber-id=\"{{ vm.userId }}\"></messaging></div>");
-$templateCache.put("views/project-details.html","<main><status-modal ng-if=\"vm.showClaimedModal\" type=\"statusModal\" next-state=\"project-details.challenges\" next-step=\"Create Estimates\"><span>Congratulations! You have claimed this project.</span></status-modal><status-modal type=\"successModal\" ng-if=\"vm.showStatusComponent(\'Estimate\')\" class=\"success\"><h3>Project estimate complete. Awaiting client approval.</h3></status-modal><status-modal type=\"successModal\" ng-if=\"vm.showStatusComponent(\'Launched\')\" class=\"success\"><h3>Your project has been launched!</h3></status-modal><div class=\"detailsContainer\"><h2>{{ vm.work.name | cutOff}}</h2><h3>{{vm.work.requestType | requestType}} Project</h3><br/><button ng-if=\"vm.projectAvailable()\" ng-click=\"vm.submitClaim()\">Claim Project</button><button ng-if=\"vm.showStatusComponent(\'Assigned\')\" ui-sref=\"project-details.challenges\">Create Estimates</button><button ng-if=\"vm.showStatusComponent(\'Approved\')\" ng-click=\"vm.openCreateChallenges()\">Create Challenges</button><button ng-if=\"vm.showStatusComponent(\'awaiting_launch\')\" ng-click=\"vm.launchProject()\">Launch Project</button><button ng-if=\"!vm.projectAvailable()\" ui-sref=\"messaging({ id: vm.work.id})\">Message Client</button><br/><br/><br/><hr/><div class=\"summary\"><h5>Project Description</h5><p>{{vm.work.summary}}</p></div><div class=\"similarApps\"><h5>Similar Apps</h5><ul></ul><p ng-repeat=\"competitor in vm.work.competitorApps\">{{competitor}}</p></div><div class=\"usersDescription\"><h5>Description of Users</h5><p>{{vm.work.usageDescription}}</p></div><div class=\"features\"><h5>Features</h5><ul></ul><p ng-repeat=\"feature in vm.work.features\">{{feature.name}}: {{feature.description}}</p></div><div class=\"visualElements\"><h5>Visual Elements</h5></div></div><aside ui-view=\"\"></aside></main>");
-$templateCache.put("views/projectTabs.html","<div class=\"projectsHeading\"><h1>Copilot Projects</h1><div><button ui-sref=\"view-projects.assigned\" ng-click=\"vm.assignedButtonSelected()\" ng-class=\"{\'selected\': vm.highlightAssignedButton}\">My Projects</button><button ui-sref=\"view-projects.open\" ng-click=\"vm.openButtonSelected()\" ng-class=\"{\'selected\': vm.highlightOpenButton}\">Open Projects</button></div><main ui-view=\"\" class=\"layout-main projects\"></main></div>");
-$templateCache.put("views/projects.html","<dropdown ng-hide=\"!vm.workRequests.length\" class=\"dropdown\"><div class=\"dropdown-container\"><p ng-click=\"vm.toggleTypeFilterMenu()\" ng-bind=\"vm.typeFilterValue || \'All Project Types\'\" class=\"dropdown-button type\"><ul ng-class=\"{\'show-menu\': vm.showTypeFilterMenu}\" class=\"dropdown-menu dropdown-select type\"><li ng-repeat=\"typeFilter in vm.typeFilters\" ng-click=\"vm.selectType(typeFilter)\">{{typeFilter}}</li></ul></p></div></dropdown><ul><li ng-repeat=\"project in filteredWorkRequests=(vm.workRequests | orderBy:\'createdAt\':true | filter: vm.typeFilter)\" ng-mouseenter=\"vm.hoverSelect($index)\" ng-mouseleave=\"vm.hoverDeselect($index)\" class=\"projectLi\"><div ng-class=\"{\'hovered\': $index === vm.active, \'grey\': project.requestType === \'code\'}\" class=\"tile\"><h5>{{project.name | cutOff}}</h5><br/><img src=\"projects/images/dev-project-icon.png\" ng-class=\"{\'faded\': $index === vm.active}\"/><br/><span class=\"type\">{{project.requestType | requestType | uppercase}}</span><br/><br/><span ng-show=\"vm.showDetailSpan(\'view-projects.open\')\" class=\"created\">Project Created - {{project.createdAt | date:\'MM/dd/yyyy\'}}</span><span ng-show=\"vm.showDetailSpan(\'view-projects.assigned\')\" class=\"created\">{{project.status | status}}</span><br/><button ng-show=\"$index === vm.active\" ng-click=\"vm.viewProjectDetails(project)\">{{project.status | statusButton}}</button></div></li></ul><div ng-show=\"!filteredWorkRequests.length\" class=\"noProjectsMessage\"><h1>Sorry, there are no available {{vm.selectedType}} projects at this time.</h1></div>");
-$templateCache.put("views/statusModal.html","<div class=\"statusModal\"><div ng-transclude=\"ng-transclude\" class=\"messageContainer\"></div><br/><button ng-click=\"nextState()\" class=\"modalButton\">{{nextStep}}</button><br/><a ng-click=\"hideModal()\">I\'ll do it later</a></div>");
-$templateCache.put("views/successModal.html","<div class=\"statusModal success\"><div class=\"exit\"><a ng-click=\"hideModal()\">&times;</a></div><div class=\"imageContainer\"><img src=\"projects/images/check-solid-green.svg\" class=\"checkmark-green\"/></div><div ng-transclude=\"ng-transclude\" class=\"messageContainer\"></div></div>");}]);
 (function () {
   'use strict';
 
   angular.module('ap-copilot-flow', [
+    'app.constants',
     'ap-copilot-flow.projects',
     'ap-copilot-flow.project-details'
   ])
 
 })();
-
 (function () {
   'use strict';
 
   angular.module('ap-copilot-flow.project-details', [
-    'app.resource',
-    'app.workRequest'
+    // 'app.resource',
+    // 'app.workRequest'
   ])
 
 })();
@@ -49,22 +42,10 @@ $templateCache.put("views/successModal.html","<div class=\"statusModal success\"
 
   angular
     .module('ap-copilot-flow.projects', [
-      'app.resource',
-      'app.workRequest'
+      // 'app.resource',
+      // 'app.workRequest'
     ])
-    .run(Projects);
 
-    Projects.$inject = ['ApiResource'];
-
-    function Projects(ApiResource) {
-      var config = {
-      url: 'copilots/:copilotId/projects/',
-      resource: 'copilot-assigned-projects',
-      apiUrl: 'https://api.topcoder-dev.com/v3/'
-    };
-
-      ApiResource.add(config);
-    }
 })();
 
 (function() {
@@ -82,6 +63,176 @@ $templateCache.put("views/successModal.html","<div class=\"statusModal success\"
     }
   }
 })();
+(function () {
+  'use strict';
+
+  angular
+    .module('ap-copilot-flow.projects')
+    .factory('ProjectsService', ProjectsService);
+
+  ProjectsService.$inject = ['$q', '$http', 'UserV3Service', 'apiUrl'];
+  /* @ngInject */
+  function ProjectsService($q, $http, UserV3Service, apiUrl) {
+
+    var service = {
+
+      projects: [],
+      // functions
+      getWorkRequests: null,
+      getAssignedProjects: null
+
+    };
+
+    service.getWorkRequests = function() {
+      var deferred = $q.defer();
+      $http.get(apiUrl)
+      data.get('work-request', {filter: 'copilotId=unassigned'}).then(function(data) {
+        service.projects = data.result.content;
+        deferred.resolve(data.result.content);
+      }).catch(function(e) {
+            console.log('Error on open projects', e);
+            $q.reject(e);
+      });
+        return deferred.promise;
+    };
+
+    service.getAssignedProjects = function() {
+      var deferred = $q.defer();
+      var user = UserV3Service.getCurrentUser();
+        data.get('work-request', {filter: 'copilotId='+user.id}).then(function(copilotData) {
+          service.projects = copilotData.result.content;
+          deferred.resolve(copilotData.result.content)
+        });
+      return deferred.promise;
+    }
+
+    return service;
+
+  }
+})();
+
+(function () {
+  'use strict';
+
+  angular
+    .module('ap-copilot-flow.project-details')
+    .factory('ProjectDetailsService', ProjectDetailsService);
+
+  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'data', 'apiUrl', 'UserV3Service'];
+
+  function ProjectDetailsService($rootScope, $http, $q, data, apiUrl, UserV3Service) {
+    var service = {
+
+      // variables
+      work           : null,
+      claimedProjectId: null,
+      currentUserId: null,
+      workDetails: {},
+
+      // functions
+      initializeCopilotWork : null,
+      submitClaim: null,
+      submitChallenges: null,
+      projectAvailable: null,
+      showStatusComponent: null,
+      openCreateChallenges: null
+    };
+
+   service.initializeCopilotWork = function(id, status) {
+    if (status) {
+      service.workDetails[id] = {};
+      service.workDetails[id].status = status;
+    }
+     var deferred = $q.defer();
+       data.get('work-request', {id: id}).then(function(data) {
+         service.work = data.result.content;
+         console.log('work request details', service.work);
+         deferred.resolve(service.work);
+       }).catch(function(e) {
+         console.log('error on initialize work', e);
+       });
+       return deferred.promise;
+    };
+
+    service.submitClaim= function(projectId) {
+      var user = UserV3Service.getCurrentUser();
+      $http.post(apiUrl+'copilots/'+user.id+'/projects/',
+        {"id": projectId}
+        ).success(function(data, status, headers, config) {
+         console.log('Updated project status', data);
+         $rootScope.$emit('projectClaimed');
+         if (!service.workDetails[projectId]) {
+            service.workDetails[projectId] = {}
+          }
+            service.workDetails[projectId].status = 'Assigned';
+        }).
+          error(function(data, status, headers, config) {
+            console.log('error on project claim', data);
+        });
+     };
+
+   service.submitChallenges = function(projectId, challengesEstimate) {
+    var user = UserV3Service.getCurrentUser();
+    $http.put(apiUrl+'copilots/'+user.id+'/projects/'+projectId+'',
+      {"id": projectId, "estimate": challengesEstimate, "status": "estimated"}
+      ). success(function(data, status, headers, config) {
+       if (!service.workDetails[projectId]) {
+            service.workDetails[projectId] = {}
+        }
+        service.workDetails[projectId].status = 'Estimate';
+        service.workDetails[projectId].estimate = challengesEstimate;
+      }).
+      error(function(data, status, headers, config) {
+        console.log('error on submit estimates', data);
+      });
+    };
+
+   service.launchProject = function(projectId) {
+    var user = UserV3Service.getCurrentUser();
+    $http.put(apiUrl+'/copilots/'+user.id+'/projects/'+projectId+'',
+      {"id": projectId, "estimate": service.workDetails[projectId].estimate, "status": "launched"}
+      ).success(function(data, status, headers, config) {
+       if (!service.workDetails[projectId]) {
+            service.workDetails[projectId] = {}
+        }
+        service.workDetails[projectId].status = 'Launched';
+      }).
+      error(function(data, status, headers, config) {
+        console.log('error on project launch', data);
+      });
+    }
+
+   service.projectAvailable = function(project, projectId) {
+      var claimedProjectStatuses =
+      ['Assigned',
+      'Estimate',
+      'Approved',
+      'awaiting_launch',
+      'Launched']
+      if (service.workDetails[projectId]) {
+        return claimedProjectStatuses.indexOf(service.workDetails[projectId].status) < 0
+      } else {
+      return project.status === 'Incomplete' || project.status === 'Submitted';
+      }
+   }
+
+   service.showStatusComponent = function(projectId, status) {
+      if (service.workDetails[projectId]) {
+        return service.workDetails[projectId].status === status;
+      }
+   }
+
+   service.openCreateChallenges = function(projectId) {
+    if (service.workDetails[projectId]) {
+      service.workDetails[projectId].status = 'awaiting_launch';
+    }
+   }
+
+    return service;
+
+  }
+})();
+
 (function() {
   'use strict';
 
@@ -408,274 +559,30 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
 
   angular
     .module('ap-copilot-flow.projects')
-    .factory('ProjectsService', ProjectsService);
+    .controller('ProjectsTabController', ProjectsTabController);
 
-  ProjectsService.$inject = ['$q', '$http', 'data', 'UserV3Service'];
-  /* @ngInject */
-  function ProjectsService($q, $http, data, UserV3Service) {
+  ProjectsTabController.$inject = [];
+  function ProjectsTabController() {
+    var vm = this;
+    vm.highlightAssignedButton = true;
+    vm.highlightOpenButton = false;
 
-    var service = {
-
-      projects: [],
-      // functions
-      getWorkRequests: null,
-      getAssignedProjects: null
-
-    };
-
-    service.getWorkRequests = function() {
-      var deferred = $q.defer();
-      data.get('work-request', {filter: 'copilotId=unassigned'}).then(function(data) {
-        service.projects = data.result.content;
-        deferred.resolve(data.result.content);
-      }).catch(function(e) {
-            console.log('Error on open projects', e);
-            $q.reject(e);
-      });
-        return deferred.promise;
-    };
-
-    service.getAssignedProjects = function() {
-      var deferred = $q.defer();
-      var user = UserV3Service.getCurrentUser();
-        data.get('work-request', {filter: 'copilotId='+user.id}).then(function(copilotData) {
-          service.projects = copilotData.result.content;
-          deferred.resolve(copilotData.result.content)
-        });
-      return deferred.promise;
+    vm.assignedButtonSelected = function() {
+      vm.highlightOpenButton = false;
+      vm.highlightAssignedButton = true;
     }
 
-    return service;
+    vm.openButtonSelected = function() {
+      vm.highlightAssignedButton = false;
+      vm.highlightOpenButton = true;
+    }
 
   }
 })();
-
-(function () {
-  'use strict';
-
-  angular
-    .module('ap-copilot-flow.project-details')
-    .factory('ProjectDetailsService', ProjectDetailsService);
-
-  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'data', 'apiUrl', 'UserV3Service'];
-
-  function ProjectDetailsService($rootScope, $http, $q, data, apiUrl, UserV3Service) {
-    var service = {
-
-      // variables
-      work           : null,
-      claimedProjectId: null,
-      currentUserId: null,
-      workDetails: {},
-
-      // functions
-      initializeCopilotWork : null,
-      submitClaim: null,
-      submitChallenges: null,
-      projectAvailable: null,
-      showStatusComponent: null,
-      openCreateChallenges: null
-    };
-
-   service.initializeCopilotWork = function(id, status) {
-    if (status) {
-      service.workDetails[id] = {};
-      service.workDetails[id].status = status;
-    }
-     var deferred = $q.defer();
-       data.get('work-request', {id: id}).then(function(data) {
-         service.work = data.result.content;
-         console.log('work request details', service.work);
-         deferred.resolve(service.work);
-       }).catch(function(e) {
-         console.log('error on initialize work', e);
-       });
-       return deferred.promise;
-    };
-
-    service.submitClaim= function(projectId) {
-      var user = UserV3Service.getCurrentUser();
-      $http.post(apiUrl+'copilots/'+user.id+'/projects/',
-        {"id": projectId}
-        ).success(function(data, status, headers, config) {
-         console.log('Updated project status', data);
-         $rootScope.$emit('projectClaimed');
-         if (!service.workDetails[projectId]) {
-            service.workDetails[projectId] = {}
-          }
-            service.workDetails[projectId].status = 'Assigned';
-        }).
-          error(function(data, status, headers, config) {
-            console.log('error on project claim', data);
-        });
-     };
-
-   service.submitChallenges = function(projectId, challengesEstimate) {
-    var user = UserV3Service.getCurrentUser();
-    $http.put(apiUrl+'copilots/'+user.id+'/projects/'+projectId+'',
-      {"id": projectId, "estimate": challengesEstimate, "status": "estimated"}
-      ). success(function(data, status, headers, config) {
-       if (!service.workDetails[projectId]) {
-            service.workDetails[projectId] = {}
-        }
-        service.workDetails[projectId].status = 'Estimate';
-        service.workDetails[projectId].estimate = challengesEstimate;
-      }).
-      error(function(data, status, headers, config) {
-        console.log('error on submit estimates', data);
-      });
-    };
-
-   service.launchProject = function(projectId) {
-    var user = UserV3Service.getCurrentUser();
-    $http.put(apiUrl+'/copilots/'+user.id+'/projects/'+projectId+'',
-      {"id": projectId, "estimate": service.workDetails[projectId].estimate, "status": "launched"}
-      ).success(function(data, status, headers, config) {
-       if (!service.workDetails[projectId]) {
-            service.workDetails[projectId] = {}
-        }
-        service.workDetails[projectId].status = 'Launched';
-      }).
-      error(function(data, status, headers, config) {
-        console.log('error on project launch', data);
-      });
-    }
-
-   service.projectAvailable = function(project, projectId) {
-      var claimedProjectStatuses =
-      ['Assigned',
-      'Estimate',
-      'Approved',
-      'awaiting_launch',
-      'Launched']
-      if (service.workDetails[projectId]) {
-        return claimedProjectStatuses.indexOf(service.workDetails[projectId].status) < 0
-      } else {
-      return project.status === 'Incomplete' || project.status === 'Submitted';
-      }
-   }
-
-   service.showStatusComponent = function(projectId, status) {
-      if (service.workDetails[projectId]) {
-        return service.workDetails[projectId].status === status;
-      }
-   }
-
-   service.openCreateChallenges = function(projectId) {
-    if (service.workDetails[projectId]) {
-      service.workDetails[projectId].status = 'awaiting_launch';
-    }
-   }
-
-    return service;
-
-  }
-})();
-
-(function () {
-  'use strict';
-
-  angular.module('ap-copilot-flow.project-details').run(appRun);
-
-  appRun.$inject = ['routerHelper'];
-  /* @ngInject */
-  function appRun(routerHelper) {
-    routerHelper.configureStates(getStates());
-  }
-
-  function getStates() {
-    return [{
-      state: 'project-details',
-      config: {
-        url: '/project-details/:id?/:status?',
-        title: 'Claim Project',
-        controller: 'ProjectDetailsController',
-        controllerAs: 'vm',
-        resolve: {
-          copilotWork: ['$stateParams', 'ProjectDetailsService', function($stateParams, ProjectDetailsService) {
-            if ($stateParams.id && $stateParams.status) {
-              return ProjectDetailsService.initializeCopilotWork($stateParams.id, $stateParams.status);
-            } else if ($stateParams.id) {
-                return ProjectDetailsService.initializeCopilotWork($stateParams.id);
-            } else {
-              return false;
-            }
-          }]
-        },
-        templateUrl: 'project-details/project-details.html'
-      }
-    },{
-      state: 'project-details.challenges',
-      config: {
-        url: '/challengeEstimates',
-        templateUrl: 'project-details/details-features/views/challenges.html',
-        controller: 'ChallengesController',
-        controllerAs: 'vm'
-      }
-    }, {
-      state: 'copilot-messaging',
-      config: {
-        url: '/messaging/:id',
-        templateUrl: 'project-details/details-features/views/messaging.html',
-        controller: 'ProjectDetailsController',
-        controllerAs: 'vm'
-      }
-    }
-    ];
-  }
-})();
-(function () {
-  'use strict';
-
-  angular
-    .module('ap-copilot-flow.projects').run(runApp);
-
-  runApp.$inject = ['routerHelper', 'ProjectsService', 'ProjectDetailsService'];
-  /* @ngInject */
-  function runApp(routerHelper) {
-    routerHelper.configureStates(getStates(), "/projects");
-  }
-
-  function getStates() {
-    return [
-      {
-        state: 'view-projects',
-        config: {
-          url: '/projects',
-          templateUrl: 'projects/views/projectTabs.html',
-          controller: 'ProjectsTabController',
-          controllerAs: 'vm',
-          title: 'View Projects',
-          abstract: true,
-        }
-      }, {
-        state: 'view-projects.assigned',
-        config: {
-        url: '/assigned',
-        templateUrl: 'projects/views/projects.html',
-        controller: 'ProjectsController',
-        controllerAs: 'vm',
-        resolve: {
-          workRequests: ['ProjectsService', function(ProjectsService) {
-            return ProjectsService.getAssignedProjects();
-          }]
-        }
-        }
-      }, {
-        state: 'view-projects.open',
-        config: {
-          url: '/open',
-          templateUrl: 'projects/views/projects.html',
-          controller: 'ProjectsController',
-          controllerAs: 'vm',
-          resolve: {
-            workRequests: ['ProjectsService', function(ProjectsService) {
-              return ProjectsService.getWorkRequests();
-            }]
-          }
-          }
-        }
-    ];
-  }
-
-})();
+angular.module("ap-copilot-flow").run(["$templateCache", function($templateCache) {$templateCache.put("views/challenges.html","<div ng-hide=\"vm.showAddedChallenges()\" class=\"challengesContainer\"><h5 ng-hide=\"vm.showAddedChallenges()\">Create Project Estimate</h5><dropdown class=\"dropdown\"><div class=\"dropdown-container\"><p ng-click=\"vm.toggleMenu(\'showTypeMenu\')\" ng-bind=\"vm.challenge.challengeType.charAt(0).toUpperCase() +  vm.challenge.challengeType.slice(1) || \'Type of Challenge\'\" class=\"dropdown-button type\"><ul ng-class=\"{\'show-menu\': vm.showTypeMenu}\" class=\"dropdown-menu dropdown-select type\"><li ng-repeat=\"type in vm.challengeTypes\" ng-click=\"vm.selectType(type)\">{{type}}</li></ul></p><p ng-click=\"vm.toggleMenu(\'showCountMenu\')\" ng-bind=\"vm.challenge.count || \'How Many\'\" class=\"dropdown-button count\"></p><ul ng-class=\"{\'show-menu\': vm.showCountMenu}\" class=\"dropdown-menu dropdown-select count\"><li ng-repeat=\"number in vm.challengeCounts\" ng-click=\"vm.selectCount(number)\">{{number}}</li></ul><button type=\"button\" ng-click=\"vm.addChallenge(challenge)\" class=\"addButton\">+</button></div></dropdown><br/><h1></h1><hr/><div ng-show=\"vm.challenges.length &gt; 0\" class=\"addedChallenges\"><ul><li ng-repeat=\"challenge in vm.challenges track by challenge.id\">{{challenge.count}} {{challenge.challengeType | capitalize}} Challenges<a ng-click=\"vm.removeChallenge($index)\">remove</a></li></ul></div><br/><div class=\"projectDifficulty\"></div><h5>Overall Project Difficulty</h5><div class=\"dropdown\"><div class=\"dropdown-container difficulty\"><p ng-click=\"vm.toggleMenu(\'showDifficultyMenu\')\" ng-bind=\"vm.overallDifficulty.charAt(0).toUpperCase() +  vm.overallDifficulty.slice(1) || \'Difficulty Level\'\" class=\"dropdown-button difficulty\"><ul ng-class=\"{\'show-menu\': vm.showDifficultyMenu}\" class=\"dropdown-menu dropdown-select difficulty\"><li ng-repeat=\"difficulty in vm.challengeDifficulties\" ng-click=\"vm.selectDifficulty(difficulty)\">{{difficulty | capitalize}}</li></ul></p></div></div><br/><br/><h5>Explain Complexity</h5><br/><textarea name=\"difficultyExplanation\" ng-model=\"vm.difficultyExplanation\"></textarea><button ng-click=\"vm.submit()\" class=\"submitEstimates\">Create Estimates</button></div><div ng-show=\"vm.showAddedChallenges()\" class=\"projectEstimate\"><h5>Project Estimate</h5><ul><li ng-repeat=\"challenge in vm.challenges track by challenge.id\">{{challenge.count}} {{challenge.challengeType | capitalize}} Challenges</li></ul></div>");
+$templateCache.put("views/messaging.html","<br/><br/><br/><button ui-sref=\"project-details\" class=\"backButton\">Go Back</button><br/><div class=\"messagingContainer\"><h2>Messaging With Customer</h2><messaging thread-id=\"{{ vm.work.id }}\" subscriber-id=\"{{ vm.userId }}\"></messaging></div>");
+$templateCache.put("views/project-details.html","<main><status-modal ng-if=\"vm.showClaimedModal\" type=\"statusModal\" next-state=\"project-details.challenges\" next-step=\"Create Estimates\"><span>Congratulations! You have claimed this project.</span></status-modal><status-modal type=\"successModal\" ng-if=\"vm.showStatusComponent(\'Estimate\')\" class=\"success\"><h3>Project estimate complete. Awaiting client approval.</h3></status-modal><status-modal type=\"successModal\" ng-if=\"vm.showStatusComponent(\'Launched\')\" class=\"success\"><h3>Your project has been launched!</h3></status-modal><div class=\"detailsContainer\"><h2>{{ vm.work.name | cutOff}}</h2><h3>{{vm.work.requestType | requestType}} Project</h3><br/><button ng-if=\"vm.projectAvailable()\" ng-click=\"vm.submitClaim()\">Claim Project</button><button ng-if=\"vm.showStatusComponent(\'Assigned\')\" ui-sref=\"project-details.challenges\">Create Estimates</button><button ng-if=\"vm.showStatusComponent(\'Approved\')\" ng-click=\"vm.openCreateChallenges()\">Create Challenges</button><button ng-if=\"vm.showStatusComponent(\'awaiting_launch\')\" ng-click=\"vm.launchProject()\">Launch Project</button><button ng-if=\"!vm.projectAvailable()\" ui-sref=\"messaging({ id: vm.work.id})\">Message Client</button><br/><br/><br/><hr/><div class=\"summary\"><h5>Project Description</h5><p>{{vm.work.summary}}</p></div><div class=\"similarApps\"><h5>Similar Apps</h5><ul></ul><p ng-repeat=\"competitor in vm.work.competitorApps\">{{competitor}}</p></div><div class=\"usersDescription\"><h5>Description of Users</h5><p>{{vm.work.usageDescription}}</p></div><div class=\"features\"><h5>Features</h5><ul></ul><p ng-repeat=\"feature in vm.work.features\">{{feature.name}}: {{feature.description}}</p></div><div class=\"visualElements\"><h5>Visual Elements</h5></div></div><aside ui-view=\"\"></aside></main>");
+$templateCache.put("views/projectTabs.html","<div class=\"projectsHeading\"><h1>Copilot Projects</h1><div><button ui-sref=\"view-projects.assigned\" ng-click=\"vm.assignedButtonSelected()\" ng-class=\"{\'selected\': vm.highlightAssignedButton}\">My Projects</button><button ui-sref=\"view-projects.open\" ng-click=\"vm.openButtonSelected()\" ng-class=\"{\'selected\': vm.highlightOpenButton}\">Open Projects</button></div><main ui-view=\"\" class=\"layout-main projects\"></main></div>");
+$templateCache.put("views/projects.html","<dropdown ng-hide=\"!vm.workRequests.length\" class=\"dropdown\"><div class=\"dropdown-container\"><p ng-click=\"vm.toggleTypeFilterMenu()\" ng-bind=\"vm.typeFilterValue || \'All Project Types\'\" class=\"dropdown-button type\"><ul ng-class=\"{\'show-menu\': vm.showTypeFilterMenu}\" class=\"dropdown-menu dropdown-select type\"><li ng-repeat=\"typeFilter in vm.typeFilters\" ng-click=\"vm.selectType(typeFilter)\">{{typeFilter}}</li></ul></p></div></dropdown><ul><li ng-repeat=\"project in filteredWorkRequests=(vm.workRequests | orderBy:\'createdAt\':true | filter: vm.typeFilter)\" ng-mouseenter=\"vm.hoverSelect($index)\" ng-mouseleave=\"vm.hoverDeselect($index)\" class=\"projectLi\"><div ng-class=\"{\'hovered\': $index === vm.active, \'grey\': project.requestType === \'code\'}\" class=\"tile\"><h5>{{project.name | cutOff}}</h5><br/><img src=\"projects/images/dev-project-icon.png\" ng-class=\"{\'faded\': $index === vm.active}\"/><br/><span class=\"type\">{{project.requestType | requestType | uppercase}}</span><br/><br/><span ng-show=\"vm.showDetailSpan(\'view-projects.open\')\" class=\"created\">Project Created - {{project.createdAt | date:\'MM/dd/yyyy\'}}</span><span ng-show=\"vm.showDetailSpan(\'view-projects.assigned\')\" class=\"created\">{{project.status | status}}</span><br/><button ng-show=\"$index === vm.active\" ng-click=\"vm.viewProjectDetails(project)\">{{project.status | statusButton}}</button></div></li></ul><div ng-show=\"!filteredWorkRequests.length\" class=\"noProjectsMessage\"><h1>Sorry, there are no available {{vm.selectedType}} projects at this time.</h1></div>");
+$templateCache.put("views/statusModal.html","<div class=\"statusModal\"><div ng-transclude=\"ng-transclude\" class=\"messageContainer\"></div><br/><button ng-click=\"nextState()\" class=\"modalButton\">{{nextStep}}</button><br/><a ng-click=\"hideModal()\">I\'ll do it later</a></div>");
+$templateCache.put("views/successModal.html","<div class=\"statusModal success\"><div class=\"exit\"><a ng-click=\"hideModal()\">&times;</a></div><div class=\"imageContainer\"><img src=\"projects/images/check-solid-green.svg\" class=\"checkmark-green\"/></div><div ng-transclude=\"ng-transclude\" class=\"messageContainer\"></div></div>");}]);

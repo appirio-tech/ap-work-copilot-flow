@@ -5,9 +5,9 @@
     .module('ap-copilot-flow.projects')
     .factory('ProjectsService', ProjectsService);
 
-  ProjectsService.$inject = ['$q', '$http', 'data', 'UserV3Service'];
+  ProjectsService.$inject = ['$q', '$http', 'UserV3Service', 'apiUrl'];
   /* @ngInject */
-  function ProjectsService($q, $http, data, UserV3Service) {
+  function ProjectsService($q, $http, UserV3Service, apiUrl) {
 
     var service = {
 
@@ -20,6 +20,7 @@
 
     service.getWorkRequests = function() {
       var deferred = $q.defer();
+      $http.get(apiUrl)
       data.get('work-request', {filter: 'copilotId=unassigned'}).then(function(data) {
         service.projects = data.result.content;
         deferred.resolve(data.result.content);
