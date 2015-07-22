@@ -1,3 +1,4 @@
+
 main
   status-modal(ng-if="vm.showClaimedModal", type="statusModal", next-state="project-details.challenges", next-step="Create Estimates")
     span Congratulations! You have claimed this project.
@@ -9,7 +10,7 @@ main
     h3 Your project has been launched!
 
   .detailsContainer
-    h2{{ vm.work.name | cutOff}}
+    h2 {{ vm.work.name | cutOff}}
     h3 {{vm.work.requestType | requestType}} Project
     br
     button(ng-if="vm.projectAvailable()", ng-click="vm.submitClaim()") Claim Project

@@ -1,0 +1,37 @@
+- var portraitCSS  = ['project-details', 'projects']
+- var landscapeCSS = ['projects']
+- var desktopCSS   = ['project-details', 'projects']
+
+link(href="styles/main.css", rel="stylesheet")
+
+link(href="bower_components/appirio-tech-ng-ui-components/dist/main.css", rel="stylesheet")
+
+// build:css main.css
+= "\n"
+each path in portraitCSS
+  = "\n"
+  link(href="styles/#{path}.css", rel="stylesheet")
+  = "\n"
+= "\n"
+// endbuild
+= "\n"
+= "\n"
+// build:css styles/mobile-landscape.css media="(min-width: 568px)"
+= "\n"
+each path in landscapeCSS
+  = "\n"
+  link(href="styles/#{path}.landscape.css", rel="stylesheet", media="(min-width: 568px)")
+  = "\n"
+= "\n"
+// endbuild
+= "\n"
+= "\n"
+// build:css styles/desktop.css media="(min-width: 767px)"
+= "\n"
+each path in desktopCSS
+  = "\n"
+  link(href="styles/#{path}.desktop.css", rel="stylesheet", media="(min-width: 767px)")
+  = "\n"
+= "\n"
+// endbuild
+= "\n"

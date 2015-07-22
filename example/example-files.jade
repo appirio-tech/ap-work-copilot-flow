@@ -1,0 +1,12 @@
+- examples = ['example.module', 'routes', 'example-templates']
+
+= "\n"
+// build:js example.js
+= "\n"
+each path in examples
+  = "\n"
+  script(src="scripts/#{path}.js", type="text/javascript")
+  = "\n"
+= "\n"
+// endbuild
+= "\n"
