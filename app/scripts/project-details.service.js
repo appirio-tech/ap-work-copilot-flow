@@ -5,9 +5,9 @@
     .module('ap-copilot-flow.project-details')
     .factory('ProjectDetailsService', ProjectDetailsService);
 
-  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'data', 'apiUrl', 'UserV3Service'];
+  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'apiUrl', 'UserV3Service'];
 
-  function ProjectDetailsService($rootScope, $http, $q, data, apiUrl, UserV3Service) {
+  function ProjectDetailsService($rootScope, $http, $q, apiUrl, UserV3Service) {
     var service = {
 
       // variables
@@ -31,13 +31,23 @@
       service.workDetails[id].status = status;
     }
      var deferred = $q.defer();
-       data.get('work-request', {id: id}).then(function(data) {
-         service.work = data.result.content;
-         console.log('work request details', service.work);
-         deferred.resolve(service.work);
-       }).catch(function(e) {
-         console.log('error on initialize work', e);
-       });
+       $http.get(apiUrl+'work/'+id)
+         .success(function(data, status, headers, config) {
+          service.work = data.result.content;
+          console.log('work request details', service.work)
+          deferred.resolve(service.work);
+        }).
+        error(function(data, status, headers, config) {
+          console.log('error on work details', data)
+        });
+
+       // .then(function(data) {
+       //   service.work = data.result.content;
+       //   console.log('work request details', service.work);
+       //   deferred.resolve(service.work);
+       // }).catch(function(e) {
+       //   console.log('error on initialize work', e);
+       // });
        return deferred.promise;
     };
 

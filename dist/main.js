@@ -22,6 +22,7 @@ angular.module("app.constants", [])
 
   angular.module('ap-copilot-flow', [
     'app.constants',
+    'appirio-tech-ng-auth',
     'ap-copilot-flow.projects',
     'ap-copilot-flow.project-details'
   ])
@@ -84,16 +85,23 @@ angular.module("app.constants", [])
     };
 
     service.getWorkRequests = function() {
-      var deferred = $q.defer();
-      $http.get(apiUrl)
-      data.get('work-request', {filter: 'copilotId=unassigned'}).then(function(data) {
-        service.projects = data.result.content;
-        deferred.resolve(data.result.content);
-      }).catch(function(e) {
-            console.log('Error on open projects', e);
-            $q.reject(e);
-      });
-        return deferred.promise;
+      console.log('work req geting called')
+      $http.get(apiUrl + 'work', {filter: 'copilotId=unassigned'}).success(function(data, status, headers, config) {
+         console.log('getting work requests', data);
+         service.projects = data.result.content
+        }).
+          error(function(data, status, headers, config) {
+            console.log('error getting projects', data);
+        });
+
+      // data.get('work-request', {filter: 'copilotId=unassigned'}).then(function(data) {
+      //   service.projects = data.result.content;
+      //   deferred.resolve(data.result.content);
+      // }).catch(function(e) {
+      //       console.log('Error on open projects', e);
+      //       $q.reject(e);
+      // });
+      //   return deferred.promise;
     };
 
     service.getAssignedProjects = function() {
@@ -439,7 +447,7 @@ angular.module("app.constants", [])
   ProjectsController.$inject = ['ProjectsService', '$state'];
   function ProjectsController(ProjectsService, $state) {
    var vm = this;
-   vm.workRequests = ProjectsService.projects;
+   vm.workRequests = null;
    vm.title = 'View Projects';
    vm.active = null;
    vm.showTypeFilterMenu = false;
@@ -488,6 +496,11 @@ angular.module("app.constants", [])
         $state.go('project-details', {id: project.id})
       }
     }
+
+    function activate() {
+      ProjectsService.getWorkRequests()
+    }
+    activate()
   }
 })();
 

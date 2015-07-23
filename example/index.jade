@@ -27,13 +27,14 @@ html(ng-app='example')
 
     include css-files
 
-  body
-    include nav
-
-    main.layout-main("role"="main", class="{{ pageClass }}", ui-view="")
-
     include lib-files
 
     include app-files
 
     include example-files
+
+  body
+    include nav
+
+    main.layout-main("role"="main", class="{{ pageClass }}", ui-view="")
+

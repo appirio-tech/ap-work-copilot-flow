@@ -9,7 +9,7 @@ ProjectDetailsController.$inject = ['$rootScope', '$window', 'ProjectDetailsServ
 
 function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $state, UserV3Service) {
   var vm = this;
-  vm.work  =  ProjectDetailsService.work;
+  vm.work  =  null;
   vm.showClaimedModal = false;
   vm.showCreateChallengesModal = false;
   vm.showEstimatesButton = false;
@@ -54,7 +54,17 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
 
   vm.activate = function() {
   //instantiate userId for messaging's subscriberId
-  vm.userId = UserV3Service.getCurrentUser().id;
+  // vm.userId = UserV3Service.getCurrentUser().id;
+    if ($state.params.status) {
+      ProjectDetailsService.initializeCopilotWork($state.params.id, $state.params.status).then(function(data) {
+        vm.work = data;
+      })
+    } else {
+      ProjectDetailsService.initializeCopilotWork($state.params.id).then(function(data) {
+        console.log('le data', data)
+        vm.work = data;
+      })
+    }
   }
 
   vm.activate()

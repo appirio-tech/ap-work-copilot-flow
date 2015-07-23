@@ -5,8 +5,8 @@
   angular.module('example',
     [ 'ui.router',
     'app.constants',
-     'ap-copilot-flow',
     'ngResource',
+    'ap-copilot-flow'
    ])
 
 })();
