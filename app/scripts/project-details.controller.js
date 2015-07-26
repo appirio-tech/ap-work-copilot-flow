@@ -9,7 +9,7 @@ ProjectDetailsController.$inject = ['$rootScope', '$window', 'ProjectDetailsServ
 
 function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $state, UserV3Service) {
   var vm = this;
-  vm.work  =  null;
+  vm.work  =  ProjectDetailsService.work;
   vm.showClaimedModal = false;
   vm.showCreateChallengesModal = false;
   vm.showEstimatesButton = false;
@@ -61,7 +61,6 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
       })
     } else {
       ProjectDetailsService.initializeCopilotWork($state.params.id).then(function(data) {
-        console.log('le data', data)
         vm.work = data;
       })
     }

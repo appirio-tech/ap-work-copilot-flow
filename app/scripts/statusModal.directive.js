@@ -24,7 +24,7 @@
       scope: {
       },
       templateUrl: function(elem, attr){
-      return 'project-details/'+attr.type+'.html';
+      return 'views/'+attr.type+'.html';
     }
     };
   };
