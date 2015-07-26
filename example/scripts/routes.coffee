@@ -26,6 +26,7 @@ config = ($stateProvider) ->
   states['project-details'] =
     url: '/project-details/:id?/:status?',
     title: 'Claim Project',
+    templateUrl : 'views/project-details.html'
     controller: 'ProjectDetailsController',
     controllerAs: 'vm'
 
