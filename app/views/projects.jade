@@ -11,7 +11,7 @@ ul
     div(class="tile", ng-class="{'hovered': $index === vm.active, 'grey': project.requestType === 'code'}")
       h5 {{project.name | cutOff}}
       br
-      img(src="projects/images/dev-project-icon.png", ng-class="{'faded': $index === vm.active}")
+      img(src="images/dev-project-icon.png", ng-class="{'faded': $index === vm.active}")
       br
       span.type {{project.requestType | requestType | uppercase}}
       br
