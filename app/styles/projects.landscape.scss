@@ -4,7 +4,7 @@
 
 .layout-main.projects {
   .heading {
-    button {
+    button.heading {
       br {
         display: none;
       }
@@ -18,7 +18,7 @@
     div.hovered {
       background-color: #454545;
     }
-    &.button {
+    button.projectLi {
       border: 1px solid white;
       background-color: #454545;
       border-radius: 10px;

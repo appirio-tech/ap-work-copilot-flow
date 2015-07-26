@@ -24,7 +24,7 @@
       display: inline-block;
     }
 
-    &.button {
+    button.projectsHeading {
       display: inline-block;
       float: none;
       height : initial;
@@ -44,7 +44,7 @@
     height: 220px;
     margin-bottom: 15px;
 
-    &.button {
+    button.projectLi {
       border: 1px solid white;
       background-color: #454545;
       border-radius: 10px;
@@ -66,7 +66,14 @@
         margin-top: 10px;
       }
 
-        .hovered {
+      button {
+      border: 1px solid white;
+      background-color: #454545;
+      border-radius: 10px;
+      color: white
+      }
+
+        &.hovered {
           background-color: #454545;
         }
 
@@ -295,6 +302,6 @@
     }
   }
 
-  
+
 }
 
