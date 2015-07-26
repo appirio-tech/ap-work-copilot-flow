@@ -20,9 +20,15 @@
       controllerAs: 'vm'
     };
     states['view-projects.open'] = {
-      url: '/assigned',
+      url: '/open',
       templateUrl: 'views/projects.html',
       controller: 'ProjectsController',
+      controllerAs: 'vm'
+    };
+    states['project-details'] = {
+      url: '/project-details/:id?/:status?',
+      title: 'Claim Project',
+      controller: 'ProjectDetailsController',
       controllerAs: 'vm'
     };
     results = [];

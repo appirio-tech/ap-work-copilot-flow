@@ -85,34 +85,29 @@ angular.module("app.constants", [])
     };
 
     service.getWorkRequests = function() {
-      console.log('work req geting called')
-      $http.get(apiUrl + 'work', {filter: 'copilotId=unassigned'}).success(function(data, status, headers, config) {
-         console.log('getting work requests', data);
-         service.projects = data.result.content
+      var deferred = $q.defer();
+      $http.get(apiUrl + 'work?filter=copilotId%3Dunassigned')
+      .success(function(data, status, headers, config) {
+         deferred.resolve(data.result.content)
         }).
           error(function(data, status, headers, config) {
             console.log('error getting projects', data);
         });
-
-      // data.get('work-request', {filter: 'copilotId=unassigned'}).then(function(data) {
-      //   service.projects = data.result.content;
-      //   deferred.resolve(data.result.content);
-      // }).catch(function(e) {
-      //       console.log('Error on open projects', e);
-      //       $q.reject(e);
-      // });
-      //   return deferred.promise;
-    };
+        return deferred.promise
+     };
 
     service.getAssignedProjects = function() {
       var deferred = $q.defer();
       var user = UserV3Service.getCurrentUser();
-        data.get('work-request', {filter: 'copilotId='+user.id}).then(function(copilotData) {
-          service.projects = copilotData.result.content;
-          deferred.resolve(copilotData.result.content)
-        });
-      return deferred.promise;
-    }
+        $http.get(apiUrl + 'work?filter=copilotId%3D'+user.id)
+        .success(function(data, status, headers, config) {
+           deferred.resolve(data.result.content)
+          }).
+            error(function(data, status, headers, config) {
+              console.log('error getting projects', data);
+          });
+          return deferred.promise
+     };
 
     return service;
 
@@ -126,9 +121,9 @@ angular.module("app.constants", [])
     .module('ap-copilot-flow.project-details')
     .factory('ProjectDetailsService', ProjectDetailsService);
 
-  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'data', 'apiUrl', 'UserV3Service'];
+  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'apiUrl', 'UserV3Service'];
 
-  function ProjectDetailsService($rootScope, $http, $q, data, apiUrl, UserV3Service) {
+  function ProjectDetailsService($rootScope, $http, $q, apiUrl, UserV3Service) {
     var service = {
 
       // variables
@@ -152,13 +147,23 @@ angular.module("app.constants", [])
       service.workDetails[id].status = status;
     }
      var deferred = $q.defer();
-       data.get('work-request', {id: id}).then(function(data) {
-         service.work = data.result.content;
-         console.log('work request details', service.work);
-         deferred.resolve(service.work);
-       }).catch(function(e) {
-         console.log('error on initialize work', e);
-       });
+       $http.get(apiUrl+'work/'+id)
+         .success(function(data, status, headers, config) {
+          service.work = data.result.content;
+          console.log('work request details', service.work)
+          deferred.resolve(service.work);
+        }).
+        error(function(data, status, headers, config) {
+          console.log('error on work details', data)
+        });
+
+       // .then(function(data) {
+       //   service.work = data.result.content;
+       //   console.log('work request details', service.work);
+       //   deferred.resolve(service.work);
+       // }).catch(function(e) {
+       //   console.log('error on initialize work', e);
+       // });
        return deferred.promise;
     };
 
@@ -498,8 +503,17 @@ angular.module("app.constants", [])
     }
 
     function activate() {
-      ProjectsService.getWorkRequests()
+      if ($state.current.name === 'view-projects.open') {
+        ProjectsService.getWorkRequests().then(function(data) {
+          vm.workRequests = data
+        })
+       } else if ($state.current.name === 'view-projects.assigned') {
+        ProjectsService.getAssignedProjects().then(function(data) {
+          vm.workRequests = data
+        })
+      }
     }
+
     activate()
   }
 })();
@@ -515,7 +529,7 @@ ProjectDetailsController.$inject = ['$rootScope', '$window', 'ProjectDetailsServ
 
 function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $state, UserV3Service) {
   var vm = this;
-  vm.work  =  ProjectDetailsService.work;
+  vm.work  =  null;
   vm.showClaimedModal = false;
   vm.showCreateChallengesModal = false;
   vm.showEstimatesButton = false;
@@ -560,7 +574,17 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
 
   vm.activate = function() {
   //instantiate userId for messaging's subscriberId
-  vm.userId = UserV3Service.getCurrentUser().id;
+  // vm.userId = UserV3Service.getCurrentUser().id;
+    if ($state.params.status) {
+      ProjectDetailsService.initializeCopilotWork($state.params.id, $state.params.status).then(function(data) {
+        vm.work = data;
+      })
+    } else {
+      ProjectDetailsService.initializeCopilotWork($state.params.id).then(function(data) {
+        console.log('le data', data)
+        vm.work = data;
+      })
+    }
   }
 
   vm.activate()
