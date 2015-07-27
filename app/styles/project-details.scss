@@ -20,6 +20,12 @@
     // background-color: $mercury;
     margin-top: 0;
   }
+  button.addButton {
+    height: 42px;
+    max-width: 42px;
+    float: right;
+    margin-top: 5px;
+  }
 }
 .projectEstimate {
   h5 {
@@ -47,7 +53,7 @@ p {
   height: 700px;
   padding-left: 10px;
 
-  button.details-container {
+  button.details-container, button.submitEstimates {
     background-color: #454545;
     color: white;
     margin: 5px;
