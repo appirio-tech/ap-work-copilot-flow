@@ -280,11 +280,6 @@
 }
 
 div.projectsHeading {
-  height: 150px;
-  background-color: white;
-  border-top: 30px solid #454545;
-  text-align: left;
-}
      div {
        text-align: center;
        margin-top: 8px;
@@ -298,8 +293,13 @@ div.projectsHeading {
        background-color: #E6E6E6;
      }
      }
-
+  height: 150px;
+  background-color: white;
+  border-top: 30px solid #454545;
+  text-align: left;
   h1 {
     font-size: 28px;
     display: inline-block;
   }
+}
+
