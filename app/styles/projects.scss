@@ -12,31 +12,6 @@
     margin: 20px 0;
   }
 
-  .projectsHeading {
-    height: 150px;
-    background-color: white;
-    > * {
-      vertical-align: middle;
-    }
-
-    h1 {
-      font-size: 28px;
-      display: inline-block;
-    }
-
-    button.projectsHeading {
-      display: inline-block;
-      float: none;
-      height : initial;
-      padding: 8px 10px;
-
-      &:hover {
-        cursor: pointer;
-        cursor: hand;
-      }
-    }
-  }
-
   .projectLi {
 
     @include span-columns(3);
@@ -305,3 +280,39 @@
 
 }
 
+div.projectsHeading {
+  min-height: 620px;
+  background-color: white;
+  border-top: 30px solid #454545;
+  text-align: left;
+}
+     div {
+       text-align: center;
+       margin-top: 8px;
+     }
+     button.projectsHeading {
+       border-radius: 0px;
+       margin: 0px 2px;
+       background-color: white;
+       color: black;
+     &.selected {
+       background-color: #E6E6E6;
+     }
+     }
+
+  h1 {
+    font-size: 28px;
+    display: inline-block;
+  }
+
+  // button.projectsHeading {
+  //   display: inline-block;
+  //   float: none;
+  //   height : initial;
+  //   padding: 8px 10px;
+
+  //   &:hover {
+  //     cursor: pointer;
+  //     cursor: hand;
+  //   }
+  // }

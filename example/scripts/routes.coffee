@@ -28,7 +28,16 @@ config = ($stateProvider) ->
     title: 'Claim Project',
     templateUrl : 'views/project-details.html'
     controller: 'ProjectDetailsController',
-    controllerAs: 'vm'
+    controllerAs: 'vm',
+    resolve:
+      copilotWork: ['$stateParams', 'ProjectDetailsService', ($stateParams, ProjectDetailsService) ->
+        if $stateParams.id && $stateParams.status
+          return ProjectDetailsService.initializeCopilotWork($stateParams.id, $stateParams.status);
+        else if $stateParams.id
+          return ProjectDetailsService.initializeCopilotWork($stateParams.id);
+        else
+          return false;
+       ]
 
   for key, state of states
     $stateProvider.state key, state
