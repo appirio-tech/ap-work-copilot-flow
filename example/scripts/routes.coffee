@@ -38,6 +38,12 @@ config = ($stateProvider) ->
         else
           return false;
        ]
+  states['project-details.challenges'] = 
+    url         : '/challenges'
+    templateUrl : 'views/challenges.html'
+    controller: 'ChallengesController'
+    controllerAs: 'vm'
+
 
   for key, state of states
     $stateProvider.state key, state

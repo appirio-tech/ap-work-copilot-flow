@@ -8,6 +8,19 @@
   div {
     text-align: left;
   }
+ .addButton {
+    height: 42px;
+    width: 42px;
+    float: right;
+    margin-top: 5px;
+    background-color: #454545;
+    color: white;
+  }
+
+  .submitEstimates {
+    background-color: #454545;
+    color: white;
+  }
 
 .challengesContainer {
   width: 100%;
@@ -19,12 +32,8 @@
   textarea {
     // background-color: $mercury;
     margin-top: 0;
-  }
-  button.addButton {
-    height: 42px;
-    max-width: 42px;
-    float: right;
-    margin-top: 5px;
+    width: 250px;
+    height: 80px;
   }
 }
 .projectEstimate {
@@ -56,7 +65,7 @@ p {
   button.details-container, button.submitEstimates {
     background-color: #454545;
     color: white;
-    margin: 5px;
+    margin-right: 5px;
   }
 }
 

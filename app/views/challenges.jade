@@ -13,7 +13,8 @@ div(class="challengesContainer", ng-hide="vm.showAddedChallenges()")
       ul.dropdown-menu.dropdown-select.count(ng-class="{'show-menu': vm.showCountMenu}")
         li(ng-repeat="number in vm.challengeCounts", ng-click="vm.selectCount(number)") {{number}}
 
-      button(type="button", class="addButton", ng-click="vm.addChallenge(challenge)") +
+      button.addButton(type="button" ng-click="vm.addChallenge(challenge)") +
+  br
   br
   h1
 
@@ -38,7 +39,7 @@ div(class="challengesContainer", ng-hide="vm.showAddedChallenges()")
   br
   textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation")
   br
-  button(class="submitEstimates", ng-click="vm.submit()") Create Estimates
+  button.submitEstimates(ng-click="vm.submit()") Create Estimates
 
 div(class="projectEstimate", ng-show="vm.showAddedChallenges()")
   h5 Project Estimate
