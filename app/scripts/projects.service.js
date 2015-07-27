@@ -22,6 +22,7 @@
       var deferred = $q.defer();
       $http.get(apiUrl + 'work?filter=copilotId%3Dunassigned')
       .success(function(data, status, headers, config) {
+        service.projects = data.result.content;
          deferred.resolve(data.result.content)
         }).
           error(function(data, status, headers, config) {
@@ -35,6 +36,7 @@
       var user = UserV3Service.getCurrentUser();
         $http.get(apiUrl + 'work?filter=copilotId%3D'+user.id)
         .success(function(data, status, headers, config) {
+           service.projects = data.result.content;
            deferred.resolve(data.result.content)
           }).
             error(function(data, status, headers, config) {

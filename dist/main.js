@@ -64,6 +64,7 @@
       var deferred = $q.defer();
       $http.get(apiUrl + 'work?filter=copilotId%3Dunassigned')
       .success(function(data, status, headers, config) {
+        service.projects = data.result.content;
          deferred.resolve(data.result.content)
         }).
           error(function(data, status, headers, config) {
@@ -77,6 +78,7 @@
       var user = UserV3Service.getCurrentUser();
         $http.get(apiUrl + 'work?filter=copilotId%3D'+user.id)
         .success(function(data, status, headers, config) {
+           service.projects = data.result.content;
            deferred.resolve(data.result.content)
           }).
             error(function(data, status, headers, config) {
@@ -428,7 +430,7 @@
   ProjectsController.$inject = ['ProjectsService', '$state'];
   function ProjectsController(ProjectsService, $state) {
    var vm = this;
-   vm.workRequests = null;
+   vm.workRequests = ProjectsService.projects;
    vm.title = 'View Projects';
    vm.active = null;
    vm.showTypeFilterMenu = false;
@@ -478,19 +480,19 @@
       }
     }
 
-    function activate() {
-      if ($state.current.name === 'view-projects.open') {
-        ProjectsService.getWorkRequests().then(function(data) {
-          vm.workRequests = data
-        })
-       } else if ($state.current.name === 'view-projects.assigned') {
-        ProjectsService.getAssignedProjects().then(function(data) {
-          vm.workRequests = data
-        })
-      }
-    }
+    // function activate() {
+    //   if ($state.current.name === 'view-projects.open') {
+    //     ProjectsService.getWorkRequests().then(function(data) {
+    //       vm.workRequests = data
+    //     })
+    //    } else if ($state.current.name === 'view-projects.assigned') {
+    //     ProjectsService.getAssignedProjects().then(function(data) {
+    //       vm.workRequests = data
+    //     })
+    //   }
+    // }
 
-    activate()
+    // activate()
   }
 })();
 
