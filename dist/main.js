@@ -428,7 +428,7 @@
   ProjectsController.$inject = ['ProjectsService', '$state'];
   function ProjectsController(ProjectsService, $state) {
    var vm = this;
-   vm.workRequests = null;
+   vm.workRequests = ProjectsService.projects;
    vm.title = 'View Projects';
    vm.active = null;
    vm.showTypeFilterMenu = false;
@@ -477,20 +477,6 @@
         $state.go('project-details', {id: project.id})
       }
     }
-
-    function activate() {
-      if ($state.current.name === 'view-projects.open') {
-        ProjectsService.getWorkRequests().then(function(data) {
-          vm.workRequests = data
-        })
-       } else if ($state.current.name === 'view-projects.assigned') {
-        ProjectsService.getAssignedProjects().then(function(data) {
-          vm.workRequests = data
-        })
-      }
-    }
-
-    activate()
   }
 })();
 
