@@ -1,5 +1,5 @@
 
-main
+main(class="layout-main project-details")
   status-modal(ng-if="vm.showClaimedModal", type="statusModal", next-state="project-details.challenges", next-step="Create Estimates")
     span Congratulations! You have claimed this project.
 
@@ -13,11 +13,11 @@ main
     h2 {{ vm.work.name | cutOff}}
     h3 {{vm.work.requestType | requestType}} Project
     br
-    button(ng-if="vm.projectAvailable()", ng-click="vm.submitClaim()") Claim Project
-    button(ng-if="vm.showStatusComponent('Assigned')" || "vm.showEstimateButton", ui-sref="project-details.challenges") Create Estimates
-    button(ng-if="vm.showStatusComponent('Approved')", ng-click="vm.openCreateChallenges()") Create Challenges
-    button(ng-if="vm.showStatusComponent('awaiting_launch')", ng-click="vm.launchProject()") Launch Project
-    button(ng-if="!vm.projectAvailable()", ui-sref="messaging({ id: vm.work.id})") Message Client
+    button.details-container(ng-if="vm.projectAvailable()", ng-click="vm.submitClaim()") Claim Project
+    button.details-container(ng-if="vm.showStatusComponent('Assigned')" || "vm.showEstimateButton", ui-sref="project-details.challenges") Create Estimates
+    button.details-container(ng-if="vm.showStatusComponent('Approved')", ng-click="vm.openCreateChallenges()") Create Challenges
+    button.details-container(ng-if="vm.showStatusComponent('awaiting_launch')", ng-click="vm.launchProject()") Launch Project
+    button.details-container(ng-if="!vm.projectAvailable()", ui-sref="messaging({ id: vm.work.id})") Message Client
     br
     br
     br

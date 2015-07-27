@@ -41,6 +41,12 @@ p {
 .detailsContainer {
   height: 700px;
   padding-left: 10px;
+
+  button.details-container {
+    background-color: #454545;
+    color: white;
+    margin: 5px;
+  }
 }
 
   .awaitingApproval, .launchMessage {
@@ -105,7 +111,7 @@ p {
         @include font-line(30);
       }
     }
-    button {
+    button.modalButton {
       background-color: white;
       color: black;
     }
