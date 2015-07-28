@@ -1,3 +1,22 @@
+angular.module("app.constants", [])
+
+.constant("apiUrl", "https://api.topcoder-dev.com/v3/")
+
+.constant("API_URL", "https://api.topcoder-dev.com/v3")
+
+.constant("API_URL_V2", "https://api.topcoder-dev.com/v2")
+
+.constant("AVATAR_URL", "http://www.topcoder.com")
+
+.constant("SUBMISSION_URL", "https://studio.topcoder.com")
+
+.constant("AUTH0_CLIENT_ID", "abc123")
+
+.constant("AUTH0_DOMAIN", "topcoder-dev.auth0.com")
+
+.constant("AUTH0_TOKEN_NAME", "userJWTToken")
+
+;
 (function() {
   'use strict';
   var config;
@@ -5,6 +24,12 @@
   config = function($stateProvider) {
     var key, results, state, states;
     states = {};
+    states['home'] = {
+      url: '/',
+      templateUrl: 'index.html',
+      controller: 'ExampleController',
+      controllerAs: 'vm'
+    };
     states['view-projects'] = {
       url: '/projects',
       templateUrl: 'views/projectTabs.html',
@@ -17,13 +42,27 @@
       url: '/assigned',
       templateUrl: 'views/projects.html',
       controller: 'ProjectsController',
-      controllerAs: 'vm'
+      controllerAs: 'vm',
+      resolve: {
+        workRequests: [
+          'ProjectsService', function(ProjectsService) {
+            return ProjectsService.getAssignedProjects();
+          }
+        ]
+      }
     };
     states['view-projects.open'] = {
       url: '/open',
       templateUrl: 'views/projects.html',
       controller: 'ProjectsController',
-      controllerAs: 'vm'
+      controllerAs: 'vm',
+      resolve: {
+        workRequests: [
+          'ProjectsService', function(ProjectsService) {
+            return ProjectsService.getWorkRequests();
+          }
+        ]
+      }
     };
     states['project-details'] = {
       url: '/project-details/:id?/:status?',

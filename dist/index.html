@@ -5,10 +5,10 @@
 <link rel="stylesheet" href="styles/mobile-landscape.css" media="(min-width: 568px)">
 
 <link rel="stylesheet" href="styles/desktop.css" media="(min-width: 767px)">
-
+</head><body><ul><li><a ui-sref="view-projects.assigned">Assigned Projects</a></li><li><a ui-sref="view-projects.open">Open Projects</a></li></ul><form ng-hide="vm.authenticated" ng-submit="vm.login(this)"><input type="text" name="username" placeholder="username" ng-model="vm.username"><input type="password" name="password" placeholder="password" ng-model="vm.password"><button type="submit">Login</button></form><main role="main" ui-view="" class="layout-main {{ pageClass }}"></main>
 <script src="lib.js"></script>
 
 <script src="main.js"></script>
 
 <script src="example.js"></script>
-</head><body><ul><li><a ui-sref="view-projects.assigned">Assigned Projects</a></li><li><a ui-sref="view-projects.open">Open Projects</a></li></ul><main role="main" ui-view="" class="layout-main {{ pageClass }}"></main></body></html>
+</body></html>

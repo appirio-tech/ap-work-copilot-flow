@@ -3,6 +3,12 @@
 config = ($stateProvider) ->
   states = {}
 
+  states['home'] =
+    url: '/'
+    templateUrl: 'index.html'
+    controller: 'ExampleController'
+    controllerAs: 'vm'
+
   states['view-projects'] =
     url         : '/projects'
     templateUrl : 'views/projectTabs.html'
@@ -16,12 +22,20 @@ config = ($stateProvider) ->
     templateUrl : 'views/projects.html'
     controller: 'ProjectsController'
     controllerAs: 'vm'
+    resolve:
+      workRequests: ['ProjectsService', (ProjectsService) ->
+        return ProjectsService.getAssignedProjects();
+      ]
 
   states['view-projects.open'] =
     url         : '/open'
     templateUrl : 'views/projects.html'
     controller: 'ProjectsController'
     controllerAs: 'vm'
+    resolve:
+      workRequests: ['ProjectsService', (ProjectsService) ->
+        return ProjectsService.getWorkRequests();
+      ]
 
   states['project-details'] =
     url: '/project-details/:id?/:status?',

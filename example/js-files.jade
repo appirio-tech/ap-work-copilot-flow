@@ -1,0 +1,65 @@
+- var bowers = []
+- bowers.push('angular/angular')
+- bowers.push('angular-resource/angular-resource')
+- bowers.push('angular-ui-router/release/angular-ui-router')
+- bowers.push('a0-angular-storage/dist/angular-storage')
+- bowers.push('angular-jwt/dist/angular-jwt')
+- bowers.push('auth0-angular/build/auth0-angular')
+- bowers.push('auth0.js/build/auth0')
+- bowers.push('appirio-tech-ng-auth/dist/main')
+- bowers.push('appirio-tech-ng-ui-components/dist/main')
+
+- var scripts = []
+- scripts.push('ap-copilot-flow.module')
+- scripts.push('project-details.module')
+- scripts.push('projects.module')
+- scripts.push('capitalize.filter')
+- scripts.push('projects.service')
+- scripts.push('project-details.service')
+
+- scripts.push('cutOff.filter')
+- scripts.push('requestType.filter')
+- scripts.push('statusButton.filter')
+- scripts.push('status.filter')
+
+- scripts.push('statusModal.directive')
+- scripts.push('challenges.controller')
+- scripts.push('projects.controller')
+- scripts.push('project-details.controller')
+- scripts.push('projectsTab.controller')
+- scripts.push('templates')
+
+- var examples = ['constants', 'example.module', 'example.controller', 'routes', 'example-templates']
+
+= "\n"
+// build:js lib.js
+= "\n"
+each path in bowers
+  = "\n"
+  script(src="bower_components/#{path}.js", type="text/javascript")
+  = "\n"
+// endbuild
+= "\n"
+
+= "\n"
+// build:js main.js
+= "\n"
+each path in scripts
+  = "\n"
+  script(src="scripts/#{path}.js", type="text/javascript")
+  = "\n"
+= "\n"
+// endbuild
+= "\n"
+
+
+= "\n"
+// build:js example.js
+= "\n"
+each path in examples
+  = "\n"
+  script(src="scripts/#{path}.js", type="text/javascript")
+  = "\n"
+= "\n"
+// endbuild
+= "\n"

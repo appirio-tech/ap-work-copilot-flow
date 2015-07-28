@@ -11,10 +11,6 @@ html(ng-app='example')
 
     script(type="text/javascript", src="/bower_components/auto-config-fake-server/dist/auto-config-fake-server.js")
 
-    script(type="text/javascript", src="/scripts/mock.js")
-
-    script(type="text/javascript", src="/scripts/constants.js")
-
 
     = "\n"
     // endRemoveIf(production)
@@ -30,14 +26,14 @@ html(ng-app='example')
 
     include css-files
 
-    include lib-files
-
-    include app-files
-
-    include example-files
-
   body
+    form(ng-hide="vm.authenticated", ng-submit="vm.login(this)")
+      input(type="text", name="username", placeholder="username", ng-model="vm.username")
+      input(type="password", name="password", placeholder="password", ng-model="vm.password")
+      button(type="submit") Login
     include nav
 
     main.layout-main("role"="main", class="{{ pageClass }}", ui-view="")
+
+    include js-files
 
