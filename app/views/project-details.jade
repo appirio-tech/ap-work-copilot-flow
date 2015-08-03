@@ -17,7 +17,7 @@ main(class="layout-main project-details")
     button.details-container(ng-if="vm.showStatusComponent('Assigned')" || "vm.showEstimateButton", ui-sref="project-details.challenges") Create Estimates
     button.details-container(ng-if="vm.showStatusComponent('Approved')", ng-click="vm.openCreateChallenges()") Create Challenges
     button.details-container(ng-if="vm.showStatusComponent('awaiting_launch')", ng-click="vm.launchProject()") Launch Project
-    button.details-container(ng-if="!vm.projectAvailable()", ui-sref="messaging({ id: vm.work.id})") Message Client
+    button.details-container(ng-if="!vm.projectAvailable()", ui-sref="copilot-messaging({ id: vm.work.id})") Message Client
     br
     br
     br
