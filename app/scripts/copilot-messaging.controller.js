@@ -7,7 +7,6 @@ function CopilotMessagingController ($stateParams, $state, $window, UserV3Servic
   var vm;
   vm = this;
   vm.threadId = $stateParams.id;
-  console.log('thread id', vm.threadId)
   vm.subscriberId = null;
   vm.back = function() {
     if ($state.params.status) {
@@ -20,7 +19,6 @@ function CopilotMessagingController ($stateParams, $state, $window, UserV3Servic
     var user;
     user = UserV3Service.getCurrentUser();
     if (user) {
-      console.log('A LOGGED IN USER', user)
       return vm.subscriberId = user.id;
     }
   });
