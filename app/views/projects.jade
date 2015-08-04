@@ -11,7 +11,7 @@ ul
     div(class="tile", ng-class="{'hovered': $index === vm.active, 'grey': project.requestType === 'code'}")
       h5 {{project.name | cutOff}}
       br
-      img(src="dist/images/dev-project-icon.png", ng-class="{'faded': $index === vm.active}")
+      img(src="bower_components/appirio-tech-copilot/dist/images/dev-project-icon.png", ng-class="{'faded': $index === vm.active}")
       br
       span.type {{project.requestType | requestType | uppercase}}
       br
