@@ -6,7 +6,11 @@ CopilotMessagingController = function($stateParams, $state, $window, UserV3Servi
   vm.threadId = $stateParams.id;
   vm.subscriberId = null;
   vm.back = function() {
-    return $state.go('project-details');
+    if ($state.params.status) {
+      $state.go('project-details', {status: $state.params.status, id: $state.params.id})
+    } else {
+      $state.go('project-details', {id: $state.params.id})
+    }
   };
   $scope.$watch(UserV3Service.getCurrentUser, function() {
     var user;
