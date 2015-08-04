@@ -57,10 +57,8 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
    $state.go('copilot-messaging', {id: $state.params.id, status: $state.params.status})
   } else {
    $state.go('copilot-messaging', {id: $state.params.id})
-    })
+    }
   }
- }
-
   vm.activate = function() {
   //instantiate userId for messaging's subscriberId
   // vm.userId = UserV3Service.getCurrentUser().id;
