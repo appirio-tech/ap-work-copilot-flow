@@ -25,21 +25,19 @@
       openCreateChallenges: null
     };
 
-   service.initializeCopilotWork = function(id, status) {
-    if (status) {
-      service.workDetails[id] = {};
-      service.workDetails[id].status = status;
-    }
-     var deferred = $q.defer();
-       $http.get(apiUrl+'work/'+id)
-         .success(function(data, status, headers, config) {
-          service.work = data.result.content;
-          console.log('work request details', service.work)
-          deferred.resolve(service.work);
-        }).
-        error(function(data, status, headers, config) {
-          console.log('error on work details', data)
-        });
+   service.initializeCopilotWork = function(id) {
+    service.workDetails[id] = {};
+    var deferred = $q.defer();
+    $http.get(apiUrl+'work/'+id)
+      .success(function(data, status, headers, config) {
+       service.work = data.result.content;
+       console.log('work request details', service.work)
+        service.workDetails[id].status = service.work.status;
+       deferred.resolve(service.work);
+     }).
+     error(function(data, status, headers, config) {
+       console.log('error on work details', data)
+     });
 
        // .then(function(data) {
        //   service.work = data.result.content;

@@ -126,11 +126,12 @@ p {
       width: 100%;
     }
     .exit {
-      height: 30px;
-      width: 30px;
+      height: 40px;
+      width: 50px;
+      margin-left: 897px;
       a {
         text-decoration: none;
-        @include font-line(30);
+        @include font-line(55);
       }
     }
     button.modalButton {

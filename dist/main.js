@@ -551,12 +551,8 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
     return ProjectDetailsService.showStatusComponent(vm.work.id, status);
   }
 
- vm.navigateMessaging = function() {
-  if ($state.params.status) {
-   $state.go('copilot-messaging', {id: $state.params.id, status: $state.params.status})
-  } else {
-   $state.go('copilot-messaging', {id: $state.params.id})
-    }
+  vm.navigateMessaging = function() {
+    $state.go('copilot-messaging', {id: $state.params.id})
   }
   vm.activate = function() {
   //instantiate userId for messaging's subscriberId
@@ -617,11 +613,7 @@ function CopilotMessagingController ($stateParams, $state, $window, UserV3Servic
   vm.threadId = $stateParams.id;
   vm.subscriberId = null;
   vm.back = function() {
-    if ($state.params.status) {
-      $state.go('project-details', {status: $state.params.status, id: $state.params.id})
-    } else if ($state.params.id) {
-      $state.go('project-details', {id: $state.params.id})
-    }
+      $state.go('project-details', {id: $state.params.id});
   };
   $scope.$watch(UserV3Service.getCurrentUser, function() {
     var user;
