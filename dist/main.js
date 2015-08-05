@@ -582,11 +582,16 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
     .module('ap-copilot-flow.projects')
     .controller('ProjectsTabController', ProjectsTabController);
 
-  ProjectsTabController.$inject = [];
-  function ProjectsTabController() {
+  ProjectsTabController.$inject = ['$state'];
+  function ProjectsTabController($state) {
     var vm = this;
-    vm.highlightAssignedButton = false;
-    vm.highlightOpenButton = true;
+    if ($state.current.name == 'view-projects.open') {
+      vm.highlightAssignedButton = false;
+      vm.highlightOpenButton = true;
+    } else if ($state.current.name == 'view-projects.assigned') {
+      vm.highlightAssignedButton = true;
+      vm.highlightOpenButton = false;
+    }
 
     vm.assignedButtonSelected = function() {
       vm.highlightOpenButton = false;
