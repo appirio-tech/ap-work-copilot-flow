@@ -585,8 +585,8 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
   ProjectsTabController.$inject = [];
   function ProjectsTabController() {
     var vm = this;
-    vm.highlightAssignedButton = true;
-    vm.highlightOpenButton = false;
+    vm.highlightAssignedButton = false;
+    vm.highlightOpenButton = true;
 
     vm.assignedButtonSelected = function() {
       vm.highlightOpenButton = false;
