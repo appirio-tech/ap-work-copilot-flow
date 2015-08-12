@@ -52,7 +52,7 @@ config = ($stateProvider) ->
         else
           return false;
        ]
-  states['project-details.challenges'] = 
+  states['project-details.challenges'] =
     url         : '/challenges'
     templateUrl : 'views/challenges.html'
     controller: 'ChallengesController'
