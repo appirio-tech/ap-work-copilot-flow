@@ -1,4 +1,8 @@
 # AP Copilot Flow
+[![GitHub version](https://badge.fury.io/gh/appirio-tech%2Fap-work-copilot-flow.svg)](http://badge.fury.io/gh/appirio-tech%2Fap-work-copilot-flow)
+[![Build Status](https://travis-ci.org/appirio-tech/ap-work-copilot-flow.svg?branch=dev)](https://travis-ci.org/appirio-tech/ap-work-copilot-flow)
+[![Coverage Status](https://coveralls.io/repos/appirio-tech/ap-work-copilot-flow/badge.svg?branch=dev&service=github)](https://coveralls.io/github/appirio-tech/ap-work-copilot-flow?branch=dev)
+[![Dependency Status](https://www.versioneye.com/user/projects/55cbbee9dfed0a001f000180/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55cbbee9dfed0a001f000180)
 
 ## Docs
 
@@ -16,6 +20,10 @@
 
 ### Designs
 http://docs.apcopilotservice.apiary.io/#reference/copilot-project-management/individual-calls
+
+### Comitting changes
+
+The bower component served by this repo only includes the dist folder, which is committed. Make sure to ``gulp build`` before adding your files.
 
 ## Development
 ```
