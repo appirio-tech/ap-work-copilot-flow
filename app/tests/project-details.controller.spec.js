@@ -6,16 +6,20 @@ describe('ProjectDetailsController', function () {
     bard.inject(this, '$q', '$controller', '$rootScope', 'ProjectDetailsService', 'UserV3Service');
     flush = function() {$rootScope.$apply()}
     scope = $rootScope.$new();
+
     bard.mockService(ProjectDetailsService, {
       initalizeCopilotWork: $q.when([{id: '123'}]),
       work: {id: '123'},
       _default: $q.when({})
     });
+
     bard.mockService(UserV3Service, {
       getCurrentUser: $q.when({id: '123'})
     })
+
     controller = $controller('ProjectDetailsController');
     flush();
+
   });
 
   bard.verifyNoOutstandingHttpRequests();
