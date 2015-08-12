@@ -4,7 +4,8 @@
   angular.module('ap-copilot-flow', [
     'app.constants',
     'ap-copilot-flow.projects',
-    'ap-copilot-flow.project-details'
+    'ap-copilot-flow.project-details',
+    'appirio-tech-ng-auth'
   ])
 
 })();
