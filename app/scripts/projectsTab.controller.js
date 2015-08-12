@@ -8,12 +8,17 @@
   ProjectsTabController.$inject = ['$state'];
   function ProjectsTabController($state) {
     var vm = this;
-    if ($state.current.name == 'view-projects.open') {
-      vm.highlightAssignedButton = false;
-      vm.highlightOpenButton = true;
-    } else if ($state.current.name == 'view-projects.assigned') {
-      vm.highlightAssignedButton = true;
-      vm.highlightOpenButton = false;
+    vm.highlightAssignedButton = null;
+    vm.highlightOpenButton = null;
+
+    function activate() {
+      if ($state.current.name == 'view-projects.open') {
+        vm.highlightAssignedButton = false;
+        vm.highlightOpenButton = true;
+      } else if ($state.current.name == 'view-projects.assigned') {
+        vm.highlightAssignedButton = true;
+        vm.highlightOpenButton = false;
+      }
     }
 
     vm.assignedButtonSelected = function() {
@@ -25,6 +30,8 @@
       vm.highlightAssignedButton = false;
       vm.highlightOpenButton = true;
     }
+
+    activate();
 
   }
 })();
