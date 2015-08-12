@@ -1,0 +1,10 @@
+@import "work-styles";
+@import "bourbon";
+@import "neat";
+
+.layout-main.copilot-messaging {
+ padding: 1em;
+ textarea {
+   background-color: $primary-color-lightest;
+ }
+ }

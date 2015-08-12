@@ -1,0 +1,19 @@
+@import "work-styles";
+@import "neat";
+
+.layout-main.project-details {
+  // @include main-restricted-desktop();
+
+  main {
+    width: 100%;
+
+    article {
+      h3 {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  @include clearfix();
+}
+
