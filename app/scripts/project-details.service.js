@@ -16,13 +16,6 @@
       currentUserId: null,
       workDetails: {},
 
-      // functions
-      initializeCopilotWork : null,
-      submitClaim: null,
-      submitChallenges: null,
-      projectAvailable: null,
-      showStatusComponent: null,
-      openCreateChallenges: null
     };
 
    service.initializeCopilotWork = function(id) {
@@ -31,21 +24,12 @@
     $http.get(apiUrl+'work/'+id)
       .success(function(data, status, headers, config) {
        service.work = data.result.content;
-       console.log('work request details', service.work)
         service.workDetails[id].status = service.work.status;
        deferred.resolve(service.work);
      }).
      error(function(data, status, headers, config) {
        console.log('error on work details', data)
      });
-
-       // .then(function(data) {
-       //   service.work = data.result.content;
-       //   console.log('work request details', service.work);
-       //   deferred.resolve(service.work);
-       // }).catch(function(e) {
-       //   console.log('error on initialize work', e);
-       // });
        return deferred.promise;
     };
 
@@ -54,7 +38,6 @@
       $http.post(apiUrl+'copilots/'+user.id+'/projects/',
         {"id": projectId}
         ).success(function(data, status, headers, config) {
-         console.log('Updated project status', data);
          $rootScope.$emit('projectClaimed');
          if (!service.workDetails[projectId]) {
             service.workDetails[projectId] = {}
@@ -70,7 +53,7 @@
     var user = UserV3Service.getCurrentUser();
     $http.put(apiUrl+'copilots/'+user.id+'/projects/'+projectId+'',
       {"id": projectId, "estimate": challengesEstimate, "status": "estimated"}
-      ). success(function(data, status, headers, config) {
+      ).success(function(data, status, headers, config) {
        if (!service.workDetails[projectId]) {
             service.workDetails[projectId] = {}
         }

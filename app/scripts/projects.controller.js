@@ -50,26 +50,5 @@
       return $state.current.name === state
     }
 
-    vm.viewProjectDetails = function(project) {
-      if ($state.current.name === 'view-projects.assigned') {
-        $state.go('project-details', {id: project.id, status: project.status})
-      } else if ($state.current.name === 'view-projects.open') {
-        $state.go('project-details', {id: project.id})
-      }
-    }
-
-    // function activate() {
-    //   if ($state.current.name === 'view-projects.open') {
-    //     ProjectsService.getWorkRequests().then(function(data) {
-    //       vm.workRequests = data
-    //     })
-    //    } else if ($state.current.name === 'view-projects.assigned') {
-    //     ProjectsService.getAssignedProjects().then(function(data) {
-    //       vm.workRequests = data
-    //     })
-    //   }
-    // }
-
-    // activate()
   }
 })();

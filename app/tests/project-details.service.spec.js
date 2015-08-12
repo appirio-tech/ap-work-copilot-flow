@@ -14,6 +14,35 @@ describe ('ProjectDetailsService', function () {
       expect(service).to.be.defined;
     });
 
+    it('should have an initializeCopilotWork method', function () {
+      expect(service.initializeCopilotWork).to.exist;
+    });
+
+    it('should have an submitClaim method', function () {
+      expect(service.submitClaim).to.exist;
+    });
+
+    it('should have an submitChallenges method', function () {
+      expect(service.submitChallenges).to.exist;
+    });
+
+    it('should have an launchProject method', function () {
+      expect(service.launchProject).to.exist;
+    });
+
+    it('should have an projectAvailable method', function () {
+      expect(service.projectAvailable).to.exist;
+    });
+
+    it('should have an showStatusComponent method', function () {
+      expect(service.showStatusComponent).to.exist;
+    });
+
+    it('should have an openCreateChallenges method', function () {
+      expect(service.openCreateChallenges).to.exist;
+    });
+
+
     // describe('initializeCopilotWork method', function() {
     //   it ('should initialize the work', function() {
     //     service.initializeCopilotWork('123');

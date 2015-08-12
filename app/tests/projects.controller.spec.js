@@ -36,20 +36,9 @@ describe('ProjectsController', function () {
       expect(controller.typeFilter({requestType: 'code'})).to.equal(true);
     })
 
-  // context('when current state is "assigned"', function() {
-  //   it ('should include project status in route', function() {
-  //     $state.current.name = 'view-projects.assigned'
-  //     controller.viewProjectDetails({id: '123'})
-  //     expect($state.go.calledWith('project-details', {id: '123'})).to.be.ok;
-  //   })
-  // });
-
-  // context('when current state is "open"', function() {
-  //   it ('should not include project status in route', function() {
-  //     $state.current.name = 'view-projects.open'
-  //     controller.viewProjectDetails({id: '123', status: 'approved'})
-  //     expect($state.go).to.have.been.calledWith('project-details', {id: '123'});
-  //   })
-  // });
+  it ('should show detail span if passed the correct state', function() {
+    $state.current.name = 'assigned'
+    expect(controller.showDetailSpan('assigned')).to.be.true
+  })
   });
 });
