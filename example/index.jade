@@ -1,20 +1,19 @@
 doctype html
 html(ng-app='example')
   head
-    = "\n"
-    // removeIf(production)
-    = "\n"
-
-    script(type="text/javascript", src="/scripts/json-fixtures.js")
-
     script(type="text/javascript", src="/bower_components/sinon/index.js")
-
     script(type="text/javascript", src="/bower_components/auto-config-fake-server/dist/auto-config-fake-server.js")
-
-
-    = "\n"
-    // endRemoveIf(production)
-    = "\n"
+    script(type="text/javascript", src="scripts/json-fixtures.js")
+    script(type="text/javascript").
+      AutoConfigFakeServer.init();
+      AutoConfigFakeServer.fakeServer.autoRespond = true;
+      schemas = [
+        //- FIXTURES['bower_components/appirio-tech-api-schemas/apiary/apworkmicroservice.json']
+        FIXTURES['bower_components/appirio-tech-api-schemas/swagger/v3-users.json'],
+        FIXTURES['bower_components/appirio-tech-api-schemas/swagger/v2.json'],
+        FIXTURES['bower_components/appirio-tech-api-schemas/swagger/v3-work.json']
+      ];
+      AutoConfigFakeServer.consume(schemas);
 
     title Copilot App
 
@@ -27,10 +26,11 @@ html(ng-app='example')
     include css-files
 
   body
-    form(ng-hide="vm.authenticated", ng-submit="vm.login(this)")
+    form(ng-submit="vm.login(this)")
       input(type="text", name="username", placeholder="username", ng-model="vm.username")
       input(type="password", name="password", placeholder="password", ng-model="vm.password")
       button(type="submit") Login
+      | {{vm.authenticated}}
     include nav
 
     main.layout-main("role"="main", class="{{ pageClass }}", ui-view="")

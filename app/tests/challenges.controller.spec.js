@@ -4,8 +4,6 @@ describe('ChallengesController', function () {
   var controller, flush
 
   beforeEach(function () {
-    // bard.appModule('ap-copilot-flow')
-    // bard.appModule('ap-copilot-flow.project-details')
     bard.inject(this, '$q', '$controller', '$rootScope', 'ProjectDetailsService');
     flush = function() {$rootScope.$apply()}
     bard.mockService(ProjectDetailsService, {

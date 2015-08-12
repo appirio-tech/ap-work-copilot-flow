@@ -11,9 +11,8 @@
     var vm = this;
 
     vm.authenticated = AuthService.isAuthenticated();
-    console.log('auth', vm.authenticated)
     vm.login = function() {
-      console.log('effers', vm.username, vm.password)
+      console.log('logging in', vm.username, vm.password)
       AuthService.login({
         username: vm.username,
         password: vm.password,

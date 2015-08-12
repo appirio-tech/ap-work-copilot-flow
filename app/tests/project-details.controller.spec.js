@@ -3,7 +3,6 @@ describe('ProjectDetailsController', function () {
   var controller, flush, scope
 
   beforeEach(function () {
-    // bard.appModule('ap-copilot-flow.project-details')
     bard.inject(this, '$q', '$controller', '$rootScope', 'ProjectDetailsService', 'UserV3Service');
     flush = function() {$rootScope.$apply()}
     scope = $rootScope.$new();
