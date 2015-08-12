@@ -16,8 +16,7 @@ window.__karma__.loaded = ->
 
   AutoConfigFakeServer.fakeServer.respondImmediately = true
 
-  schemas = [
-  ]
+  schemas = []
 
   AutoConfigFakeServer.consume schemas
 
