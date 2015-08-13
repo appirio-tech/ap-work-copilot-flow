@@ -20,8 +20,8 @@ configs.templateCache.push
 
 configs.ngConstants =
   constants:
-    apiUrl                  : 'https://api.topcoder-dev.com/v3/' # slash is grandfathered in, need to remove
-    API_URL                 : 'https://api.topcoder-dev.com/v3'
+    apiUrl                  : 'http://api.topcoder.com/v3/' # slash is grandfathered in, need to remove
+    API_URL                 : 'http://api.topcoder.com/v3'
     API_URL_V2              : 'https://api.topcoder.com/v2'
     AVATAR_URL              : 'http://www.topcoder.com'
     SUBMISSION_URL          : 'https://studio.topcoder.com'
