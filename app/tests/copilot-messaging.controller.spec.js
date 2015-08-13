@@ -44,14 +44,5 @@ describe('CopilotMessagingController', function () {
       expect(controller.subscriberId).to.equal('1234')
     })
 
-  //   it ('should filter projects by type', function() {
-  //     controller.selectedType = 'Development'
-  //     expect(controller.typeFilter({requestType: 'code'})).to.equal(true);
-  //   })
-
-  // it ('should show detail span if passed the correct state', function() {
-  //   $state.current.name = 'assigned'
-  //   expect(controller.showDetailSpan('assigned')).to.be.true
-  // })
   });
 });
