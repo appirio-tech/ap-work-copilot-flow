@@ -34,6 +34,7 @@
     service.getAssignedProjects = function() {
       var deferred = $q.defer();
          $rootScope.$watch(UserV3Service.getCurrentUser, function(user) {
+          console.log('user', user)
             if (user) {
             $http.get(apiUrl + 'work?filter=copilotId%3D'+user.id)
             .success(function(data, status, headers, config) {

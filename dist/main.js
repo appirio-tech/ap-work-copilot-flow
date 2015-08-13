@@ -77,6 +77,7 @@
     service.getAssignedProjects = function() {
       var deferred = $q.defer();
          $rootScope.$watch(UserV3Service.getCurrentUser, function(user) {
+          console.log('user', user)
             if (user) {
             $http.get(apiUrl + 'work?filter=copilotId%3D'+user.id)
             .success(function(data, status, headers, config) {
@@ -114,13 +115,6 @@
       currentUserId: null,
       workDetails: {},
 
-      // functions
-      initializeCopilotWork : null,
-      submitClaim: null,
-      submitChallenges: null,
-      projectAvailable: null,
-      showStatusComponent: null,
-      openCreateChallenges: null
     };
 
    service.initializeCopilotWork = function(id) {
@@ -129,21 +123,12 @@
     $http.get(apiUrl+'work/'+id)
       .success(function(data, status, headers, config) {
        service.work = data.result.content;
-       console.log('work request details', service.work)
         service.workDetails[id].status = service.work.status;
        deferred.resolve(service.work);
      }).
      error(function(data, status, headers, config) {
        console.log('error on work details', data)
      });
-
-       // .then(function(data) {
-       //   service.work = data.result.content;
-       //   console.log('work request details', service.work);
-       //   deferred.resolve(service.work);
-       // }).catch(function(e) {
-       //   console.log('error on initialize work', e);
-       // });
        return deferred.promise;
     };
 
@@ -152,7 +137,6 @@
       $http.post(apiUrl+'copilots/'+user.id+'/projects/',
         {"id": projectId}
         ).success(function(data, status, headers, config) {
-         console.log('Updated project status', data);
          $rootScope.$emit('projectClaimed');
          if (!service.workDetails[projectId]) {
             service.workDetails[projectId] = {}
@@ -168,7 +152,7 @@
     var user = UserV3Service.getCurrentUser();
     $http.put(apiUrl+'copilots/'+user.id+'/projects/'+projectId+'',
       {"id": projectId, "estimate": challengesEstimate, "status": "estimated"}
-      ). success(function(data, status, headers, config) {
+      ).success(function(data, status, headers, config) {
        if (!service.workDetails[projectId]) {
             service.workDetails[projectId] = {}
         }
@@ -474,27 +458,6 @@
       return $state.current.name === state
     }
 
-    vm.viewProjectDetails = function(project) {
-      if ($state.current.name === 'view-projects.assigned') {
-        $state.go('project-details', {id: project.id, status: project.status})
-      } else if ($state.current.name === 'view-projects.open') {
-        $state.go('project-details', {id: project.id})
-      }
-    }
-
-    // function activate() {
-    //   if ($state.current.name === 'view-projects.open') {
-    //     ProjectsService.getWorkRequests().then(function(data) {
-    //       vm.workRequests = data
-    //     })
-    //    } else if ($state.current.name === 'view-projects.assigned') {
-    //     ProjectsService.getAssignedProjects().then(function(data) {
-    //       vm.workRequests = data
-    //     })
-    //   }
-    // }
-
-    // activate()
   }
 })();
 
@@ -583,12 +546,17 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
   ProjectsTabController.$inject = ['$state'];
   function ProjectsTabController($state) {
     var vm = this;
-    if ($state.current.name == 'view-projects.open') {
-      vm.highlightAssignedButton = false;
-      vm.highlightOpenButton = true;
-    } else if ($state.current.name == 'view-projects.assigned') {
-      vm.highlightAssignedButton = true;
-      vm.highlightOpenButton = false;
+    vm.highlightAssignedButton = null;
+    vm.highlightOpenButton = null;
+
+    function activate() {
+      if ($state.current.name == 'view-projects.open') {
+        vm.highlightAssignedButton = false;
+        vm.highlightOpenButton = true;
+      } else if ($state.current.name == 'view-projects.assigned') {
+        vm.highlightAssignedButton = true;
+        vm.highlightOpenButton = false;
+      }
     }
 
     vm.assignedButtonSelected = function() {
@@ -601,26 +569,27 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
       vm.highlightOpenButton = true;
     }
 
+    activate();
+
   }
 })();
 'use strict';
 angular.module('ap-copilot-flow.project-details')
 .controller('CopilotMessagingController', CopilotMessagingController);
 
-CopilotMessagingController.$inject = ['$stateParams', '$state', '$window', 'UserV3Service', '$scope'];
-function CopilotMessagingController ($stateParams, $state, $window, UserV3Service, $scope) {
+CopilotMessagingController.$inject = ['$state', '$window', 'UserV3Service', '$scope'];
+function CopilotMessagingController ($state, $window, UserV3Service, $scope) {
   var vm;
   vm = this;
-  vm.threadId = $stateParams.id;
+  vm.threadId = $state.params.id;
   vm.subscriberId = null;
   vm.back = function() {
       $state.go('project-details', {id: $state.params.id});
   };
   $scope.$watch(UserV3Service.getCurrentUser, function() {
-    var user;
-    user = UserV3Service.getCurrentUser();
+    var user = UserV3Service.getCurrentUser();
     if (user) {
-      return vm.subscriberId = user.id;
+     vm.subscriberId = user.id;
     }
   });
   return vm;
@@ -629,6 +598,6 @@ angular.module("ap-copilot-flow").run(["$templateCache", function($templateCache
 $templateCache.put("views/copilot-messaging.html","<a ng-click=\"vm.back()\">Back</a><h1 class=\"messaging-page-header\">Messaging Customer</h1><messaging thread-id=\"{{ vm.threadId }}\" subscriber-id=\"{{ vm.subscriberId }}\"></messaging>");
 $templateCache.put("views/project-details.html","<main class=\"layout-main project-details\"><status-modal ng-if=\"vm.showClaimedModal\" type=\"statusModal\" next-state=\"project-details.challenges\" next-step=\"Create Estimates\"><span>Congratulations! You have claimed this project.</span></status-modal><status-modal type=\"successModal\" ng-if=\"vm.showStatusComponent(\'Estimate\')\" class=\"success\"><h3>Project estimate complete. Awaiting client approval.</h3></status-modal><status-modal type=\"successModal\" ng-if=\"vm.showStatusComponent(\'Launched\')\" class=\"success\"><h3>Your project has been launched!</h3></status-modal><div class=\"detailsContainer\"><h2>{{ vm.work.name | cutOff}}</h2><h3>{{vm.work.requestType | requestType}} Project</h3><br/><button ng-if=\"vm.projectAvailable()\" ng-click=\"vm.submitClaim()\" class=\"details-container\">Claim Project</button><button ng-if=\"vm.showStatusComponent(\'Assigned\')\" ui-sref=\"project-details.challenges\" class=\"details-container\">Create Estimates</button><button ng-if=\"vm.showStatusComponent(\'Approved\')\" ng-click=\"vm.openCreateChallenges()\" class=\"details-container\">Create Challenges</button><button ng-if=\"vm.showStatusComponent(\'awaiting_launch\')\" ng-click=\"vm.launchProject()\" class=\"details-container\">Launch Project</button><button ng-if=\"!vm.projectAvailable()\" ng-click=\"vm.navigateMessaging()\" class=\"details-container\">Message Client</button><br/><br/><br/><hr/><div class=\"summary\"><h5>Project Description</h5><p>{{vm.work.summary}}</p></div><div class=\"similarApps\"><h5>Similar Apps</h5><ul></ul><p ng-repeat=\"competitor in vm.work.competitorApps\">{{competitor}}</p></div><div class=\"usersDescription\"><h5>Description of Users</h5><p>{{vm.work.usageDescription}}</p></div><div class=\"features\"><h5>Features</h5><ul></ul><p ng-repeat=\"feature in vm.work.features\">{{feature.name}}: {{feature.description}}</p></div><div class=\"visualElements\"><h5>Visual Elements</h5></div></div><aside ui-view=\"\"></aside></main>");
 $templateCache.put("views/projectTabs.html","<div class=\"projectsHeading\"><h1>Copilot Projects</h1><div><button ui-sref=\"view-projects.assigned\" ng-click=\"vm.assignedButtonSelected()\" ng-class=\"{\'selected\': vm.highlightAssignedButton}\" class=\"projectsHeading\">My Projects</button><button ui-sref=\"view-projects.open\" ng-click=\"vm.openButtonSelected()\" ng-class=\"{\'selected\': vm.highlightOpenButton}\" class=\"projectsHeading\">Open Projects</button></div><main ui-view=\"\" class=\"layout-main projects\"></main></div>");
-$templateCache.put("views/projects.html","<dropdown ng-hide=\"!vm.workRequests.length\" class=\"dropdown\"><div class=\"dropdown-container\"><p ng-click=\"vm.toggleTypeFilterMenu()\" ng-bind=\"vm.typeFilterValue || \'All Project Types\'\" class=\"dropdown-button type\"><ul ng-class=\"{\'show-menu\': vm.showTypeFilterMenu}\" class=\"dropdown-menu dropdown-select type\"><li ng-repeat=\"typeFilter in vm.typeFilters\" ng-click=\"vm.selectType(typeFilter)\">{{typeFilter}}</li></ul></p></div></dropdown><ul><li ng-repeat=\"project in filteredWorkRequests=(vm.workRequests | orderBy:\'createdAt\':true | filter: vm.typeFilter)\" ng-mouseenter=\"vm.hoverSelect($index)\" ng-mouseleave=\"vm.hoverDeselect($index)\" class=\"projectLi\"><div ng-class=\"{\'hovered\': $index === vm.active, \'grey\': project.requestType === \'code\'}\" class=\"tile\"><h5>{{project.name | cutOff}}</h5><br/><img src=\"https://s3-us-west-1.amazonaws.com/static-images-for-demo/dev-project-icon.png\" ng-class=\"{\'faded\': $index === vm.active}\"/><br/><span class=\"type\">{{project.requestType | requestType | uppercase}}</span><br/><br/><span ng-show=\"vm.showDetailSpan(\'view-projects.open\')\" class=\"created\">Project Created - {{project.createdAt | date:\'MM/dd/yyyy\'}}</span><span ng-show=\"vm.showDetailSpan(\'view-projects.assigned\')\" class=\"created\">{{project.status | status}}</span><br/><button ng-show=\"$index === vm.active\" ng-click=\"vm.viewProjectDetails(project)\" class=\"projectsLi\">{{project.status | statusButton}}</button></div></li></ul><div ng-show=\"!filteredWorkRequests.length\" class=\"noProjectsMessage\"><h1>Sorry, there are no available {{vm.selectedType}} projects at this time.</h1></div>");
+$templateCache.put("views/projects.html","<dropdown ng-hide=\"!vm.workRequests.length\" class=\"dropdown\"><div class=\"dropdown-container\"><p ng-click=\"vm.toggleTypeFilterMenu()\" ng-bind=\"vm.typeFilterValue || \'All Project Types\'\" class=\"dropdown-button type\"><ul ng-class=\"{\'show-menu\': vm.showTypeFilterMenu}\" class=\"dropdown-menu dropdown-select type\"><li ng-repeat=\"typeFilter in vm.typeFilters\" ng-click=\"vm.selectType(typeFilter)\">{{typeFilter}}</li></ul></p></div></dropdown><ul><li ng-repeat=\"project in filteredWorkRequests=(vm.workRequests | orderBy:\'createdAt\':true | filter: vm.typeFilter)\" ng-mouseenter=\"vm.hoverSelect($index)\" ng-mouseleave=\"vm.hoverDeselect($index)\" class=\"projectLi\"><div ng-class=\"{\'hovered\': $index === vm.active, \'grey\': project.requestType === \'code\'}\" class=\"tile\"><h5>{{project.name | cutOff}}</h5><br/><img src=\"https://s3-us-west-1.amazonaws.com/static-images-for-demo/dev-project-icon.png\" ng-class=\"{\'faded\': $index === vm.active}\"/><br/><span class=\"type\">{{project.requestType | requestType | uppercase}}</span><br/><br/><span ng-show=\"vm.showDetailSpan(\'view-projects.open\')\" class=\"created\">Project Created - {{project.createdAt | date:\'MM/dd/yyyy\'}}</span><span ng-show=\"vm.showDetailSpan(\'view-projects.assigned\')\" class=\"created\">{{project.status | status}}</span><br/><button ng-show=\"$index === vm.active\" ui-sref=\"project-details({id: project.id})\" class=\"projectsLi\">{{project.status | statusButton}}</button></div></li></ul><div ng-show=\"!filteredWorkRequests.length\" class=\"noProjectsMessage\"><h1>Sorry, there are no available {{vm.selectedType}} projects at this time.</h1></div>");
 $templateCache.put("views/statusModal.html","<div class=\"statusModal\"><div ng-transclude=\"ng-transclude\" class=\"messageContainer\"></div><br/><button ng-click=\"nextState()\" class=\"modalButton\">{{nextStep}}</button><br/><a ng-click=\"hideModal()\">I\'ll do it later</a></div>");
 $templateCache.put("views/successModal.html","<div class=\"statusModal success\"><div class=\"exit\"><a ng-click=\"hideModal()\">&times;</a></div><div class=\"imageContainer\"><img src=\"https://s3-us-west-1.amazonaws.com/static-images-for-demo/check-solid-green.svg\" class=\"checkmark-green\"/></div><div ng-transclude=\"ng-transclude\" class=\"messageContainer\"></div></div>");}]);
