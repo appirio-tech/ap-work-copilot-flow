@@ -1,4 +1,5 @@
-/* jshint -W117, -W030 */
+'use strict';
+
 describe ('ProjectDetailsService', function () {
   var service, flush
 

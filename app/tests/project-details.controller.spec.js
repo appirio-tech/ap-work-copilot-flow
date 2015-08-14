@@ -1,4 +1,5 @@
 'use strict';
+
 describe('ProjectDetailsController', function () {
   var controller, flush, scope
 

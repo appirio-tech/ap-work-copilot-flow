@@ -1,5 +1,5 @@
-// /* jshint -W117, -W030 */
 'use strict';
+
 describe('ProjectsTabController', function () {
   var controller, flush, scope, state
 
