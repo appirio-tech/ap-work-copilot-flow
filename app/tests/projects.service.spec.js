@@ -1,4 +1,5 @@
-/* jshint -W117, -W030 */
+'use strict';
+
  describe('ProjectsService', function () {
    var service, requests;
 
