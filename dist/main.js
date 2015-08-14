@@ -48,9 +48,9 @@
     .module('ap-copilot-flow.projects')
     .factory('ProjectsService', ProjectsService);
 
-  ProjectsService.$inject = ['$rootScope', '$q', '$http', 'UserV3Service', 'apiUrl'];
+  ProjectsService.$inject = ['$rootScope', '$q', '$http', 'UserV3Service', 'API_URL'];
   /* @ngInject */
-  function ProjectsService($rootScope, $q, $http, UserV3Service, apiUrl) {
+  function ProjectsService($rootScope, $q, $http, UserV3Service, API_URL) {
 
     var service = {
 
@@ -63,7 +63,7 @@
 
     service.getWorkRequests = function() {
       var deferred = $q.defer();
-      $http.get(apiUrl + 'work?filter=copilotId%3Dunassigned')
+      $http.get(API_URL + '/v3/work?filter=copilotId%3Dunassigned')
       .success(function(data, status, headers, config) {
         service.projects = data.result.content;
          deferred.resolve(data.result.content)
@@ -79,7 +79,7 @@
          $rootScope.$watch(UserV3Service.getCurrentUser, function(user) {
           console.log('user', user)
             if (user) {
-            $http.get(apiUrl + 'work?filter=copilotId%3D'+user.id)
+            $http.get(API_URL + '/v3/work?filter=copilotId%3D'+user.id)
             .success(function(data, status, headers, config) {
                service.projects = data.result.content;
                deferred.resolve(data.result.content)
@@ -104,9 +104,9 @@
     .module('ap-copilot-flow.project-details')
     .factory('ProjectDetailsService', ProjectDetailsService);
 
-  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'apiUrl', 'UserV3Service'];
+  ProjectDetailsService.$inject = ['$rootScope', '$http', '$q', 'API_URL', 'UserV3Service'];
 
-  function ProjectDetailsService($rootScope, $http, $q, apiUrl, UserV3Service) {
+  function ProjectDetailsService($rootScope, $http, $q, API_URL, UserV3Service) {
     var service = {
 
       // variables
@@ -120,7 +120,7 @@
    service.initializeCopilotWork = function(id) {
     service.workDetails[id] = {};
     var deferred = $q.defer();
-    $http.get(apiUrl+'work/'+id)
+    $http.get(API_URL+'/v3/work/'+id)
       .success(function(data, status, headers, config) {
        service.work = data.result.content;
         service.workDetails[id].status = service.work.status;
@@ -134,7 +134,7 @@
 
     service.submitClaim= function(projectId) {
       var user = UserV3Service.getCurrentUser();
-      $http.post(apiUrl+'copilots/'+user.id+'/projects/',
+      $http.post(API_URL+'/v3/copilots/'+user.id+'/projects/',
         {"id": projectId}
         ).success(function(data, status, headers, config) {
          $rootScope.$emit('projectClaimed');
@@ -150,7 +150,7 @@
 
    service.submitChallenges = function(projectId, challengesEstimate) {
     var user = UserV3Service.getCurrentUser();
-    $http.put(apiUrl+'copilots/'+user.id+'/projects/'+projectId+'',
+    $http.put(API_URL+'/v3/copilots/'+user.id+'/projects/'+projectId+'',
       {"id": projectId, "estimate": challengesEstimate, "status": "estimated"}
       ).success(function(data, status, headers, config) {
        if (!service.workDetails[projectId]) {
@@ -166,7 +166,7 @@
 
    service.launchProject = function(projectId) {
     var user = UserV3Service.getCurrentUser();
-    $http.put(apiUrl+'/copilots/'+user.id+'/projects/'+projectId+'',
+    $http.put(API_URL+'/v3/copilots/'+user.id+'/projects/'+projectId+'',
       {"id": projectId, "estimate": service.workDetails[projectId].estimate, "status": "launched"}
       ).success(function(data, status, headers, config) {
        if (!service.workDetails[projectId]) {

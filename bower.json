@@ -17,7 +17,7 @@
     "angular-mocks": "1.4.x",
     "sinon": "http://sinonjs.org/releases/sinon-1.12.1.js",
     "auto-config-fake-server": "2.x.x",
-    "appirio-tech-api-schemas": "copilot-api",
+    "appirio-tech-api-schemas": "4.x.x",
     "bardjs": "^0.1.1"
   },
   "dependencies": {
@@ -35,8 +35,8 @@
     "auth0-angular": "4.x.x",
     "a0-angular-storage": "~0.0.9",
     "angular-jwt": "~0.0.6",
-    "appirio-tech-ng-auth": "1.x.x",
-    "appirio-tech-ng-messaging": "2.x.x"
+    "appirio-tech-ng-auth": "2.x.x",
+    "appirio-tech-ng-messaging": "4.x.x"
   },
   "ignore": [
     "**/*",
