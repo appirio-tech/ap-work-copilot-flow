@@ -5,9 +5,9 @@ angular
   .module('ap-copilot-flow.project-details')
   .controller('ProjectDetailsController', ProjectDetailsController);
 
-ProjectDetailsController.$inject = ['$rootScope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service', 'ProjectsService'];
+ProjectDetailsController.$inject = ['$scope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service', 'ProjectsService'];
 
-function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $state, UserV3Service, ProjectsService) {
+function ProjectDetailsController ($scope, $window, ProjectDetailsService, $state, UserV3Service, ProjectsService) {
   var vm = this;
   vm.loading = true;
   vm.userId = null;
@@ -44,7 +44,9 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
       'awaiting_launch',
       'Launched'
     ]
-      return claimedProjectStatuses.indexOf(service.work.status) <  0;
+    if (vm.work) {
+      return claimedProjectStatuses.indexOf(vm.work.status) <  0;
+    }
   }
 
   vm.hideClaimedModal = function() {
@@ -83,7 +85,9 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
   }
 
   vm.showStatusComponent = function(status) {
-    return vm.work.status = status;
+    if (vm.work) {
+      return vm.work.status == status;
+    }
   }
 
   vm.navigateMessaging = function() {

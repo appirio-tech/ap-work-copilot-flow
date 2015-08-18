@@ -5,7 +5,7 @@
     .module('ap-copilot-flow.project-details')
     .factory('ProjectDetailsService', ProjectDetailsService);
 
-  ProjectDetailsService.$inject = ['$resouce', 'API_URL', 'UserV3Service'];
+  ProjectDetailsService.$inject = ['$resource', 'API_URL', 'UserV3Service'];
 
   function ProjectDetailsService($resource, API_URL, UserV3Service) {
 
@@ -25,6 +25,11 @@
       query: {
         method           : 'GET',
         isArray          : true,
+        transformResponse: transformResponse
+      },
+      post: {
+        method           : 'POST',
+        isArray          : false,
         transformResponse: transformResponse
       },
       put: {
