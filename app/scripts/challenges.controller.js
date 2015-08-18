@@ -5,12 +5,14 @@
     .module('ap-copilot-flow.project-details')
     .controller('ChallengesController', ChallengesController);
 
-  ChallengesController.$inject = [ '$rootScope', 'ProjectDetailsService'];
+  ChallengesController.$inject = ['$scope', '$rootScope', 'ProjectDetailsService'];
 
-  function ChallengesController($rootScope, ProjectDetailsService) {
+  function ChallengesController($scope, $rootScope, ProjectDetailsService) {
     var vm   = this;
-    vm.work = ProjectDetailsService.work;
+    vm.work = null;
     vm.title = 'Challenge Estimates';
+    vm.userId = null;
+    vm.showAddedChallenges = false;
     //initialize challenges and estimates menus
     vm.challengeTypes = ['Design', 'Code'];
     vm.challengeCounts = [1, 2, 3, 4];
@@ -62,12 +64,29 @@
         difficultyExplanation: vm.difficultyExplanation,
         challengeEstimates: vm.challenges
       }
-      ProjectDetailsService.submitChallenges(vm.work.id, challengesEstimate);
+
+      var body = {id: vm.work.id, estimate: challengesEstimate, status: "launched"};
+
+      var params = {workId: vm.work.id, userId: vm.userId};
+
+      if (vm.userId) {
+        var resource = ProjectDetailsService.put(params, body);
+        resource.$promise.then(function(data) {
+          console.log('estimates created', data);
+          vm.showAddedChallenges = true;
+          vm.work = data;
+        })
+        resource.$promise.catch(function(data) {
+          console.log('error on estimates', data);
+        })
+      }
     };
 
-    vm.showAddedChallenges = function() {
-      return ProjectDetailsService.showStatusComponent(vm.work.id, 'Estimate');
-    }
+    $scope.$watch(UserV3Service.getCurrentUser, function(user) {
+      if (user) {
+        vm.userId = user.id;
+      }
+    })
 
     }
   })();

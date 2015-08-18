@@ -5,14 +5,15 @@ angular
   .module('ap-copilot-flow.project-details')
   .controller('ProjectDetailsController', ProjectDetailsController);
 
-ProjectDetailsController.$inject = ['$rootScope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service'];
+ProjectDetailsController.$inject = ['$rootScope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service', 'ProjectsService'];
 
-function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $state, UserV3Service) {
+function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $state, UserV3Service, ProjectsService) {
   var vm = this;
   vm.loading = true;
   vm.userId = null;
-  vm.work  =  data;
+  vm.work  =  null;
   vm.showClaimedModal = false;
+  vm.showLaunchButton = false;
   vm.showCreateChallengesModal = false;
   vm.showEstimatesButton = false;
   vm.threadId = null;
@@ -36,8 +37,14 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
   }
 
   vm.projectAvailable = function() {
-    //TODO: Eliminate incomplete once only submitted return
-    return ProjectDetailsService.projectAvailable(vm.work, vm.work.id);
+    var claimedProjectStatuses = [
+      'Assigned',
+      'Estimate',
+      'Approved',
+      'awaiting_launch',
+      'Launched'
+    ]
+      return claimedProjectStatuses.indexOf(service.work.status) <  0;
   }
 
   vm.hideClaimedModal = function() {
@@ -46,7 +53,7 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
 
   vm.openCreateChallenges = function() {
     $window.open('https://www.topcoder.com/direct/home.action', '_blank');
-    ProjectDetailsService.openCreateChallenges(vm.work.id);
+    vm.showLaunchButton = true;
   }
 
   vm.hideCreateChallengesModal = function() {
@@ -54,11 +61,29 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
   }
 
   vm.launchProject = function() {
-    return ProjectDetailsService.launchProject(vm.work.id);
+    var body = {
+      id: vm.work.id,
+      estimate: vm.work.estimate,
+      status: "launched"
+    }
+
+      var params = {workId: vm.work.id, userId: vm.userId}
+
+      if (vm.userId) {
+        var resource = ProjectDetailsService.put(params, body);
+        resource.$promise.then(function(data) {
+          console.log('estimates created', data)
+          vm.work = data;
+          vm.showLaunchButton = true;
+        })
+        resource.$promise.catch(function(data) {
+          console.log('error on launch project', data)
+        })
+      }
   }
 
   vm.showStatusComponent = function(status) {
-    return ProjectDetailsService.showStatusComponent(vm.work.id, status);
+    return vm.work.status = status;
   }
 
   vm.navigateMessaging = function() {
