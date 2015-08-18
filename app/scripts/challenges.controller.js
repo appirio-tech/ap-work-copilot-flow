@@ -5,9 +5,9 @@
     .module('ap-copilot-flow.project-details')
     .controller('ChallengesController', ChallengesController);
 
-  ChallengesController.$inject = ['$scope', '$rootScope', 'ProjectDetailsService'];
+  ChallengesController.$inject = ['$state', '$scope', '$rootScope', 'ProjectDetailsService', 'UserV3Service', 'ProjectsService'];
 
-  function ChallengesController($scope, $rootScope, ProjectDetailsService) {
+  function ChallengesController($state, $scope, $rootScope, ProjectDetailsService, UserV3Service, ProjectsService) {
     var vm   = this;
     vm.work = null;
     vm.title = 'Challenge Estimates';
@@ -65,9 +65,9 @@
         challengeEstimates: vm.challenges
       }
 
-      var body = {id: vm.work.id, estimate: challengesEstimate, status: "launched"};
+      var body = {id: vm.work.id, estimate: challengesEstimate, status: "estimated"};
 
-      var params = {workId: vm.work.id, userId: vm.userId};
+      var params = {projectId: vm.work.id, userId: vm.userId};
 
       if (vm.userId) {
         var resource = ProjectDetailsService.put(params, body);
@@ -75,6 +75,7 @@
           console.log('estimates created', data);
           vm.showAddedChallenges = true;
           vm.work = data;
+          $rootScope.$broadcast('projectEstimated')
         })
         resource.$promise.catch(function(data) {
           console.log('error on estimates', data);
@@ -82,11 +83,28 @@
       }
     };
 
+    function activate() {
+      var params = {workId: $state.params.id}
+        var resource = ProjectsService.get(params)
+        resource.$promise.then(function(data) {
+          vm.work = data;
+        })
+        resource.$promise.catch(function(data) {
+          console.log('error retrieving projects', data)
+        })
+        resource.$promise.finally(function() {
+          vm.loading = false;
+        })
+
+    }
+
     $scope.$watch(UserV3Service.getCurrentUser, function(user) {
       if (user) {
         vm.userId = user.id;
       }
     })
+
+    activate();
 
     }
   })();

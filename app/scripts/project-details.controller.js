@@ -5,24 +5,25 @@ angular
   .module('ap-copilot-flow.project-details')
   .controller('ProjectDetailsController', ProjectDetailsController);
 
-ProjectDetailsController.$inject = ['$scope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service', 'ProjectsService'];
+ProjectDetailsController.$inject = ['$rootScope', '$scope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service', 'ProjectsService'];
 
-function ProjectDetailsController ($scope, $window, ProjectDetailsService, $state, UserV3Service, ProjectsService) {
+function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsService, $state, UserV3Service, ProjectsService) {
   var vm = this;
   vm.loading = true;
   vm.userId = null;
   vm.work  =  null;
   vm.showClaimedModal = false;
+  vm.showEstimatedModal = false;
   vm.showLaunchButton = false;
   vm.showCreateChallengesModal = false;
-  vm.showEstimatesButton = false;
+  vm.showEstimateButton = false;
   vm.threadId = null;
 
   //event listener for displaying modal
-  // $rootScope.$on('projectClaimed', function() {
-  //  vm.showClaimedModal = true;
-  //  vm.showEstimatesButton = true;
-  // });
+  $rootScope.$on('projectEstimated', function() {
+   vm.showEstimatedModal = true;
+   vm.showEstimateButton = false;
+  });
 
   vm.submitClaim = function() {
     if (vm.userId) {
@@ -32,6 +33,7 @@ function ProjectDetailsController ($scope, $window, ProjectDetailsService, $stat
       resource.$promise.then(function(data) {
         vm.work = data;
         vm.showClaimedModal = true;
+        vm.showEstimateButton = true;
       })
     }
   }
@@ -99,6 +101,7 @@ function ProjectDetailsController ($scope, $window, ProjectDetailsService, $stat
       var resource = ProjectsService.get(params)
       resource.$promise.then(function(data) {
         vm.work = data;
+        console.log('le work', data)
       })
       resource.$promise.catch(function(data) {
         console.log('error retrieving projects', data)
