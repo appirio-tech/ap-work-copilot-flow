@@ -1,3 +1,4 @@
+loader(ng-show="vm.loading")
 dropdown.dropdown(ng-hide="!vm.workRequests.length")
   .dropdown-container
     p.dropdown-button.type(ng-click="vm.toggleTypeFilterMenu()", ng-bind="vm.typeFilterValue || 'All Project Types'")
@@ -20,5 +21,5 @@ ul
       span.created(ng-show="vm.showDetailSpan('view-projects.assigned')") {{project.status | status}}
       br
       button.projectsLi(ng-show="$index === vm.active", ui-sref="project-details({id: project.id})") {{project.status | statusButton}}
-.noProjectsMessage(ng-show="!filteredWorkRequests.length")
+.noProjectsMessage(ng-if="!vm.loading && !filteredWorkRequests.length")
   h1 Sorry, there are no available {{vm.selectedType}} projects at this time.

@@ -63,7 +63,7 @@
 
     service.getWorkRequests = function() {
       var deferred = $q.defer();
-      $http.get(API_URL + '/v3/work?filter=copilotId%3Dunassigned')
+      $http.get(API_URL + 'work?filter=copilotId%3Dunassigned')
       .success(function(data, status, headers, config) {
         service.projects = data.result.content;
          deferred.resolve(data.result.content)
@@ -77,9 +77,8 @@
     service.getAssignedProjects = function() {
       var deferred = $q.defer();
          $rootScope.$watch(UserV3Service.getCurrentUser, function(user) {
-          console.log('user', user)
             if (user) {
-            $http.get(API_URL + '/v3/work?filter=copilotId%3D'+user.id)
+            $http.get(API_URL + 'work?filter=copilotId%3D'+user.id)
             .success(function(data, status, headers, config) {
                service.projects = data.result.content;
                deferred.resolve(data.result.content)
@@ -137,6 +136,7 @@
       $http.post(API_URL+'/v3/copilots/'+user.id+'/projects/',
         {"id": projectId}
         ).success(function(data, status, headers, config) {
+          console.log('the data', data)
          $rootScope.$emit('projectClaimed');
          if (!service.workDetails[projectId]) {
             service.workDetails[projectId] = {}

@@ -5,10 +5,11 @@
     .module('ap-copilot-flow.projects')
     .controller('ProjectsController', ProjectsController);
 
-  ProjectsController.$inject = ['ProjectsService', '$state'];
-  function ProjectsController(ProjectsService, $state) {
+  ProjectsController.$inject = ['$scope', '$resource', '$state', 'UserV3Service', 'ProjectsService'];
+  function ProjectsController($scope, $resource, $state, UserV3Service, ProjectsService) {
    var vm = this;
-   vm.workRequests = ProjectsService.projects;
+   vm.loading = true;
+   vm.workRequests = null;
    vm.title = 'View Projects';
    vm.active = null;
    vm.showTypeFilterMenu = false;
@@ -49,6 +50,32 @@
     vm.showDetailSpan = function(state) {
       return $state.current.name === state
     }
+
+  function activate() {
+    var params;
+    //check if user is logged in, load assigned or open
+    $scope.$watch(UserV3Service.getCurrentUser, function(user) {
+      if (user) {
+        if ($state.current.name === 'view-projects.open') {
+          params = {filter: 'copilotId=unassigned'}
+        } else if ($state.current.name === 'view-projects.assigned') {
+          params = {filter:'copilotId='+user.id}
+        }
+      }
+      });
+      var resource = ProjectsService.query(params)
+      resource.$promise.then(function(data) {
+        vm.workRequests = data;
+      })
+      resource.$promise.catch(function(data) {
+        console.log('error retrieving projects', data)
+      })
+      resource.$promise.finally(function() {
+        vm.loading = false;
+      })
+
+      }
+   activate()
 
   }
 })();

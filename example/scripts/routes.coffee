@@ -22,20 +22,20 @@ config = ($stateProvider) ->
     templateUrl : 'views/projects.html'
     controller: 'ProjectsController'
     controllerAs: 'vm'
-    resolve:
-      workRequests: ['ProjectsService', (ProjectsService) ->
-        return ProjectsService.getAssignedProjects();
-      ]
+    # resolve:
+    #   workRequests: ['ProjectsService', (ProjectsService) ->
+    #     return ProjectsService.getAssignedProjects();
+    #   ]
 
   states['view-projects.open'] =
     url         : '/open'
     templateUrl : 'views/projects.html'
     controller: 'ProjectsController'
     controllerAs: 'vm'
-    resolve:
-      workRequests: ['ProjectsService', (ProjectsService) ->
-        return ProjectsService.getWorkRequests();
-      ]
+    # resolve:
+    #   workRequests: ['ProjectsService', (ProjectsService) ->
+    #     return ProjectsService.getWorkRequests();
+    #   ]
 
   states['project-details'] =
     url: '/project-details/:id?/:status?',

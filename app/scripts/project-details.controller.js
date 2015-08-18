@@ -9,21 +9,30 @@ ProjectDetailsController.$inject = ['$rootScope', '$window', 'ProjectDetailsServ
 
 function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $state, UserV3Service) {
   var vm = this;
-  vm.work  =  ProjectDetailsService.work;
+  vm.loading = true;
+  vm.userId = null;
+  vm.work  =  data;
   vm.showClaimedModal = false;
   vm.showCreateChallengesModal = false;
   vm.showEstimatesButton = false;
   vm.threadId = null;
 
   //event listener for displaying modal
-  $rootScope.$on('projectClaimed', function() {
-   vm.showClaimedModal = true;
-   vm.showEstimatesButton = true;
-  });
+  // $rootScope.$on('projectClaimed', function() {
+  //  vm.showClaimedModal = true;
+  //  vm.showEstimatesButton = true;
+  // });
 
   vm.submitClaim = function() {
-    var projectId = vm.work.id;
-    ProjectDetailsService.submitClaim(projectId);
+    if (vm.userId) {
+    var body = {id: vm.work.id};
+    var params = {userId: vm.userId};
+      var resource = ProjectDetailsService.post(params, body);
+      resource.$promise.then(function(data) {
+        vm.work = data;
+        vm.showClaimedModal = true;
+      })
+    }
   }
 
   vm.projectAvailable = function() {
@@ -55,21 +64,29 @@ function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $
   vm.navigateMessaging = function() {
     $state.go('copilot-messaging', {id: $state.params.id})
   }
-  vm.activate = function() {
-  //instantiate userId for messaging's subscriberId
-  // vm.userId = UserV3Service.getCurrentUser().id;
-    if ($state.params.status) {
-      ProjectDetailsService.initializeCopilotWork($state.params.id, $state.params.status).then(function(data) {
+
+  function activate() {
+    var params = {workId: $state.params.id}
+      var resource = ProjectsService.get(params)
+      resource.$promise.then(function(data) {
         vm.work = data;
       })
-    } else {
-      ProjectDetailsService.initializeCopilotWork($state.params.id).then(function(data) {
-        vm.work = data;
+      resource.$promise.catch(function(data) {
+        console.log('error retrieving projects', data)
       })
-    }
+      resource.$promise.finally(function() {
+        vm.loading = false;
+      })
+
   }
 
-  vm.activate()
+  $scope.$watch(UserV3Service.getCurrentUser, function(user) {
+    if (user) {
+      vm.userId = user.id;
+    }
+  })
+
+  activate()
 
 }
 })();
