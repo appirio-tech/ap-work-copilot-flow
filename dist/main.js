@@ -636,6 +636,7 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
       var resource = ProjectsService.get(params)
       resource.$promise.then(function(data) {
         vm.work = data;
+        console.log('le work', data)
       })
       resource.$promise.catch(function(data) {
         console.log('error retrieving projects', data)
