@@ -13,6 +13,7 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
   vm.userId = null;
   vm.work  =  null;
   vm.showClaimedModal = false;
+  vm.showClaimButton = false;
   vm.showEstimatedModal = false;
   vm.showLaunchButton = false;
   vm.showCreateChallengesModal = false;
@@ -30,8 +31,10 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
     var body = {id: vm.work.id};
     var params = {userId: vm.userId};
       var resource = ProjectDetailsService.post(params, body);
+
       resource.$promise.then(function(data) {
         vm.work = data;
+        vm.showClaimButton = true;
         vm.showClaimedModal = true;
         vm.showEstimateButton = true;
       })
@@ -101,6 +104,11 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
       var resource = ProjectsService.get(params)
       resource.$promise.then(function(data) {
         vm.work = data;
+
+        //allow project to be claimed if available
+        if (vm.work.status === 'Submitted') {
+          vm.showClaimButton = true;
+        }
         console.log('le work', data)
       })
       resource.$promise.catch(function(data) {
