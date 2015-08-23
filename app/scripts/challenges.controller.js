@@ -72,7 +72,6 @@
       if (vm.userId) {
         var resource = ProjectDetailsService.put(params, body);
         resource.$promise.then(function(data) {
-          console.log('estimates created', data);
           vm.showAddedChallenges = true;
           vm.work = data;
           $rootScope.$broadcast('projectEstimated')
