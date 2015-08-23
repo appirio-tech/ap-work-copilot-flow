@@ -12,19 +12,18 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
   vm.loading = true;
   vm.userId = null;
   vm.work  =  null;
+  vm.threadId = null;
+
+  //Action buttons based on project status
+  vm.showMessageButton = false;
   vm.showClaimedModal = false;
   vm.showClaimButton = false;
   vm.showEstimatedModal = false;
   vm.showLaunchButton = false;
   vm.showCreateChallengesModal = false;
+  vm.showCreateEstimatesButton = false;
   vm.showEstimateButton = false;
-  vm.threadId = null;
 
-  //event listener for displaying modal
-  $rootScope.$on('projectEstimated', function() {
-   vm.showEstimatedModal = true;
-   vm.showEstimateButton = false;
-  });
 
   vm.submitClaim = function() {
     if (vm.userId) {
@@ -33,10 +32,10 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
       var resource = ProjectDetailsService.post(params, body);
 
       resource.$promise.then(function(data) {
-        vm.work = data;
-        vm.showClaimButton = true;
+        vm.showClaimButton = false;
         vm.showClaimedModal = true;
-        vm.showEstimateButton = true;
+        vm.showCreateEstimatesButton = true;
+        vm.showMessageButton = true;
       })
     }
   }
@@ -50,21 +49,13 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
       'Launched'
     ]
     if (vm.work) {
-      return claimedProjectStatuses.indexOf(vm.work.status) <  0;
+      return claimedProjectStatuses.indexOf(vm.work.status) === -1;
     }
-  }
-
-  vm.hideClaimedModal = function() {
-    vm.showClaimedModal  = false;
   }
 
   vm.openCreateChallenges = function() {
     $window.open('https://www.topcoder.com/direct/home.action', '_blank');
     vm.showLaunchButton = true;
-  }
-
-  vm.hideCreateChallengesModal = function() {
-    vm.showCreateChallengesModal = false;
   }
 
   vm.launchProject = function() {
@@ -79,7 +70,7 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
       if (vm.userId) {
         var resource = ProjectDetailsService.put(params, body);
         resource.$promise.then(function(data) {
-          console.log('estimates created', data)
+          console.log('project launched', data)
           vm.work = data;
           vm.showLaunchButton = true;
         })
@@ -87,12 +78,6 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
           console.log('error on launch project', data)
         })
       }
-  }
-
-  vm.showStatusComponent = function(status) {
-    if (vm.work) {
-      return vm.work.status == status;
-    }
   }
 
   vm.navigateMessaging = function() {
@@ -105,11 +90,21 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
       resource.$promise.then(function(data) {
         vm.work = data;
 
-        //allow project to be claimed if available
-        if (vm.work.status === 'Submitted') {
+        //Show buttons & banners according to project status
+        vm.showMessageButton = true;
+        if (vm.work.status === 'Submitted' || vm.projectAvailable()) {
           vm.showClaimButton = true;
+          //copilot cannot message if project is unclaimed
+          vm.showMessageButton = false;
+        } else if (vm.work.status === 'Assigned') {
+          vm.showCreateEstimatesButton = true;
+        } else if (vm.work.status === 'Estimate') {
+          vm.showEstimatedModal = true;
+        } else if (vm.work.status === 'Approved') {
+          vm.showCreateChallengesButton = true;
+        } else if (vm.work.status === 'Launched') {
+          vm.showLaunchedModal = true
         }
-        console.log('le work', data)
       })
       resource.$promise.catch(function(data) {
         console.log('error retrieving projects', data)
@@ -125,6 +120,12 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
       vm.userId = user.id;
     }
   })
+
+  //event listener for displaying modal
+  $rootScope.$on('projectEstimated', function() {
+   vm.showEstimatedModal = true;
+   vm.showCreateEstimatesButton = false;
+  });
 
   activate()
 

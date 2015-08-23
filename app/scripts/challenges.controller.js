@@ -90,7 +90,7 @@
           vm.work = data;
         })
         resource.$promise.catch(function(data) {
-          console.log('error retrieving projects', data)
+          console.log('error retrieving project', data)
         })
         resource.$promise.finally(function() {
           vm.loading = false;

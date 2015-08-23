@@ -65,7 +65,6 @@
       var resource = ProjectsService.query(params)
       resource.$promise.then(function(data) {
         vm.workRequests = data;
-        console.log('the  projects', data)
       })
       resource.$promise.catch(function(data) {
         console.log('error retrieving projects', data)
