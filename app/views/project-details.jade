@@ -15,7 +15,7 @@ main(class="layout-main project-details")
     br
     button.details-container(ng-if="vm.showClaimButton", ng-click="vm.submitClaim()") Claim Project
     button.details-container(ng-if="vm.showCreateEstimatesButton", ui-sref="project-details.challenges") Create Estimates
-    button.details-container(ng-if="vm.showCreateChallengesButton)", ng-click="vm.openCreateChallenges()") Create Challenges
+    button.details-container(ng-if="vm.showCreateChallengesButton", ng-click="vm.openCreateChallenges()") Create Challenges
     button.details-container(ng-if="vm.showLaunchButton", ng-click="vm.launchProject()") Launch Project
     button.details-container(ng-if="vm.showMessageButton", ng-click="vm.navigateMessaging()") Message Client
     br
