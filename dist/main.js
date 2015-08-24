@@ -121,7 +121,7 @@
       }
     }
 
-    return $resource(url, params, actions)
+    return $resource(url, params, actions);
 
   }
 })();
@@ -263,6 +263,7 @@
     vm.title = 'Challenge Estimates';
     vm.userId = null;
     vm.showAddedChallenges = false;
+
     //initialize challenges and estimates menus
     vm.challengeTypes = ['Design', 'Code'];
     vm.challengeCounts = [1, 2, 3, 4];
@@ -322,7 +323,6 @@
       if (vm.userId) {
         var resource = ProjectDetailsService.put(params, body);
         resource.$promise.then(function(data) {
-          console.log('estimates created', data);
           vm.showAddedChallenges = true;
           vm.work = data;
           $rootScope.$broadcast('projectEstimated')
