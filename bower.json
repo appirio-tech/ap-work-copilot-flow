@@ -38,7 +38,7 @@
     "appirio-tech-ng-auth": "3.x.x",
     "appirio-tech-ng-ui-components": "0.x.x",
     "appirio-tech-ng-messaging": "5.x.x",
-    "appirio-tech-ng-api-services": "copilotServices"
+    "appirio-tech-ng-api-services": "0.x.x"
   },
   "ignore": [
     "**/*",
