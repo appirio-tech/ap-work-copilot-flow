@@ -38894,7 +38894,7 @@ if (typeof global.window.define == 'function' && global.window.define.amd) {
   'use strict';
   var config, dependencies, run;
 
-  dependencies = ['ngResource', 'app.constants', 'ui.router', 'angular-storage', 'angular-jwt', 'auth0'];
+  dependencies = ['ngResource', 'app.constants', 'ui.router', 'angular-storage', 'angular-jwt', 'auth0', 'appirio-tech-ng-api-services'];
 
   config = function($httpProvider, jwtInterceptorProvider, authProvider, AUTH0_DOMAIN, AUTH0_CLIENT_ID) {
     var jwtInterceptor, logout;
@@ -39002,7 +39002,8 @@ if (typeof global.window.define == 'function' && global.window.define.amd) {
       var newAuth, onError, onSuccess, params;
       TokenService.storeRefreshToken(refreshToken);
       onSuccess = function(res) {
-        TokenService.setToken(res.result.content.token);
+        var ref, ref1;
+        TokenService.setToken(res != null ? (ref = res.result) != null ? (ref1 = ref.content) != null ? ref1.token : void 0 : void 0 : void 0);
         loggedIn = true;
         return typeof success === "function" ? success(res) : void 0;
       };
@@ -39050,8 +39051,10 @@ if (typeof global.window.define == 'function' && global.window.define.amd) {
       if (TokenService.tokenIsValid()) {
         if (TokenService.tokenIsExpired()) {
           refreshToken();
+          return false;
+        } else {
+          return true;
         }
-        return true;
       } else {
         return false;
       }
@@ -39070,25 +39073,6 @@ if (typeof global.window.define == 'function' && global.window.define.amd) {
   AuthService.$inject = ['$rootScope', 'AuthorizationsAPIService', 'auth', 'store', 'TokenService'];
 
   angular.module('appirio-tech-ng-auth').factory('AuthService', AuthService);
-
-}).call(this);
-
-(function() {
-  'use strict';
-  var srv;
-
-  srv = function($resource, API_URL) {
-    var params, url;
-    url = API_URL + '/v3/authorizations/:id';
-    params = {
-      id: '@id'
-    };
-    return $resource(url, params);
-  };
-
-  srv.$inject = ['$resource', 'API_URL'];
-
-  angular.module('appirio-tech-ng-auth').factory('AuthorizationsAPIService', srv);
 
 }).call(this);
 
@@ -39157,41 +39141,6 @@ if (typeof global.window.define == 'function' && global.window.define.amd) {
   TokenService.$inject = ['$rootScope', '$http', 'store', 'AUTH0_TOKEN_NAME', 'AUTH0_REFRESH_TOKEN_NAME', 'jwtHelper'];
 
   angular.module('appirio-tech-ng-auth').factory('TokenService', TokenService);
-
-}).call(this);
-
-(function() {
-  'use strict';
-  var srv, transformResponse;
-
-  transformResponse = function(response) {
-    var parsed, ref;
-    parsed = JSON.parse(response);
-    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || {};
-  };
-
-  srv = function($resource, API_URL) {
-    var actions, params, url;
-    url = API_URL + '/v3/users/:id';
-    params = {
-      id: '@id'
-    };
-    actions = {
-      get: {
-        method: 'GET',
-        isArray: false,
-        transformResponse: transformResponse
-      },
-      post: {
-        method: 'POST'
-      }
-    };
-    return $resource(url, params, actions);
-  };
-
-  srv.$inject = ['$resource', 'API_URL'];
-
-  angular.module('appirio-tech-ng-auth').factory('UserV3APIService', srv);
 
 }).call(this);
 
@@ -39397,6 +39346,29 @@ $templateCache.put("views/loader.directive.html","<div class=\"container\"><div 
 
 (function() {
   'use strict';
+  var dir;
+
+  dir = function() {
+    var link;
+    link = function(scope, element, attrs) {
+      return $(element).bind('click', function() {
+        return $(element).focus();
+      });
+    };
+    return {
+      restrict: 'A',
+      link: link
+    };
+  };
+
+  dir.$inject = [];
+
+  angular.module('appirio-tech-ng-ui-components').directive('focusOnClick', dir);
+
+}).call(this);
+
+(function() {
+  'use strict';
   var AvatarController;
 
   AvatarController = function($scope) {
@@ -39465,5 +39437,416 @@ $templateCache.put("views/loader.directive.html","<div class=\"container\"><div 
   };
 
   angular.module('appirio-tech-ng-ui-components').filter('timeLapse', filter);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var dependencies;
+
+  dependencies = ['ui.router', 'ngResource', 'app.constants'];
+
+  angular.module('appirio-tech-ng-api-services', dependencies);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv, transformResponse;
+
+  transformResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || {};
+  };
+
+  srv = function($resource, API_URL) {
+    var actions, params, url;
+    url = API_URL + '/v3/users/:id';
+    params = {
+      id: '@id'
+    };
+    actions = {
+      get: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      },
+      post: {
+        method: 'POST'
+      }
+    };
+    return $resource(url, params, actions);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('UserV3APIService', srv);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv;
+
+  srv = function($resource, API_URL) {
+    var params, url;
+    url = API_URL + '/v3/authorizations/:id';
+    params = {
+      id: '@id'
+    };
+    return $resource(url, params);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('AuthorizationsAPIService', srv);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv, transformResponse;
+
+  transformResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || {};
+  };
+
+  srv = function($resource, API_URL) {
+    var actions, params, url;
+    url = API_URL + '/v3/projects/:workId/submissions/final-fixes';
+    params = {
+      workId: '@workId'
+    };
+    actions = {
+      put: {
+        method: 'PUT',
+        isArray: false,
+        transformResponse: transformResponse
+      },
+      get: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      }
+    };
+    return $resource(url, params, actions);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('FinalFixesAPIService', srv);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv, transformResponse;
+
+  transformResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || [];
+  };
+
+  srv = function($resource, API_URL) {
+    var methods, params, url;
+    url = API_URL + '/v3/messages/:id';
+    params = {
+      id: '@id'
+    };
+    methods = {
+      put: {
+        method: 'PUT'
+      }
+    };
+    return $resource(url, {}, methods);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('MessagesAPIService', srv);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv, transformResponse;
+
+  transformResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || [];
+  };
+
+  srv = function($resource, API_URL) {
+    var methods, params, url;
+    url = API_URL + '/v3/projects/:workId/submissions';
+    params = {
+      workId: '@workId',
+      phase: '@phase'
+    };
+    methods = {
+      query: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      },
+      get: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      }
+    };
+    return $resource(url, params, methods);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('SubmissionAPIService', srv);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv, transformResponse, updateRank;
+
+  transformResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || {};
+  };
+
+  updateRank = function(submission) {
+    var dataToUpdate;
+    dataToUpdate = {
+      rank: submission.rank
+    };
+    return dataToUpdate;
+  };
+
+  srv = function($resource, API_URL) {
+    var actions, params, url;
+    url = API_URL + '/v3/projects/:workId/submissions/:submissionId';
+    params = {
+      workId: '@workId',
+      submissionId: '@submissionId'
+    };
+    actions = {
+      query: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      },
+      get: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      },
+      updateRank: {
+        method: 'PUT',
+        transformRequest: updateRank
+      }
+    };
+    return $resource(url, params, actions);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('SubmissionDetailAPIService', srv);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv, transformResponse;
+
+  transformResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || {};
+  };
+
+  srv = function($resource, API_URL) {
+    var actions, params, url;
+    url = API_URL + '/v3/threads/:id';
+    params = {
+      id: '@id',
+      subscriberId: '@subscriberId'
+    };
+    actions = {
+      query: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      },
+      get: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      }
+    };
+    return $resource(url, params, actions);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('ThreadsAPIService', srv);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv, transformResponse;
+
+  transformResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || [];
+  };
+
+  srv = function($resource, API_URL) {
+    var methods, params, url;
+    url = API_URL + '/v3/work/:workId/timeline';
+    params = {
+      workId: '@workId'
+    };
+    methods = {
+      query: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      },
+      get: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      }
+    };
+    return $resource(url, params, methods);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('TimelineAPIService', srv);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv, transformResponse;
+
+  transformResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || [];
+  };
+
+  srv = function($resource, API_URL) {
+    var methods, params, url;
+    url = API_URL + '/v3/work/:id';
+    params = {
+      id: '@id'
+    };
+    methods = {
+      put: {
+        method: 'PUT',
+        isArray: false,
+        transformResponse: transformResponse
+      },
+      get: {
+        method: 'GET',
+        isArray: true,
+        transformResponse: transformResponse
+      }
+    };
+    return $resource(url, {}, methods);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('WorkAPIService', srv);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv, transformResponse;
+
+  transformResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || [];
+  };
+
+  srv = function($resource, API_URL) {
+    var methods, params, url;
+    url = API_URL + '/v3/work/:workId';
+    params = {
+      workId: '@workId'
+    };
+    methods = {
+      query: {
+        method: 'GET',
+        isArray: true,
+        transformResponse: transformResponse
+      },
+      get: {
+        method: 'GET',
+        isArray: false,
+        transformResponse: transformResponse
+      }
+    };
+    return $resource(url, {}, methods);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('CopilotProjectsService', srv);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var srv, transformResponse;
+
+  transformResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || [];
+  };
+
+  srv = function($resource, API_URL) {
+    var methods, params, url;
+    url = API_URL + '/v3/copilots/:userId/projects/:projectId';
+    params = {
+      userId: '@userId',
+      projectId: '@projectId'
+    };
+    methods = {
+      query: {
+        method: 'GET',
+        isArray: true,
+        transformResponse: transformResponse
+      },
+      get: {
+        method: 'GET',
+        isArray: true,
+        transformResponse: transformResponse
+      },
+      post: {
+        method: 'POST',
+        isArray: false,
+        transformResponse: transformResponse
+      }
+    };
+    return $resource(url, {}, methods);
+  };
+
+  srv.$inject = ['$resource', 'API_URL'];
+
+  angular.module('appirio-tech-ng-api-services').factory('CopilotProjectDetailsService', srv);
 
 }).call(this);
