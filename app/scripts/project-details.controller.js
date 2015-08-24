@@ -5,9 +5,9 @@ angular
   .module('ap-copilot-flow.project-details')
   .controller('ProjectDetailsController', ProjectDetailsController);
 
-ProjectDetailsController.$inject = ['$rootScope', '$scope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service', 'ProjectsService'];
+ProjectDetailsController.$inject = ['$rootScope', '$scope', '$window', 'CopilotProjectDetailsService', '$state', 'UserV3Service', 'CopilotProjectsService'];
 
-function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsService, $state, UserV3Service, ProjectsService) {
+function ProjectDetailsController ($rootScope, $scope, $window, CopilotProjectDetailsService, $state, UserV3Service, CopilotProjectsService) {
   var vm = this;
   vm.loading = true;
   vm.userId = null;
@@ -29,7 +29,7 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
     if (vm.userId) {
     var body = {id: vm.work.id};
     var params = {userId: vm.userId};
-      var resource = ProjectDetailsService.post(params, body);
+      var resource = CopilotProjectDetailsService.post(params, body);
 
       resource.$promise.then(function(data) {
         vm.showClaimButton = false;
@@ -68,7 +68,7 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
       var params = {workId: vm.work.id, userId: vm.userId}
 
       if (vm.userId) {
-        var resource = ProjectDetailsService.put(params, body);
+        var resource = CopilotProjectDetailsService.put(params, body);
         resource.$promise.then(function(data) {
           console.log('project launched', data)
           vm.work = data;
@@ -86,7 +86,7 @@ function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsSe
 
   function activate() {
     var params = {workId: $state.params.id}
-      var resource = ProjectsService.get(params)
+      var resource = CopilotProjectsService.get(params)
       resource.$promise.then(function(data) {
         vm.work = data;
 

@@ -5,9 +5,9 @@
     .module('ap-copilot-flow.project-details')
     .controller('ChallengesController', ChallengesController);
 
-  ChallengesController.$inject = ['$state', '$scope', '$rootScope', 'ProjectDetailsService', 'UserV3Service', 'ProjectsService'];
+  ChallengesController.$inject = ['$state', '$scope', '$rootScope', 'CopilotProjectDetailsService', 'UserV3Service', 'ProjectsService'];
 
-  function ChallengesController($state, $scope, $rootScope, ProjectDetailsService, UserV3Service, ProjectsService) {
+  function ChallengesController($state, $scope, $rootScope, CopilotProjectDetailsService, UserV3Service, ProjectsService) {
     var vm   = this;
     vm.work = null;
     vm.title = 'Challenge Estimates';
@@ -71,7 +71,7 @@
       var params = {projectId: vm.work.id, userId: vm.userId};
 
       if (vm.userId) {
-        var resource = ProjectDetailsService.put(params, body);
+        var resource = CopilotProjectDetailsService.put(params, body);
         resource.$promise.then(function(data) {
           vm.showAddedChallenges = true;
           vm.work = data;
