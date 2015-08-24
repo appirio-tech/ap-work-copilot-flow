@@ -39804,7 +39804,7 @@ $templateCache.put("views/loader.directive.html","<div class=\"container\"><div 
 
   srv.$inject = ['$resource', 'API_URL'];
 
-  angular.module('appirio-tech-ng-api-services').factory('CopilotProjectsService', srv);
+  angular.module('appirio-tech-ng-api-services').factory('CopilotProjectsAPIService', srv);
 
 }).call(this);
 
@@ -39831,9 +39831,9 @@ $templateCache.put("views/loader.directive.html","<div class=\"container\"><div 
         isArray: true,
         transformResponse: transformResponse
       },
-      get: {
-        method: 'GET',
-        isArray: true,
+      put: {
+        method: 'PUT',
+        isArray: false,
         transformResponse: transformResponse
       },
       post: {
@@ -39847,6 +39847,6 @@ $templateCache.put("views/loader.directive.html","<div class=\"container\"><div 
 
   srv.$inject = ['$resource', 'API_URL'];
 
-  angular.module('appirio-tech-ng-api-services').factory('CopilotProjectDetailsService', srv);
+  angular.module('appirio-tech-ng-api-services').factory('CopilotProjectDetailsAPIService', srv);
 
 }).call(this);

@@ -5,8 +5,8 @@
     .module('ap-copilot-flow.projects')
     .controller('ProjectsController', ProjectsController);
 
-  ProjectsController.$inject = ['$scope', '$resource', '$state', 'UserV3Service', 'CopilotProjectsService'];
-  function ProjectsController($scope, $resource, $state, UserV3Service, CopilotProjectsService) {
+  ProjectsController.$inject = ['$scope', '$resource', '$state', 'UserV3Service', 'CopilotProjectsAPIService'];
+  function ProjectsController($scope, $resource, $state, UserV3Service, CopilotProjectsAPIService) {
    var vm = this;
    vm.loading = true;
    vm.workRequests = null;
@@ -62,7 +62,7 @@
           params = {filter:'copilotId='+user.id}
         }
       }
-      var resource = CopilotProjectsService.query(params)
+      var resource = CopilotProjectsAPIService.query(params)
       resource.$promise.then(function(data) {
         vm.workRequests = data;
       })

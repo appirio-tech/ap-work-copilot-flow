@@ -255,9 +255,9 @@
     .module('ap-copilot-flow.project-details')
     .controller('ChallengesController', ChallengesController);
 
-  ChallengesController.$inject = ['$state', '$scope', '$rootScope', 'CopilotProjectDetailsService', 'UserV3Service', 'CopilotProjectsService'];
+  ChallengesController.$inject = ['$state', '$scope', '$rootScope', 'CopilotProjectDetailsAPIService', 'UserV3Service', 'CopilotProjectsAPIService'];
 
-  function ChallengesController($state, $scope, $rootScope, CopilotProjectDetailsService, UserV3Service, CopilotProjectsService) {
+  function ChallengesController($state, $scope, $rootScope, CopilotProjectDetailsAPIService, UserV3Service, CopilotProjectsAPIService) {
     var vm   = this;
     vm.work = null;
     vm.title = 'Challenge Estimates';
@@ -321,7 +321,7 @@
       var params = {projectId: vm.work.id, userId: vm.userId};
 
       if (vm.userId) {
-        var resource = CopilotProjectDetailsService.put(params, body);
+        var resource = CopilotProjectDetailsAPIService.put(params, body);
         resource.$promise.then(function(data) {
           vm.showAddedChallenges = true;
           vm.work = data;
@@ -335,7 +335,7 @@
 
     function activate() {
       var params = {workId: $state.params.id}
-        var resource = CopilotProjectsService.get(params)
+        var resource = CopilotProjectsAPIService.get(params)
         resource.$promise.then(function(data) {
           vm.work = data;
         })
@@ -366,8 +366,8 @@
     .module('ap-copilot-flow.projects')
     .controller('ProjectsController', ProjectsController);
 
-  ProjectsController.$inject = ['$scope', '$resource', '$state', 'UserV3Service', 'CopilotProjectsService'];
-  function ProjectsController($scope, $resource, $state, UserV3Service, CopilotProjectsService) {
+  ProjectsController.$inject = ['$scope', '$resource', '$state', 'UserV3Service', 'CopilotProjectsAPIService'];
+  function ProjectsController($scope, $resource, $state, UserV3Service, CopilotProjectsAPIService) {
    var vm = this;
    vm.loading = true;
    vm.workRequests = null;
@@ -423,7 +423,7 @@
           params = {filter:'copilotId='+user.id}
         }
       }
-      var resource = CopilotProjectsService.query(params)
+      var resource = CopilotProjectsAPIService.query(params)
       resource.$promise.then(function(data) {
         vm.workRequests = data;
       })
@@ -447,9 +447,9 @@ angular
   .module('ap-copilot-flow.project-details')
   .controller('ProjectDetailsController', ProjectDetailsController);
 
-ProjectDetailsController.$inject = ['$rootScope', '$scope', '$window', 'CopilotProjectDetailsService', '$state', 'UserV3Service', 'CopilotProjectsService'];
+ProjectDetailsController.$inject = ['$rootScope', '$scope', '$window', 'CopilotProjectDetailsAPIService', '$state', 'UserV3Service', 'CopilotProjectsAPIService'];
 
-function ProjectDetailsController ($rootScope, $scope, $window, CopilotProjectDetailsService, $state, UserV3Service, CopilotProjectsService) {
+function ProjectDetailsController ($rootScope, $scope, $window, CopilotProjectDetailsAPIService, $state, UserV3Service, CopilotProjectsAPIService) {
   var vm = this;
   vm.loading = true;
   vm.userId = null;
@@ -471,7 +471,7 @@ function ProjectDetailsController ($rootScope, $scope, $window, CopilotProjectDe
     if (vm.userId) {
     var body = {id: vm.work.id};
     var params = {userId: vm.userId};
-      var resource = CopilotProjectDetailsService.post(params, body);
+      var resource = CopilotProjectDetailsAPIService.post(params, body);
 
       resource.$promise.then(function(data) {
         vm.showClaimButton = false;
@@ -510,7 +510,7 @@ function ProjectDetailsController ($rootScope, $scope, $window, CopilotProjectDe
       var params = {workId: vm.work.id, userId: vm.userId}
 
       if (vm.userId) {
-        var resource = CopilotProjectDetailsService.put(params, body);
+        var resource = CopilotProjectDetailsAPIService.put(params, body);
         resource.$promise.then(function(data) {
           console.log('project launched', data)
           vm.work = data;
@@ -528,7 +528,7 @@ function ProjectDetailsController ($rootScope, $scope, $window, CopilotProjectDe
 
   function activate() {
     var params = {workId: $state.params.id}
-      var resource = CopilotProjectsService.get(params)
+      var resource = CopilotProjectsAPIService.get(params)
       resource.$promise.then(function(data) {
         vm.work = data;
 
