@@ -255,9 +255,9 @@
     .module('ap-copilot-flow.project-details')
     .controller('ChallengesController', ChallengesController);
 
-  ChallengesController.$inject = ['$state', '$scope', '$rootScope', 'CopilotProjectDetailsService', 'UserV3Service', 'ProjectsService'];
+  ChallengesController.$inject = ['$state', '$scope', '$rootScope', 'CopilotProjectDetailsService', 'UserV3Service', 'CopilotProjectsService'];
 
-  function ChallengesController($state, $scope, $rootScope, CopilotProjectDetailsService, UserV3Service, ProjectsService) {
+  function ChallengesController($state, $scope, $rootScope, CopilotProjectDetailsService, UserV3Service, CopilotProjectsService) {
     var vm   = this;
     vm.work = null;
     vm.title = 'Challenge Estimates';
@@ -335,7 +335,7 @@
 
     function activate() {
       var params = {workId: $state.params.id}
-        var resource = ProjectsService.get(params)
+        var resource = CopilotProjectsService.get(params)
         resource.$promise.then(function(data) {
           vm.work = data;
         })
