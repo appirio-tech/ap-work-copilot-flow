@@ -13,6 +13,7 @@
     vm.title = 'Challenge Estimates';
     vm.userId = null;
     vm.showAddedChallenges = false;
+
     //initialize challenges and estimates menus
     vm.challengeTypes = ['Design', 'Code'];
     vm.challengeCounts = [1, 2, 3, 4];

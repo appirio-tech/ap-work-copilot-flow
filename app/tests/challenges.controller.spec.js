@@ -1,17 +1,18 @@
 'use strict';
 
-describe('ChallengesController', function () {
-  var controller, flush
+describe.only ('ChallengesController', function () {
+  var controller, flush, scope
 
   beforeEach(function () {
     bard.inject(this, '$q', '$controller', '$rootScope', 'ProjectDetailsService');
     flush = function() {$rootScope.$apply()}
     bard.mockService(ProjectDetailsService, {
-      initalizeCopilotWork: $q.when([{id: '123'}]),
-      work: {id: '123'},
       _default: $q.when({})
     });
-    controller = $controller('ChallengesController');
+
+    scope =  $rootScope.$new()
+    controller = $controller('ChallengesController', {$scope: scope});
+    scope.vm   = controller
     flush();
   });
 
