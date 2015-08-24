@@ -5,71 +5,129 @@ angular
   .module('ap-copilot-flow.project-details')
   .controller('ProjectDetailsController', ProjectDetailsController);
 
-ProjectDetailsController.$inject = ['$rootScope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service'];
+ProjectDetailsController.$inject = ['$rootScope', '$scope', '$window', 'ProjectDetailsService', '$state', 'UserV3Service', 'ProjectsService'];
 
-function ProjectDetailsController ($rootScope, $window, ProjectDetailsService, $state, UserV3Service) {
+function ProjectDetailsController ($rootScope, $scope, $window, ProjectDetailsService, $state, UserV3Service, ProjectsService) {
   var vm = this;
-  vm.work  =  ProjectDetailsService.work;
-  vm.showClaimedModal = false;
-  vm.showCreateChallengesModal = false;
-  vm.showEstimatesButton = false;
+  vm.loading = true;
+  vm.userId = null;
+  vm.work  =  null;
   vm.threadId = null;
 
-  //event listener for displaying modal
-  $rootScope.$on('projectClaimed', function() {
-   vm.showClaimedModal = true;
-   vm.showEstimatesButton = true;
-  });
+  //Action buttons based on project status
+  vm.showMessageButton = false;
+  vm.showClaimedModal = false;
+  vm.showClaimButton = false;
+  vm.showEstimatedModal = false;
+  vm.showLaunchButton = false;
+  vm.showCreateChallengesModal = false;
+  vm.showCreateEstimatesButton = false;
+  vm.showEstimateButton = false;
+
 
   vm.submitClaim = function() {
-    var projectId = vm.work.id;
-    ProjectDetailsService.submitClaim(projectId);
+    if (vm.userId) {
+    var body = {id: vm.work.id};
+    var params = {userId: vm.userId};
+      var resource = ProjectDetailsService.post(params, body);
+
+      resource.$promise.then(function(data) {
+        vm.showClaimButton = false;
+        vm.showClaimedModal = true;
+        vm.showCreateEstimatesButton = true;
+        vm.showMessageButton = true;
+      })
+    }
   }
 
   vm.projectAvailable = function() {
-    //TODO: Eliminate incomplete once only submitted return
-    return ProjectDetailsService.projectAvailable(vm.work, vm.work.id);
-  }
-
-  vm.hideClaimedModal = function() {
-    vm.showClaimedModal  = false;
+    var claimedProjectStatuses = [
+      'Assigned',
+      'Estimate',
+      'Approved',
+      'awaiting_launch',
+      'Launched'
+    ]
+    if (vm.work) {
+      return claimedProjectStatuses.indexOf(vm.work.status) === -1;
+    }
   }
 
   vm.openCreateChallenges = function() {
     $window.open('https://www.topcoder.com/direct/home.action', '_blank');
-    ProjectDetailsService.openCreateChallenges(vm.work.id);
-  }
-
-  vm.hideCreateChallengesModal = function() {
-    vm.showCreateChallengesModal = false;
+    vm.showLaunchButton = true;
   }
 
   vm.launchProject = function() {
-    return ProjectDetailsService.launchProject(vm.work.id);
-  }
+    var body = {
+      id: vm.work.id,
+      estimate: vm.work.estimate,
+      status: "launched"
+    }
 
-  vm.showStatusComponent = function(status) {
-    return ProjectDetailsService.showStatusComponent(vm.work.id, status);
+      var params = {workId: vm.work.id, userId: vm.userId}
+
+      if (vm.userId) {
+        var resource = ProjectDetailsService.put(params, body);
+        resource.$promise.then(function(data) {
+          console.log('project launched', data)
+          vm.work = data;
+          vm.showLaunchButton = true;
+        })
+        resource.$promise.catch(function(data) {
+          console.log('error on launch project', data)
+        })
+      }
   }
 
   vm.navigateMessaging = function() {
     $state.go('copilot-messaging', {id: $state.params.id})
   }
-  vm.activate = function() {
-  //instantiate userId for messaging's subscriberId
-  // vm.userId = UserV3Service.getCurrentUser().id;
-    if ($state.params.status) {
-      ProjectDetailsService.initializeCopilotWork($state.params.id, $state.params.status).then(function(data) {
+
+  function activate() {
+    var params = {workId: $state.params.id}
+      var resource = ProjectsService.get(params)
+      resource.$promise.then(function(data) {
         vm.work = data;
+
+        //Show buttons & banners according to project status
+        vm.showMessageButton = true;
+        if (vm.work.status === 'Submitted' || vm.projectAvailable()) {
+          vm.showClaimButton = true;
+          //copilot cannot message if project is unclaimed
+          vm.showMessageButton = false;
+        } else if (vm.work.status === 'Assigned') {
+          vm.showCreateEstimatesButton = true;
+        } else if (vm.work.status === 'Estimate') {
+          vm.showEstimatedModal = true;
+        } else if (vm.work.status === 'Approved') {
+          vm.showCreateChallengesButton = true;
+        } else if (vm.work.status === 'Launched') {
+          vm.showLaunchedModal = true
+        }
       })
-    } else {
-      ProjectDetailsService.initializeCopilotWork($state.params.id).then(function(data) {
-        vm.work = data;
+      resource.$promise.catch(function(data) {
+        console.log('error retrieving projects', data)
       })
-    }
+      resource.$promise.finally(function() {
+        vm.loading = false;
+      })
+
   }
 
-  vm.activate()
+  $scope.$watch(UserV3Service.getCurrentUser, function(user) {
+    if (user) {
+      vm.userId = user.id;
+    }
+  })
+
+  //event listener for displaying modal
+  $rootScope.$on('projectEstimated', function() {
+   vm.showEstimatedModal = true;
+   vm.showCreateEstimatesButton = false;
+  });
+
+  activate()
 
 }
 })();

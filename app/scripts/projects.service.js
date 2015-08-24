@@ -5,50 +5,34 @@
     .module('ap-copilot-flow.projects')
     .factory('ProjectsService', ProjectsService);
 
-  ProjectsService.$inject = ['$rootScope', '$q', '$http', 'UserV3Service', 'API_URL'];
-  /* @ngInject */
-  function ProjectsService($rootScope, $q, $http, UserV3Service, API_URL) {
+  ProjectsService.$inject = ['$resource', 'UserV3Service', 'API_URL'];
 
-    var service = {
+  function ProjectsService($resource, UserV3Service, API_URL) {
+    var url = API_URL + '/v3/work/:workId'
 
-      projects: [],
-      // functions
-      getWorkRequests: null,
-      getAssignedProjects: null
+     function transformResponse (response) {
+      var parsed = JSON.parse(response)
+      return parsed.result.content? parsed.result.content : {}
+    }
 
-    };
+    var params  = {
+      workId      : '@workId'
+    }
 
-    service.getWorkRequests = function() {
-      var deferred = $q.defer();
-      $http.get(API_URL + '/v3/work?filter=copilotId%3Dunassigned')
-      .success(function(data, status, headers, config) {
-        service.projects = data.result.content;
-         deferred.resolve(data.result.content)
-        }).
-          error(function(data, status, headers, config) {
-            console.log('error getting projects', data);
-        });
-        return deferred.promise
-     };
-
-    service.getAssignedProjects = function() {
-      var deferred = $q.defer();
-         $rootScope.$watch(UserV3Service.getCurrentUser, function(user) {
-            if (user) {
-            $http.get(API_URL + '/v3/work?filter=copilotId%3D'+user.id)
-            .success(function(data, status, headers, config) {
-               service.projects = data.result.content;
-               deferred.resolve(data.result.content)
-              })
-            .error(function(data, status, headers, config) {
-              console.log('error getting projects', data);
-            });
-            }
-          })
-        return deferred.promise
+    var actions = {
+      query: {
+        method           : 'GET',
+        isArray          : true,
+        transformResponse: transformResponse
+      },
+      get: {
+        method           : 'GET',
+        isArray          : false,
+        transformResponse: transformResponse
       }
+    }
 
-    return service;
+    return $resource(url, params, actions)
 
   }
 })();

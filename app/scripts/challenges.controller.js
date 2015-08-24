@@ -5,12 +5,15 @@
     .module('ap-copilot-flow.project-details')
     .controller('ChallengesController', ChallengesController);
 
-  ChallengesController.$inject = [ '$rootScope', 'ProjectDetailsService'];
+  ChallengesController.$inject = ['$state', '$scope', '$rootScope', 'ProjectDetailsService', 'UserV3Service', 'ProjectsService'];
 
-  function ChallengesController($rootScope, ProjectDetailsService) {
+  function ChallengesController($state, $scope, $rootScope, ProjectDetailsService, UserV3Service, ProjectsService) {
     var vm   = this;
-    vm.work = ProjectDetailsService.work;
+    vm.work = null;
     vm.title = 'Challenge Estimates';
+    vm.userId = null;
+    vm.showAddedChallenges = false;
+
     //initialize challenges and estimates menus
     vm.challengeTypes = ['Design', 'Code'];
     vm.challengeCounts = [1, 2, 3, 4];
@@ -62,12 +65,46 @@
         difficultyExplanation: vm.difficultyExplanation,
         challengeEstimates: vm.challenges
       }
-      ProjectDetailsService.submitChallenges(vm.work.id, challengesEstimate);
+
+      var body = {id: vm.work.id, estimate: challengesEstimate, status: "estimated"};
+
+      var params = {projectId: vm.work.id, userId: vm.userId};
+
+      if (vm.userId) {
+        var resource = ProjectDetailsService.put(params, body);
+        resource.$promise.then(function(data) {
+          vm.showAddedChallenges = true;
+          vm.work = data;
+          $rootScope.$broadcast('projectEstimated')
+        })
+        resource.$promise.catch(function(data) {
+          console.log('error on estimates', data);
+        })
+      }
     };
 
-    vm.showAddedChallenges = function() {
-      return ProjectDetailsService.showStatusComponent(vm.work.id, 'Estimate');
+    function activate() {
+      var params = {workId: $state.params.id}
+        var resource = ProjectsService.get(params)
+        resource.$promise.then(function(data) {
+          vm.work = data;
+        })
+        resource.$promise.catch(function(data) {
+          console.log('error retrieving project', data)
+        })
+        resource.$promise.finally(function() {
+          vm.loading = false;
+        })
+
     }
+
+    $scope.$watch(UserV3Service.getCurrentUser, function(user) {
+      if (user) {
+        vm.userId = user.id;
+      }
+    })
+
+    activate();
 
     }
   })();

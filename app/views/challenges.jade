@@ -1,6 +1,6 @@
 
-div(class="challengesContainer", ng-hide="vm.showAddedChallenges()")
-  h5(ng-hide="vm.showAddedChallenges()") Create Project Estimate
+div(class="challengesContainer", ng-hide="vm.showAddedChallenges")
+  h5(ng-hide="vm.showAddedChallenges") Create Project Estimate
   dropdown.dropdown
     .dropdown-container
       p.dropdown-button.type(ng-click="vm.toggleMenu('showTypeMenu')", ng-bind="vm.challenge.challengeType.charAt(0).toUpperCase() +  vm.challenge.challengeType.slice(1) || 'Type of Challenge'")
@@ -41,7 +41,7 @@ div(class="challengesContainer", ng-hide="vm.showAddedChallenges()")
   br
   button.submitEstimates(ng-click="vm.submit()") Create Estimates
 
-div(class="projectEstimate", ng-show="vm.showAddedChallenges()")
+div(class="projectEstimate", ng-show="vm.showAddedChallenges")
   h5 Project Estimate
   ul
     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.challengeType | capitalize}} Challenges

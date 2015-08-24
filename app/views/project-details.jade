@@ -1,23 +1,22 @@
-
 main(class="layout-main project-details")
   status-modal(ng-if="vm.showClaimedModal", type="statusModal", next-state="project-details.challenges", next-step="Create Estimates")
     span Congratulations! You have claimed this project.
 
-  status-modal(class="success", type="successModal", ng-if="vm.showStatusComponent('Estimate')")
+  status-modal(class="success", type="successModal", ng-if="vm.showEstimatedModal")
     h3 Project estimate complete. Awaiting client approval.
 
-  status-modal(class="success", type="successModal", ng-if="vm.showStatusComponent('Launched')")
+  status-modal(class="success", type="successModal", ng-if="vm.showLaunchedModal")
     h3 Your project has been launched!
 
   .detailsContainer
     h2 {{ vm.work.name | cutOff}}
     h3 {{vm.work.requestType | requestType}} Project
     br
-    button.details-container(ng-if="vm.projectAvailable()", ng-click="vm.submitClaim()") Claim Project
-    button.details-container(ng-if="vm.showStatusComponent('Assigned')" || "vm.showEstimateButton", ui-sref="project-details.challenges") Create Estimates
-    button.details-container(ng-if="vm.showStatusComponent('Approved')", ng-click="vm.openCreateChallenges()") Create Challenges
-    button.details-container(ng-if="vm.showStatusComponent('awaiting_launch')", ng-click="vm.launchProject()") Launch Project
-    button.details-container(ng-if="!vm.projectAvailable()", ng-click="vm.navigateMessaging()") Message Client
+    button.details-container(ng-if="vm.showClaimButton", ng-click="vm.submitClaim()") Claim Project
+    button.details-container(ng-if="vm.showCreateEstimatesButton", ui-sref="project-details.challenges") Create Estimates
+    button.details-container(ng-if="vm.showCreateChallengesButton", ng-click="vm.openCreateChallenges()") Create Challenges
+    button.details-container(ng-if="vm.showLaunchButton", ng-click="vm.launchProject()") Launch Project
+    button.details-container(ng-if="vm.showMessageButton", ng-click="vm.navigateMessaging()") Message Client
     br
     br
     br
