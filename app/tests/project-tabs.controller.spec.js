@@ -1,6 +1,6 @@
 'use strict';
 
-describe('ProjectsTabController', function () {
+describe ('ProjectsTabController', function () {
   var controller, flush, scope, state
 
   beforeEach(function () {
@@ -9,7 +9,8 @@ describe('ProjectsTabController', function () {
     scope = $rootScope.$new();
 
     bard.mockService($state, {
-      _default: $q.when({})
+      _default: $q.when({}),
+      current: {name: 'view-projects.assigned'}
     });
 
     controller = $controller('ProjectsTabController');
@@ -18,15 +19,13 @@ describe('ProjectsTabController', function () {
   bard.verifyNoOutstandingHttpRequests();
 
   describe('Projects Tab Controller', function () {
-    // it('should select assigned button if current state is assigned', function () {
-    //   $state.current.name = 'view-projects.assigned';
-    //   expect(controller.highlightAssignedButton).to.be.true;
-    // });
+    it('should select assigned button if current state is assigned', function () {
+      expect(controller.highlightAssignedButton).to.be.true;
+    });
 
-    // it('should select open button if current state is assigned', function () {
-    //   $state.current.name = 'view-projects.open';
-    //   expect(controller.highlightOpenButton).to.be.true;
-    // });
+    it('should not select open button if current state is not open', function () {
+      expect(controller.highlightOpenButton).to.be.false;
+    });
 
     it('should select assigned button if assigned is clicked', function () {
       controller.assignedButtonSelected()

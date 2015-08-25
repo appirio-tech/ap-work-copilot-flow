@@ -1,22 +1,35 @@
 'use strict';
 
-describe.only ('ChallengesController', function () {
+describe ('ChallengesController', function () {
   var controller, flush, scope
 
   beforeEach(function () {
-    bard.inject(this, '$q', '$controller', '$rootScope', 'ProjectDetailsService');
+    bard.inject(this, '$q', '$controller', '$rootScope', 'CopilotProjectDetailsAPIService', 'CopilotProjectsAPIService');
     flush = function() {$rootScope.$apply()}
-    bard.mockService(ProjectDetailsService, {
-      _default: $q.when({})
+
+    bard.mockService(CopilotProjectDetailsAPIService, {
+      _default: {
+        $promise:
+          $q.when({})
+        },
+        post: {
+          $promise:
+          $q.when({})
+        }
+    });
+
+    bard.mockService(CopilotProjectsAPIService, {
+      _default: {
+        $promise:
+          $q.when({})
+        }
     });
 
     scope =  $rootScope.$new()
     controller = $controller('ChallengesController', {$scope: scope});
     scope.vm   = controller
-    flush();
-  });
 
-  bard.verifyNoOutstandingHttpRequests();
+  });
 
   describe('Challenges Controller', function () {
     it('should be created successfully', function () {
@@ -47,15 +60,13 @@ describe.only ('ChallengesController', function () {
       expect(controller.overallDifficulty).to.equal('low')
     })
 
-    it ('should show added challenges', function() {
-      controller.showAddedChallenges();
-      expect(ProjectDetailsService.showStatusComponent).to.have.been.called;
+    it ('should be able to submit challenges', function() {
+      controller.userId = '123';
+      controller.work = {id: '123'}
+      controller.submit();
+      expect(CopilotProjectDetailsAPIService.put.called).to.be.ok;
     })
 
-    it ('should be able to submit challenges', function() {
-      controller.submit();
-      expect(ProjectDetailsService.submitChallenges).to.have.been.called;
-    })
     it ('should initalize challenges', function() {
       expect(controller.challenges).to.eql([]);
     })

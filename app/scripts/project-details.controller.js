@@ -29,13 +29,13 @@ function ProjectDetailsController ($rootScope, $scope, $window, CopilotProjectDe
     if (vm.userId) {
     var body = {id: vm.work.id};
     var params = {userId: vm.userId};
-      var resource = CopilotProjectDetailsAPIService.post(params, body);
+    var resource = CopilotProjectDetailsAPIService.post(params, body);
 
-      resource.$promise.then(function(data) {
-        vm.showClaimButton = false;
-        vm.showClaimedModal = true;
-        vm.showCreateEstimatesButton = true;
-        vm.showMessageButton = true;
+    resource.$promise.then(function(data) {
+      vm.showClaimButton = false;
+      vm.showClaimedModal = true;
+      vm.showCreateEstimatesButton = true;
+      vm.showMessageButton = true;
       })
     }
   }
@@ -70,7 +70,6 @@ function ProjectDetailsController ($rootScope, $scope, $window, CopilotProjectDe
       if (vm.userId) {
         var resource = CopilotProjectDetailsAPIService.put(params, body);
         resource.$promise.then(function(data) {
-          console.log('project launched', data)
           vm.work = data;
           vm.showLaunchButton = true;
         })

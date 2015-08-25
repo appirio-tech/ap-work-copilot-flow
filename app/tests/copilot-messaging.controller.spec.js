@@ -1,6 +1,6 @@
 'use strict';
 
-describe('CopilotMessagingController', function () {
+describe ('CopilotMessagingController', function () {
   var controller, flush, scope
 
   beforeEach(function () {
