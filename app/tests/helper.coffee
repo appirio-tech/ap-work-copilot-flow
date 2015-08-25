@@ -10,24 +10,9 @@ window.unstashIt = (obj, key) ->
 
   delete stash[key]
 
-window.__karma__.loaded = ->
-  # prevent karma from starting
-  AutoConfigFakeServer.init()
-
-  AutoConfigFakeServer.fakeServer.respondImmediately = true
-
-  schemas = []
-
-  AutoConfigFakeServer.consume schemas
-
-  window.__karma__.start()
-
 beforeEach ->
+  module 'appirio-tech-ng-api-services'
   module 'ap-copilot-flow'
-  module 'ap-copilot-flow.projects'
-  module 'ap-copilot-flow.project-details'
-
-
 
 # Transfer fakeserver responses to $httpBackend
 beforeEach inject ($httpBackend) ->

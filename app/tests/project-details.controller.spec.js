@@ -1,24 +1,43 @@
 'use strict';
 
-describe('ProjectDetailsController', function () {
+describe ('ProjectDetailsController', function () {
   var controller, flush, scope
 
   beforeEach(function () {
-    bard.inject(this, '$q', '$controller', '$rootScope', 'ProjectDetailsService', 'UserV3Service');
+    bard.inject(this, '$q', '$controller', '$rootScope', '$state', 'CopilotProjectDetailsAPIService', 'CopilotProjectsAPIService', 'UserV3Service');
     flush = function() {$rootScope.$apply()}
     scope = $rootScope.$new();
 
-    bard.mockService(ProjectDetailsService, {
-      initalizeCopilotWork: $q.when([{id: '123'}]),
-      work: {id: '123'},
-      _default: $q.when({})
+    bard.mockService(CopilotProjectDetailsAPIService, {
+      _default: {
+        $promise:
+          $q.when({})
+        },
+        post: {
+          $promise:
+          $q.when({})
+        }
+    });
+
+    bard.mockService(CopilotProjectsAPIService, {
+      _default: {
+        $promise:
+          $q.when({})
+        }
     });
 
     bard.mockService(UserV3Service, {
       getCurrentUser: $q.when({id: '123'})
     })
 
-    controller = $controller('ProjectDetailsController');
+
+    bard.mockService($state, {
+      go: $q.when({}),
+      params: {id: '123'}
+    })
+
+    controller = $controller('ProjectDetailsController', {$scope: scope});
+    scope.vm = controller;
     flush();
 
   });
@@ -31,56 +50,37 @@ describe('ProjectDetailsController', function () {
     });
 
     it ('should submit a claim', function() {
-      controller.submitClaim()
-      expect(ProjectDetailsService.submitClaim).to.have.been.called;
+      controller.userId = '123';
+      controller.submitClaim();
+      expect(CopilotProjectDetailsAPIService.post.called).to.be.ok;
     })
 
     it ('should check if a project is available', function() {
-      controller.projectAvailable();
-      expect(ProjectDetailsService.projectAvailable).to.have.been.called;
+      controller.work = {status: 'Submitted'}
+      var result = controller.projectAvailable()
+      expect(result).to.equal(true)
     })
 
-    it ('should open new window for creating challenges', function() {
+    it ('should show launch project after creating challenges', function() {
       controller.openCreateChallenges();
-      expect(ProjectDetailsService.openCreateChallenges).to.have.been.called;
+      expect(controller.showLaunchButton).to.equal(true);
     })
 
     it ('should launch a project', function() {
+      controller.userId = '123';
       controller.launchProject();
-      expect(ProjectDetailsService.launchProject).to.have.been.called;
+      expect(CopilotProjectDetailsAPIService.put).to.have.been.called;
     })
 
-    it ('should show any status component', function() {
-      controller.showStatusComponent();
-      expect(ProjectDetailsService.showStatusComponent).to.have.been.called;
+    it ('should navigate to the messaging page', function() {
+      controller.navigateMessaging();
+      $state.params = {'id': '124'}
+      expect($state.go.called).to.be.ok;
     })
 
-    it ('should create a userId on activate', function() {
-      controller.activate();
-      flush();
-      expect(UserV3Service.getCurrentUser).to.have.been.called;
+    it ('should fetch work data on activate', function() {
+      expect(CopilotProjectsAPIService.get.called).to.be.ok;
     })
 
-  context('when project is claimed', function() {
-    it ('should show claimed modal', function() {
-      scope.$emit('projectClaimed')
-      expect(controller.showClaimedModal).to.equal(true);
-    })
-
-    it('should show estimates button', function() {
-      scope.$emit('projectClaimed')
-      expect(controller.showEstimatesButton).to.equal(true)
-    })
-  })
-
-  context('when project is not claimed', function() {
-      it ('should not show claimed modal', function() {
-        expect(controller.showClaimedModal).to.equal(false);
-      })
-
-      it ('should not show estimates button', function() {
-        expect(controller.showEstimatesButton).to.equal(false)
-      })
-    })
   });
 });

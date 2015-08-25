@@ -1,21 +1,25 @@
 'use strict';
 
-describe('ProjectsController', function () {
+describe ('ProjectsController', function () {
   var controller, flush, scope, stateSpy, state, workRequests;
 
   beforeEach(function () {
-    bard.inject(this, '$q', '$controller', '$rootScope', 'ProjectsService', '$state');
+    bard.inject(this, '$q', '$controller', '$rootScope', 'CopilotProjectsAPIService', '$state');
     flush = function() {$rootScope.$apply()}
     scope = $rootScope.$new();
 
-    bard.mockService(ProjectsService, {
-      _default: $q.when({})
+    bard.mockService(CopilotProjectsAPIService, {
+      _default: {
+        $promise:
+          $q.when({})
+        }
     });
+
     bard.mockService($state, {
       _default: $q.when({})
     });
 
-    controller = $controller('ProjectsController');
+    controller = $controller('ProjectsController', {$scope: scope});
     flush();
   });
 
@@ -40,5 +44,6 @@ describe('ProjectsController', function () {
     $state.current.name = 'assigned'
     expect(controller.showDetailSpan('assigned')).to.be.true
   })
+
   });
 });
