@@ -428,7 +428,7 @@ html {
 
 .layout-main.project-details {
   width: 100%;
-  padding: 0px; }
+  padding: 0; }
   .layout-main.project-details div {
     text-align: left; }
   .layout-main.project-details .addButton {
@@ -504,7 +504,9 @@ html {
     text-align: center;
     z-index: 999;
     vertical-align: middle;
-    line-height: 44px; }
+    line-height: 44px;
+    left: 804px;
+    top: 53px;}
     .layout-main.project-details .statusModal div {
       text-align: center; }
     .layout-main.project-details .statusModal.success {
@@ -1312,7 +1314,6 @@ html {
       display: block; }
 
 div.projectsHeading {
-  height: 150px;
   background-color: white;
   border-top: 30px solid #454545;
   text-align: left; }
