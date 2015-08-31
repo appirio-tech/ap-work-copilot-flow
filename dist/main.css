@@ -1145,7 +1145,7 @@ html {
     .layout-main.projects .projectLi div {
       margin-left: auto;
       margin-right: auto;
-      width: 220px;
+      width: 100%;
       height: 100%;
       background-color: white;
       padding-top: 15px;
