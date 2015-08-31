@@ -443,8 +443,7 @@ html {
     color: white; }
   .layout-main.project-details .challengesContainer {
     width: 100%;
-    margin-top: 33%;
-    padding: 10px; }
+    margin-top: 33%;}
     .layout-main.project-details .challengesContainer .submitEstimates {
       margin-top: 10px; }
     .layout-main.project-details .challengesContainer textarea {
