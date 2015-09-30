@@ -24,19 +24,6 @@
     color: white;
   }
 
-.challengesContainer {
-  width: 100%;
-  margin-top: 33%;
-  .submitEstimates {
-    margin-top: 10px;
-  }
-  textarea {
-    margin-top: 0;
-    width: 250px;
-    height: 80px;
-  }
-}
-
 .addedChallenges {
   width: 100%;
   margin-top: 10px;
@@ -92,6 +79,57 @@
     width: 100%;
   }
 
+  .message {
+    background: #38b449;
+    line-height: 25px;
+    vertical-align: middle;
+    padding-left: 20px;
+    margin-bottom: 15px;
+    span {
+      color: white;
+      position: relative;
+      bottom: 12px;
+    }
+    img.checkmark-green {
+      height: 43px;
+      top: 3px;
+      right: 10px;
+      position: relative;
+    }
+  }
+
+  header {
+    background-color: black;
+  }
+
+  main {
+    background-color: white;
+    padding: 0
+  }
+  div {
+    @include outer-container;
+    @include span-columns(6);
+  }
+  aside {
+    @include shift(1);
+    @include span-columns(5);
+  }
+
+}
+
+.challengesContainer {
+  width: 100%;
+  margin-top: 33%;
+  .submitEstimates {
+    margin-top: 10px;
+  }
+  textarea {
+    margin-top: 0;
+    width: 250px;
+    height: 80px;
+  }
+}
+
   .statusModal {
     position: absolute;
     background: rgba(0, 0, 0, 0.8);
@@ -139,43 +177,9 @@
   }
   }
 
-  .message {
-    background: #38b449;
-    line-height: 25px;
-    vertical-align: middle;
-    padding-left: 20px;
-    margin-bottom: 15px;
-    span {
-      color: white;
-      position: relative;
-      bottom: 12px;
-    }
-    img.checkmark-green {
-      height: 43px;
-      top: 3px;
-      right: 10px;
-      position: relative;
-    }
-  }
 
-  header {
-    background-color: black;
-  }
 
-  main {
-    background-color: white;
-    padding: 0
-  }
-  div {
-    @include outer-container;
-    @include span-columns(6);
-  }
-  aside {
-    @include shift(1);
-    @include span-columns(5);
-  }
 
-}
 .dropdown {
   $base-border-color: gainsboro !default;
   $base-border-radius: 3px !default;
