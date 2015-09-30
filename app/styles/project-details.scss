@@ -126,13 +126,11 @@
   .statusModal {
     position: absolute;
     background: rgba(0, 0, 0, 0.8);
-    height: 25%;
     width: 40%;
     text-align: center;
     z-index: 999;
     vertical-align: middle;
     line-height: 44px;
-    top: 53px;
     div {
       text-align: center;
     }
@@ -237,14 +235,17 @@
       float: left;
       margin-right: 10px;
       width: 150px;
+      font-weight: normal;
     }
     &.count {
       float: left;
       width: 110px;
+      font-weight: normal;
     }
     &.difficulty {
       width: 150px;
       float: left;
+      font-weight: normal;
     }
   }
 

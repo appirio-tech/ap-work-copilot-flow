@@ -55,11 +55,9 @@
         margin-top: 10px;
         @include source-sans();
         @include font-line(5);
-        font-weight: bold;
       }
 
       span.created {
-       font-weight: bold;
       }
 
       .middle {
@@ -88,7 +86,6 @@
         }
 
         span.status {
-          font-weight: bold;
           color: white;
           display: inline-block;
           margin-top: 8px;
@@ -173,6 +170,7 @@
         float: left;
         margin-right: 10px;
         width: 156px;
+        font-weight: normal;
       }
       &.count {
         float: left;
