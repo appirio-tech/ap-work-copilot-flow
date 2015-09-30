@@ -22,25 +22,25 @@ main(class="layout-main project-details")
     br
     hr
     .summary
-        h5 Project Description
+        h2 Project Description
         p {{vm.work.summary}}
 
     .similarApps
-        h5 Similar Apps
+        h2 Similar Apps
         ul
         p(ng-repeat="competitor in vm.work.competitorApps") {{competitor}}
 
     .usersDescription
-        h5 Description of Users
+        h2 Description of Users
         p {{vm.work.usageDescription}}
 
     .features
-        h5 Features
+        h2 Features
         ul
         p(ng-repeat="feature in vm.work.features") {{feature.name}}: {{feature.description}}
 
     .visualElements
-        h5 Visual Elements
+        h2 Visual Elements
 
   aside(ui-view="")
 

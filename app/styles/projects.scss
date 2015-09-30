@@ -17,6 +17,22 @@
     margin-bottom: 15px;
 
     div {
+       button {
+        display: none;
+       }
+       &:hover{
+        background-color: #454545;
+        img {
+          opacity: 0.1;
+        }
+      button {
+        display: inline-block;
+        border: 1px solid white;
+        background-color: #454545;
+        border-radius: 10px;
+        color: white
+      }
+      }
 
       margin-left: auto;
       margin-right: auto;
