@@ -10,30 +10,6 @@
   div {
     text-align: left;
   }
- .addButton {
-    height: 42px;
-    width: 42px;
-    float: right;
-    margin-top: 5px;
-    background-color: #454545;
-    color: white;
-  }
-
-  .submitEstimates {
-    background-color: #454545;
-    color: white;
-  }
-
-.addedChallenges {
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-
-  a {
-    text-decoration: underline;
-    float: right;
-  }
-}
 
 .detailsContainer {
   height: 700px;
@@ -113,22 +89,46 @@
   aside {
     @include shift(1);
     @include span-columns(5);
+    .challengesContainer {
+      width: 100%;
+      margin-top: 33%;
+      .submitEstimates {
+        margin-top: 10px;
+      }
+      textarea {
+        margin-top: 0;
+        width: 250px;
+        height: 80px;
+      }
+     .addButton {
+        height: 42px;
+        width: 42px;
+        float: right;
+        margin-top: 5px;
+        background-color: #454545;
+        color: white;
+      }
+
+      .submitEstimates {
+        background-color: #454545;
+        color: white;
+      }
+
+    .addedChallenges {
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      a {
+        text-decoration: underline;
+        float: right;
+      }
+    }
+    }
   }
 
 }
 
-.challengesContainer {
-  width: 100%;
-  margin-top: 33%;
-  .submitEstimates {
-    margin-top: 10px;
-  }
-  textarea {
-    margin-top: 0;
-    width: 250px;
-    height: 80px;
-  }
-}
 
   .statusModal {
     position: absolute;
