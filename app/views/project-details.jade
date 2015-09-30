@@ -9,7 +9,7 @@ main(class="layout-main project-details")
     h3 Your project has been launched!
 
   .detailsContainer
-    h2 {{ vm.work.name | cutOff}}
+    h3 {{ vm.work.name | cutOff}}
     h3 {{vm.work.requestType | requestType}} Project
     br
     button.details-container(ng-if="vm.showClaimButton", ng-click="vm.submitClaim()") Claim Project
@@ -22,25 +22,25 @@ main(class="layout-main project-details")
     br
     hr
     .summary
-        h2 Project Description
+        h3 Project Description
         p {{vm.work.summary}}
 
     .similarApps
-        h2 Similar Apps
+        h3 Similar Apps
         ul
         p(ng-repeat="competitor in vm.work.competitorApps") {{competitor}}
 
     .usersDescription
-        h2 Description of Users
+        h3 Description of Users
         p {{vm.work.usageDescription}}
 
     .features
-        h2 Features
+        h3 Features
         ul
         p(ng-repeat="feature in vm.work.features") {{feature.name}}: {{feature.description}}
 
     .visualElements
-        h2 Visual Elements
+        h3 Visual Elements
 
   aside(ui-view="")
 
