@@ -84,11 +84,10 @@
   aside {
     background-color: white;
     float: left;
-    width: 20%;
     min-height: 700px;
-    padding: 20px;
     .challengesContainer {
       margin-top: 30%;
+      width: 400px;
       .submitEstimates {
         margin-top: 10px;
       }
@@ -104,6 +103,7 @@
         margin-top: 5px;
         background-color: #454545;
         color: white;
+        margin-right: 20px;
       }
 
       .submitEstimates {
@@ -123,15 +123,11 @@
     }
     }
   }
-
-}
-
-
   .statusModal {
     position: absolute;
     background: rgba(0, 0, 0, 0.8);
     height: 25%;
-    width: 50%;
+    width: 40%;
     text-align: center;
     z-index: 999;
     vertical-align: middle;
@@ -171,6 +167,10 @@
     right: 10px;
   }
   }
+
+}
+
+
 
 
 
@@ -292,7 +292,7 @@
     }
     &.count {
       width: 110px;
-      right: 202px;
+      right: 131px;
     }
     &.difficulty {
       width: 150px;
