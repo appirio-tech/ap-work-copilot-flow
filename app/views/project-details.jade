@@ -1,5 +1,5 @@
 main(class="layout-main project-details")
-  status-modal(ng-if="true", type="statusModal", next-state="project-details.challenges", next-step="Create Estimates")
+  status-modal(ng-if="vm.showClaimedModal", type="statusModal", next-state="project-details.challenges", next-step="Create Estimates")
     span Congratulations! You have claimed this project.
 
   status-modal(class="success", type="successModal", ng-if="vm.showEstimatedModal")

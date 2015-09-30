@@ -122,6 +122,10 @@
       }
     }
     }
+    .projectEstimate {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
   }
   .statusModal {
     position: absolute;
@@ -196,7 +200,6 @@
   width: 100%;
 
   .dropdown-container {
-    display: inline-block;
     position: relative;
     text-align: center;
     width: 100%;
@@ -234,12 +237,12 @@
     &.type {
       float: left;
       margin-right: 10px;
-      width: 150px;
+      width: 168px;
       font-weight: normal;
     }
     &.count {
       float: left;
-      width: 110px;
+      width: 120px;
       font-weight: normal;
     }
     &.difficulty {
