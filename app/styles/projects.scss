@@ -16,13 +16,6 @@
     height: 220px;
     margin-bottom: 15px;
 
-    button.projectLi {
-      border: 1px solid white;
-      background-color: #454545;
-      border-radius: 10px;
-      color: white;
-    }
-
     div {
 
       margin-left: auto;
@@ -36,13 +29,6 @@
 
       .created {
         margin-top: 10px;
-      }
-
-      button {
-      border: 1px solid white;
-      background-color: #454545;
-      border-radius: 10px;
-      color: white
       }
 
       &:hover {
@@ -282,7 +268,6 @@ div.projectsHeading {
   border-top: 30px solid #454545;
   text-align: left;
   h1 {
-    font-size: 28px;
     display: inline-block;
   }
 }
