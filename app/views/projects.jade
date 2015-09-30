@@ -15,6 +15,7 @@ ul
       span.type {{project.requestType | requestType | uppercase}}
       span.created(ng-show="vm.showDetailSpan('view-projects.open')") Project Created - {{project.createdAt | date:'MM/dd/yyyy'}}
       span.created(ng-show="vm.showDetailSpan('view-projects.assigned')") {{project.status | status}}
+      br
       button.projectsLi(ui-sref="project-details({id: project.id})") {{project.status | statusButton}}
 .noProjectsMessage(ng-if="!vm.loading && !filteredWorkRequests.length")
   h1 Sorry, there are no available {{vm.selectedType}} projects at this time.
