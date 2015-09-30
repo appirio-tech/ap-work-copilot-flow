@@ -34,7 +34,7 @@
       padding-top: 15px;
       text-align: center;
 
-      &.created {
+      .created {
         margin-top: 10px;
       }
 
@@ -45,32 +45,20 @@
       color: white
       }
 
-        &.hovered {
-          background-color: #454545;
-        }
-
-      header {
-
-        height: 17%;
-        padding: 3px;
-
-        h4 {
-          margin-top: 8px;
-          float: left;
-        }
-
+      &:hover {
+        background-color: #454545;
       }
-        span.type {
-          margin-top: 10px;
-          @include source-sans();
-          @include font-line(17);
-          font-weight: bold;
-        }
 
-        span.created {
-         @include font-line(15);
-         font-weight: bold;
-        }
+      span.type {
+        margin-top: 10px;
+        @include source-sans();
+        @include font-line(5);
+        font-weight: bold;
+      }
+
+      span.created {
+       font-weight: bold;
+      }
 
       .middle {
         height: 48%;
@@ -115,12 +103,10 @@
 
     }
   }
+
   .noProjectsMessage {
     text-align: center;
   }
-  img.faded {
-          opacity: 0.1;
-        }
   .grey {
     background-color: #F1F1F1;
   }
