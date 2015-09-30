@@ -1,6 +1,6 @@
 
 div(class="challengesContainer", ng-hide="vm.showAddedChallenges")
-  h5(ng-hide="vm.showAddedChallenges") Create Project Estimate
+  h6(ng-hide="vm.showAddedChallenges") Create Project Estimate
   dropdown.dropdown
     .dropdown-container
       p.dropdown-button.type(ng-click="vm.toggleMenu('showTypeMenu')", ng-bind="vm.challenge.challengeType.charAt(0).toUpperCase() +  vm.challenge.challengeType.slice(1) || 'Type of Challenge'")
@@ -18,14 +18,13 @@ div(class="challengesContainer", ng-hide="vm.showAddedChallenges")
   br
   h1
 
-  hr
   .addedChallenges(ng-show="vm.challenges.length > 0")
     ul
       li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.challengeType | capitalize}} Challenges
         a(ng-click="vm.removeChallenge($index)") remove
   br
   .projectDifficulty
-  h5 Overall Project Difficulty
+  h6 Overall Project Difficulty
   .dropdown
     .dropdown-container.difficulty
       p.dropdown-button.difficulty(ng-click="vm.toggleMenu('showDifficultyMenu')", ng-bind="vm.overallDifficulty.charAt(0).toUpperCase() +  vm.overallDifficulty.slice(1) || 'Difficulty Level'")
@@ -35,13 +34,14 @@ div(class="challengesContainer", ng-hide="vm.showAddedChallenges")
 
   br
   br
-  h5 Explain Complexity
+  h6 Explain Complexity
   br
   textarea(name="difficultyExplanation", ng-model="vm.difficultyExplanation")
   br
   button.submitEstimates(ng-click="vm.submit()") Create Estimates
 
 div(class="projectEstimate", ng-show="vm.showAddedChallenges")
-  h5 Project Estimate
+  h2 Project Estimate
+  br
   ul
     li(ng-repeat = "challenge in vm.challenges track by challenge.id") {{challenge.count}} {{challenge.challengeType | capitalize}} Challenges

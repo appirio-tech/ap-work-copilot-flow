@@ -13,14 +13,10 @@
     @include span-columns(3);
     @include omega(4n);
     height: 220px;
-    div.hovered {
-      background-color: #454545;
-    }
-    button.projectLi {
-      border: 1px solid white;
-      background-color: #454545;
-      border-radius: 10px;
-      color: white
+    div {
+      &:hover {
+        background-color: $primary-color-darkest;
+      }
     }
   }
 }

@@ -4,6 +4,7 @@
 
   background-color: #E6E6E6;
   @include outer-container;
+  padding: 10px;
 
   hr {
     margin: 20px 0;
@@ -16,14 +17,23 @@
     height: 220px;
     margin-bottom: 15px;
 
-    button.projectLi {
-      border: 1px solid white;
-      background-color: #454545;
-      border-radius: 10px;
-      color: white;
-    }
-
     div {
+       button {
+        display: none;
+       }
+       &:hover{
+        background-color: #454545;
+        img {
+          opacity: 0.1;
+        }
+      button {
+        display: inline-block;
+        border: 1px solid white;
+        background-color: #454545;
+        border-radius: 10px;
+        color: white
+      }
+      }
 
       margin-left: auto;
       margin-right: auto;
@@ -34,43 +44,23 @@
       padding-top: 15px;
       text-align: center;
 
-      &.created {
+      .created {
         margin-top: 10px;
       }
 
-      button {
-      border: 1px solid white;
-      background-color: #454545;
-      border-radius: 10px;
-      color: white
+      &:hover {
+        background-color: #454545;
       }
 
-        &.hovered {
-          background-color: #454545;
-        }
-
-      header {
-
-        height: 17%;
-        padding: 3px;
-
-        h4 {
-          margin-top: 8px;
-          float: left;
-        }
-
+      span.type {
+        margin-top: 10px;
+        @include source-sans();
+        @include font-line(5);
       }
-        span.type {
-          margin-top: 10px;
-          @include source-sans();
-          @include font-line(17);
-          font-weight: bold;
-        }
 
-        span.created {
-         @include font-line(15);
-         font-weight: bold;
-        }
+      span.created {
+        display: block;
+      }
 
       .middle {
         height: 48%;
@@ -98,7 +88,6 @@
         }
 
         span.status {
-          font-weight: bold;
           color: white;
           display: inline-block;
           margin-top: 8px;
@@ -115,12 +104,10 @@
 
     }
   }
+
   .noProjectsMessage {
     text-align: center;
   }
-  img.faded {
-          opacity: 0.1;
-        }
   .grey {
     background-color: #F1F1F1;
   }
@@ -184,7 +171,8 @@
       &.type {
         float: left;
         margin-right: 10px;
-        width: 150px;
+        width: 156px;
+        font-weight: normal;
       }
       &.count {
         float: left;
@@ -236,7 +224,7 @@
       }
 
       &.type {
-        width: 150px;
+        width: 156px;
       }
       &.count {
         width: 110px;
@@ -296,7 +284,6 @@ div.projectsHeading {
   border-top: 30px solid #454545;
   text-align: left;
   h1 {
-    font-size: 28px;
     display: inline-block;
   }
 }
