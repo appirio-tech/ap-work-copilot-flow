@@ -133,7 +133,7 @@
   var directive = function ($state) {
     var link = function (scope, element, attrs) {
       scope.hideModal = function() {
-        element.hide();
+        element.remove();
       }
       if (attrs.nextStep) {
         scope.nextStep = attrs.nextStep;
