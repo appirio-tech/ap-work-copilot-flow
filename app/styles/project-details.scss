@@ -154,9 +154,10 @@
     .exit {
       height: 40px;
       width: 40px;
+      float: right;
       a {
         text-decoration: none;
-        @include font-line(55);
+        font-size: $font-size-big;
       }
     }
     button.modalButton {
@@ -206,6 +207,9 @@
 
     &.difficulty {
       margin-bottom: 10px;
+    }
+    h6 {
+      margin-top: 0px;
     }
   }
 

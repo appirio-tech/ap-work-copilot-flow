@@ -39325,11 +39325,37 @@ module.exports={"version":"6.7.2"}
   dependencies = ['ngResource', 'app.constants', 'ui.router', 'angular-storage', 'angular-jwt', 'auth0', 'appirio-tech-ng-api-services'];
 
   config = function($httpProvider, jwtInterceptorProvider, authProvider, AUTH0_DOMAIN, AUTH0_CLIENT_ID) {
-    var jwtInterceptor, logout;
-    jwtInterceptor = function(TokenService) {
-      return TokenService.getToken();
+    var jwtInterceptor, logout, refreshingToken;
+    refreshingToken = null;
+    jwtInterceptor = function(TokenService, $http, API_URL) {
+      var currentToken, handleRefreshResponse, refreshingTokenComplete;
+      currentToken = TokenService.getToken();
+      handleRefreshResponse = function(res) {
+        var newToken, ref, ref1, ref2;
+        newToken = (ref = res.data) != null ? (ref1 = ref.result) != null ? (ref2 = ref1.content) != null ? ref2.token : void 0 : void 0 : void 0;
+        TokenService.setToken(newToken);
+        return newToken;
+      };
+      refreshingTokenComplete = function() {
+        return refreshingToken = null;
+      };
+      if (TokenService.tokenIsValid() && TokenService.tokenIsExpired()) {
+        if (refreshingToken === null) {
+          config = {
+            method: 'GET',
+            url: API_URL + "/v3/authorizations/1",
+            headers: {
+              'Authorization': "Bearer " + currentToken
+            }
+          };
+          refreshingToken = $http(config).then(handleRefreshResponse)["finally"](refreshingTokenComplete);
+        }
+        return refreshingToken;
+      } else {
+        return currentToken;
+      }
     };
-    jwtInterceptor.$inject = ['TokenService'];
+    jwtInterceptor.$inject = ['TokenService', '$http', 'API_URL'];
     jwtInterceptorProvider.tokenGetter = jwtInterceptor;
     $httpProvider.interceptors.push('jwtInterceptor');
     authProvider.init({
@@ -39344,36 +39370,13 @@ module.exports={"version":"6.7.2"}
     return authProvider.on('logout', logout);
   };
 
-  run = function($rootScope, $injector, $state, auth, TokenService, AuthService) {
-    var checkAuth, checkRedirect;
-    auth.hookEvents();
-    checkRedirect = function() {
-      var isProtected, notLoggedIn;
-      isProtected = !toState.data || (toState.data && !toState.data.noAuthRequired);
-      notLoggedIn = !AuthService.isAuthenticated();
-      if (isProtected && notLoggedIn) {
-        $rootScope.preAuthState = toState.name;
-        event.preventDefault();
-        return $state.go('login');
-      }
-    };
-    return checkAuth = function(event, toState) {
-      var isInvalidToken;
-      isInvalidToken = TokenService.getToken() && !TokenService.tokenIsValid();
-      if (isInvalidToken) {
-        AuthService.refreshToken().then(function() {
-          return checkRedirect();
-        });
-      } else {
-        checkRedirect();
-      }
-      return $rootScope.$on('$stateChangeStart', checkAuth);
-    };
+  run = function(auth) {
+    return auth.hookEvents();
   };
 
   config.$inject = ['$httpProvider', 'jwtInterceptorProvider', 'authProvider', 'AUTH0_DOMAIN', 'AUTH0_CLIENT_ID'];
 
-  run.$inject = ['$rootScope', '$injector', '$state', 'auth', 'TokenService', 'AuthService'];
+  run.$inject = ['auth'];
 
   angular.module('appirio-tech-ng-auth', dependencies).config(config).run(run);
 
@@ -39383,7 +39386,7 @@ module.exports={"version":"6.7.2"}
   'use strict';
   var AuthService;
 
-  AuthService = function($rootScope, AuthorizationsAPIService, auth, store, TokenService) {
+  AuthService = function(AuthorizationsAPIService, auth, store, TokenService) {
     var exchangeToken, isAuthenticated, isLoggedIn, loggedIn, login, logout, refreshToken;
     loggedIn = null;
     isLoggedIn = function() {
@@ -39498,7 +39501,7 @@ module.exports={"version":"6.7.2"}
     };
   };
 
-  AuthService.$inject = ['$rootScope', 'AuthorizationsAPIService', 'auth', 'store', 'TokenService'];
+  AuthService.$inject = ['AuthorizationsAPIService', 'auth', 'store', 'TokenService'];
 
   angular.module('appirio-tech-ng-auth').factory('AuthService', AuthService);
 
@@ -39508,7 +39511,7 @@ module.exports={"version":"6.7.2"}
   'use strict';
   var TokenService;
 
-  TokenService = function($rootScope, $http, store, AUTH0_TOKEN_NAME, AUTH0_REFRESH_TOKEN_NAME, jwtHelper) {
+  TokenService = function(store, AUTH0_TOKEN_NAME, AUTH0_REFRESH_TOKEN_NAME, jwtHelper) {
     var decodeToken, deleteRefreshToken, deleteToken, getRefreshToken, getToken, setToken, storeRefreshToken, tokenIsExpired, tokenIsValid;
     getToken = function() {
       return store.get(AUTH0_TOKEN_NAME);
@@ -39566,7 +39569,7 @@ module.exports={"version":"6.7.2"}
     };
   };
 
-  TokenService.$inject = ['$rootScope', '$http', 'store', 'AUTH0_TOKEN_NAME', 'AUTH0_REFRESH_TOKEN_NAME', 'jwtHelper'];
+  TokenService.$inject = ['store', 'AUTH0_TOKEN_NAME', 'AUTH0_REFRESH_TOKEN_NAME', 'jwtHelper'];
 
   angular.module('appirio-tech-ng-auth').factory('TokenService', TokenService);
 
@@ -39910,6 +39913,108 @@ $templateCache.put("views/selected-button.directive.html","<button ng-class=\"{\
 
 (function() {
   'use strict';
+  var dir, getOffsetTop;
+
+  getOffsetTop = function(elem) {
+    var offsetTop;
+    offsetTop = elem.offsetTop;
+    while (elem = elem.offsetParent) {
+      if (!isNaN(elem.offsetTop)) {
+        offsetTop += elem.offsetTop;
+      }
+    }
+    return offsetTop;
+  };
+
+  dir = function($window) {
+    var elements, flushHeight, link, setViewPortHeight, viewPortHeight;
+    viewPortHeight = 0;
+    elements = [];
+    setViewPortHeight = function() {
+      viewPortHeight = $($window).height();
+      return viewPortHeight;
+    };
+    setViewPortHeight();
+    flushHeight = function($element) {
+      var heightDiff, top;
+      top = getOffsetTop($element[0]);
+      heightDiff = viewPortHeight - top;
+      return $element.css('min-height', heightDiff + 'px');
+    };
+    $($window).bind('resize', function() {
+      var element, i, len, results;
+      setViewPortHeight();
+      results = [];
+      for (i = 0, len = elements.length; i < len; i++) {
+        element = elements[i];
+        results.push(flushHeight(element));
+      }
+      return results;
+    });
+    link = function(scope, element, attrs) {
+      elements.push($(element[0]));
+      return element.ready(function() {
+        return flushHeight($(element[0]));
+      });
+    };
+    return {
+      restrict: 'A',
+      link: link
+    };
+  };
+
+  dir.$inject = ['$window'];
+
+  angular.module('appirio-tech-ng-ui-components').directive('flushHeight', dir);
+
+}).call(this);
+
+(function() {
+  'use strict';
+  var dir;
+
+  dir = function($window) {
+    var elements, fullHeight, link, setViewPortHeight, viewPortHeight;
+    viewPortHeight = 0;
+    elements = [];
+    setViewPortHeight = function() {
+      viewPortHeight = $($window).height();
+      return viewPortHeight;
+    };
+    setViewPortHeight();
+    fullHeight = function($element) {
+      return $element.css('min-height', viewPortHeight + 'px');
+    };
+    $($window).bind('resize', function() {
+      var element, i, len, results;
+      setViewPortHeight();
+      results = [];
+      for (i = 0, len = elements.length; i < len; i++) {
+        element = elements[i];
+        results.push(fullHeight(element));
+      }
+      return results;
+    });
+    link = function(scope, element, attrs) {
+      elements.push($(element[0]));
+      return element.ready(function() {
+        return fullHeight($(element[0]));
+      });
+    };
+    return {
+      restrict: 'A',
+      link: link
+    };
+  };
+
+  dir.$inject = ['$window'];
+
+  angular.module('appirio-tech-ng-ui-components').directive('fullHeight', dir);
+
+}).call(this);
+
+(function() {
+  'use strict';
   var AvatarController;
 
   AvatarController = function($scope) {
@@ -40152,6 +40257,12 @@ $templateCache.put("views/selected-button.directive.html","<button ng-class=\"{\
       id: '@id'
     };
     methods = {
+      post: {
+        method: 'POST'
+      },
+      patch: {
+        method: 'PATCH'
+      },
       put: {
         method: 'PUT'
       }
@@ -40189,7 +40300,11 @@ $templateCache.put("views/selected-button.directive.html","<button ng-class=\"{\
       rankedSubmissions = data;
     }
     transformedData = {
-      rankedSubmissions: rankedSubmissions
+      param: {
+        details: {
+          rankedSubmissions: rankedSubmissions
+        }
+      }
     };
     return JSON.stringify(transformedData);
   };
@@ -40202,7 +40317,11 @@ $templateCache.put("views/selected-button.directive.html","<button ng-class=\"{\
       customerConfirmedRanks = data;
     }
     transformedData = {
-      customerConfirmedRanks: customerConfirmedRanks
+      param: {
+        details: {
+          customerConfirmedRanks: customerConfirmedRanks
+        }
+      }
     };
     return JSON.stringify(transformedData);
   };
@@ -40215,7 +40334,11 @@ $templateCache.put("views/selected-button.directive.html","<button ng-class=\"{\
       customerAcceptedFixes = data;
     }
     transformedData = {
-      customerAcceptedFixes: customerAcceptedFixes
+      param: {
+        details: {
+          customerAcceptedFixes: customerAcceptedFixes
+        }
+      }
     };
     return JSON.stringify(transformedData);
   };
@@ -40416,12 +40539,20 @@ $templateCache.put("views/selected-button.directive.html","<button ng-class=\"{\
 
 (function() {
   'use strict';
-  var srv, transformResponse;
+  var srv, transformIdOnlyResponse, transformResponse;
 
   transformResponse = function(response) {
     var parsed, ref;
     parsed = JSON.parse(response);
-    return (parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0) || [];
+    return parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0;
+  };
+
+  transformIdOnlyResponse = function(response) {
+    var parsed, ref;
+    parsed = JSON.parse(response);
+    return {
+      id: parsed != null ? (ref = parsed.result) != null ? ref.content : void 0 : void 0
+    };
   };
 
   srv = function($resource, API_URL) {
@@ -40433,17 +40564,16 @@ $templateCache.put("views/selected-button.directive.html","<button ng-class=\"{\
     methods = {
       put: {
         method: 'PUT',
-        isArray: false,
-        transformResponse: transformResponse
+        transformResponse: transformIdOnlyResponse
       },
       post: {
         method: 'POST',
-        isArray: false,
-        transformResponse: transformResponse
+        transformResponse: transformIdOnlyResponse
       },
       get: {
-        method: 'GET',
-        isArray: true,
+        transformResponse: transformResponse
+      },
+      query: {
         transformResponse: transformResponse
       }
     };
