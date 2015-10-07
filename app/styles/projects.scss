@@ -1,6 +1,7 @@
 @import "work-includes";
 
-.layout-main.projects {
+copilot-projects {
+  display: block;
 
   background-color: #E6E6E6;
   @include outer-container;
