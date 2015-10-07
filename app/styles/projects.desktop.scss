@@ -1,6 +1,7 @@
 @import "work-includes";
 
-.layout-main.projects {
+copilot-projects {
+  display: block;
   .projectLi {
     @include span-columns(3);
     @include omega(4n);
