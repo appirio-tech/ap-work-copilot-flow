@@ -1,47 +1,48 @@
-main(class="layout-main project-details")
-  status-modal(ng-if="vm.showClaimedModal", type="statusModal", next-state="project-details.challenges", next-step="Create Estimates")
-    span Congratulations! You have claimed this project.
+copilot-project-details
+    main(class="layout-main project-details")
+      status-modal(ng-if="vm.showClaimedModal", type="statusModal", next-state="project-details.challenges", next-step="Create Estimates")
+        span Congratulations! You have claimed this project.
 
-  status-modal(class="success", type="successModal", ng-if="vm.showEstimatedModal")
-    h3 Project estimate complete. Awaiting client approval.
+      status-modal(class="success", type="successModal", ng-if="vm.showEstimatedModal")
+        h3 Project estimate complete. Awaiting client approval.
 
-  status-modal(class="success", type="successModal", ng-if="vm.showLaunchedModal")
-    h3 Your project has been launched!
+      status-modal(class="success", type="successModal", ng-if="vm.showLaunchedModal")
+        h3 Your project has been launched!
 
-  .detailsContainer
-    h3 {{ vm.work.name | cutOff}}
-    h3 {{vm.work.requestType | requestType}} Project
-    br
-    button.details-container(ng-if="vm.showClaimButton", ng-click="vm.submitClaim()") Claim Project
-    button.details-container(ng-if="vm.showCreateEstimatesButton", ui-sref="project-details.challenges") Create Estimates
-    button.details-container(ng-if="vm.showCreateChallengesButton", ng-click="vm.openCreateChallenges()") Create Challenges
-    button.details-container(ng-if="vm.showLaunchButton", ng-click="vm.launchProject()") Launch Project
-    button.details-container(ng-if="vm.showMessageButton", ng-click="vm.navigateMessaging()") Message Client
-    br
-    br
-    br
-    hr
-    .summary
-        h3 Project Description
-        p {{vm.work.summary}}
+      .detailsContainer
+        h3 {{ vm.work.name | cutOff}}
+        h3 {{vm.work.projectType | requestType}} Project
+        br
+        button.details-container(ng-if="vm.showClaimButton", ng-click="vm.submitClaim()") Claim Project
+        button.details-container(ng-if="vm.showCreateEstimatesButton", ui-sref="project-details.challenges") Create Estimates
+        button.details-container(ng-if="vm.showCreateChallengesButton", ng-click="vm.openCreateChallenges()") Create Challenges
+        button.details-container(ng-if="vm.showLaunchButton", ng-click="vm.launchProject()") Launch Project
+        button.details-container(ng-if="vm.showMessageButton", ng-click="vm.navigateMessaging()") Message Client
+        br
+        br
+        br
+        hr
+        .summary
+            h3 Project Description
+            p {{vm.work.brief}}
 
-    .similarApps
-        h3 Similar Apps
-        ul
-        p(ng-repeat="competitor in vm.work.competitorApps") {{competitor}}
+        .similarApps
+            h3 Similar Apps
+            ul
+            p(ng-repeat="competitor in vm.work.competitorApps") {{competitor}}
 
-    .usersDescription
-        h3 Description of Users
-        p {{vm.work.usageDescription}}
+        .usersDescription
+            h3 Description of Users
+            p {{vm.work.usageDescription}}
 
-    .features
-        h3 Features
-        ul
-        p(ng-repeat="feature in vm.work.features") {{feature.name}}: {{feature.description}}
+        .features
+            h3 Features
+            ul
+            p(ng-repeat="feature in vm.work.features") {{feature.name}}: {{feature.description}}
 
-    .visualElements
-        h3 Visual Elements
+        .visualElements
+            h3 Visual Elements
 
-  aside(ui-view="")
+      aside(ui-view="")
 
 

@@ -1,18 +1,22 @@
 @import "work-includes";
 
-.layout-main.project-details {
+copilot-project-details {
+  display: block;
+  .layout-main.project-details {
   // @include main-restricted-desktop();
 
-  main {
-    background-color: white;
-    width: 100%;
+    main {
+      background-color: white;
+      width: 100%;
 
-    article {
-      h3 {
-        margin-top: 20px;
+      article {
+        h3 {
+          margin-top: 20px;
+        }
       }
     }
-  }
 
   @include clearfix();
+  }
+
 }
