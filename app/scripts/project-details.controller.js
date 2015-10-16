@@ -80,7 +80,7 @@ function ProjectDetailsController ($rootScope, $scope, $window, CopilotProjectDe
   }
 
   vm.navigateMessaging = function() {
-    $state.go('copilot-messaging', {id: $state.params.id})
+    $state.go('copilot-messaging', {id: $state.params.id, threadId: vm.work.threadId})
   }
 
   function activate() {
