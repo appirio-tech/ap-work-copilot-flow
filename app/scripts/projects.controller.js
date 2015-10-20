@@ -15,8 +15,8 @@
    vm.showTypeFilterMenu = false;
    vm.typeFilterValue = null;
    vm.selectedType = 'All Project Types';
-   vm.typeFilters = ["All Project Types", "Design", "Development", "Design & Development"];
-   vm.filteredRequests = {"code": "Development", "design": "Design", "both": "Design & Development" };
+   vm.typeFilters = ["All Project Types", "Design", "Design & Code"];
+   vm.filteredRequests = {"DESIGN_AND_CODE": "Design & Code", "DESIGN": "Design" };
 
     vm.hoverSelect = function(index) {
       vm.active = index;
@@ -32,15 +32,11 @@
 
     vm.selectType = function(item) {
       vm.selectedType = item;
-      if (item === 'Design & Development') {
-        vm.typeFilterValue = 'Design & Dev';
-      } else {
-        vm.typeFilterValue = item;
-      }
+      vm.typeFilterValue = item;
     }
 
     vm.typeFilter = function(data) {
-      if (vm.filteredRequests[data.requestType] ===  vm.selectedType || vm.selectedType === 'All Project Types') {
+      if (vm.filteredRequests[data.projectType] ===  vm.selectedType || vm.selectedType === 'All Project Types') {
       return true;
       } else {
         return false;
