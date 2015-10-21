@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('ap-copilot-flow.project-details')
+    .module('appirio-tech-ng-copilot')
     .filter('capitalize', CapitalizeFilter);
 
   CapitalizeFilter.$inject = [];

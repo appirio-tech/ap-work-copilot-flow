@@ -2,18 +2,16 @@ configs =
   __dirname : __dirname
 
 configs.templateCache = []
+
 configs.templateCache.push
-  files : [
-    '.tmp/views/*.html'
-  ]
+  fileName: 'templates.js'
+  files : ['.tmp/views/*.directive.html']
   root  : 'views/'
-  module: 'ap-copilot-flow'
+  module: 'appirio-tech-ng-copilot'
 
 configs.templateCache.push
   fileName: 'example-templates.js'
-  files : [
-    '.tmp/views/*.html'
-  ]
+  files : ['.tmp/views/*.example.html']
   root  : 'views/'
   module: 'example'
 

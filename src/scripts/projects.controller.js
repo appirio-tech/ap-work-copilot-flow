@@ -2,11 +2,11 @@
   'use strict';
 
   angular
-    .module('ap-copilot-flow.projects')
-    .controller('ProjectsController', ProjectsController);
+    .module('appirio-tech-ng-copilot')
+    .controller('CopilotProjectsController', CopilotProjectsController);
 
-  ProjectsController.$inject = ['$scope', '$resource', '$state', 'UserV3Service', 'CopilotProjectsAPIService'];
-  function ProjectsController($scope, $resource, $state, UserV3Service, CopilotProjectsAPIService) {
+  CopilotProjectsController.$inject = ['$scope', '$resource', '$state', 'UserV3Service', 'CopilotProjectsAPIService'];
+  function CopilotProjectsController($scope, $resource, $state, UserV3Service, CopilotProjectsAPIService) {
    var vm = this;
    vm.loading = true;
    vm.workRequests = null;

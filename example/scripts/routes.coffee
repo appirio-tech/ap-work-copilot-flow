@@ -3,38 +3,13 @@
 config = ($stateProvider) ->
   states = {}
 
-  states['home'] =
+  states['projects'] =
     url: '/'
-    templateUrl: 'index.html'
-    controller: 'ExampleController'
-    controllerAs: 'vm'
+    templateUrl: 'views/copilot-projects.example.html'
 
-  states['view-projects'] =
-    url         : '/projects'
-    templateUrl : 'views/projectTabs.html'
-    controller: 'ProjectsTabController'
-    controllerAs: 'vm'
-    title: 'View Projects'
-    abstract: true
-
-  states['view-projects.assigned'] =
-    url         : '/assigned'
-    templateUrl : 'views/projects.html'
-    controller: 'ProjectsController'
-    controllerAs: 'vm'
-
-  states['view-projects.open'] =
-    url         : '/open'
-    templateUrl : 'views/projects.html'
-    controller: 'ProjectsController'
-    controllerAs: 'vm'
-
-  states['project-details'] =
-    url: '/project-details/:id?/:status?',
-    title: 'Claim Project',
-    templateUrl : 'views/project-details.html'
-    controller: 'ProjectDetailsController',
-    controllerAs: 'vm'
+  states['details'] =
+    url: '/details'
+    templateUrl: 'views/copilot-details.example.html'
 
   states['project-details.challenges'] =
     url         : '/challenges'

@@ -1,0 +1,42 @@
+@import "work-includes";
+
+copilot-projects {
+  display: block;
+  background-color: $neutral-color-lightest;
+
+  .no-projects {
+    text-align: center;
+
+    p {
+      font-size: $font-size-big;
+    }
+
+    .button {
+      margin-top: $margin-small;
+    }
+  }
+
+  h6 {
+    font-weight: bold;
+    height     : 36px;
+    overflow   : auto;
+  }
+
+  main {
+    text-align: center;
+
+    .icon {
+      margin: 0 auto;
+    }
+  }
+
+  > ul {
+    > li {
+      background-color: $white;
+      width : 280px;
+      height: 320px;
+      padding: $padding $padding-small;
+      margin: $margin-smallest;
+    }
+  }
+}

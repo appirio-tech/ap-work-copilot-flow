@@ -1,26 +1,7 @@
 doctype html
 html(ng-app='example')
   head
-    script(type="text/javascript", src="/bower_components/sinon/index.js")
-    script(type="text/javascript", src="/bower_components/auto-config-fake-server/dist/auto-config-fake-server.js")
-    script(type="text/javascript", src="scripts/json-fixtures.js")
-    script(type="text/javascript").
-      AutoConfigFakeServer.init();
-      AutoConfigFakeServer.fakeServer.autoRespond = true;
-      schemas = [
-        FIXTURES['bower_components/appirio-tech-api-schemas/apiary/apcopilotservice.json'],
-        FIXTURES['bower_components/appirio-tech-api-schemas/apiary/apworkmicroservice.json'],
-        FIXTURES['bower_components/appirio-tech-api-schemas/apiary/messaging14.json'],
-        FIXTURES['bower_components/appirio-tech-api-schemas/swagger/v3-users.json'],
-        FIXTURES['bower_components/appirio-tech-api-schemas/swagger/v3-authorizations.json'],
-        FIXTURES['bower_components/appirio-tech-api-schemas/swagger/v3-messages.json'],
-        FIXTURES['bower_components/appirio-tech-api-schemas/swagger/v3-threads.json']
-      ];
-      AutoConfigFakeServer.consume(schemas);
-
-      localStorage.setItem('userJWTToken', '"yyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FwaS50b3Bjb2Rlci1kZXYuY29tIiwiZXhwIjoxNDMzMjcxNzYwLCJ1c2VySWQiOiI0MDEzNTUxNiIsImlhdCI6MTQzMzI3MTE2MCwianRpIjoiMDZhNzVjM2EtMTQ0MC00MWE3LTk5N2YtZmFmMGVjZjFmOGM1In0.okSjl5KOmGQ6hJEoQxk4SVkFra65_Id6KUQGdAVmJNe"');
-
-    title Copilot App
+    title Copilot
 
     meta(charset='utf-8')
 
@@ -30,11 +11,15 @@ html(ng-app='example')
 
     include css-files
 
-  body
+    script(src="//use.typekit.net/jjo6pal.js")
 
+    script.
+      try{Typekit.load({ async: true });}catch(e){}
+
+  body
     include nav
 
-    main.layout-main("role"="main", class="{{ pageClass }}", ui-view="")
+
+    ui-view
 
     include js-files
-

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('ap-copilot-flow.project-details')
+    .module('appirio-tech-ng-copilot')
     .controller('ChallengesController', ChallengesController);
 
   ChallengesController.$inject = ['$state', '$scope', '$rootScope', 'CopilotProjectDetailsAPIService', 'UserV3Service', 'CopilotProjectsAPIService'];

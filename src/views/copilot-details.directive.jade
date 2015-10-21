@@ -1,0 +1,41 @@
+modal
+  p Congratulations! You have claimed this project.
+
+  p Project estimate complete. Awaiting client approval.
+
+  p Your project has been launched!
+
+h2 {{ vm.work.name }}
+
+h3 {{ vm.work.projectType }} Project
+
+button.details-container(ng-if="vm.showClaimButton", ng-click="vm.submitClaim()") Claim Project
+
+button.details-container(ng-if="vm.showCreateEstimatesButton", ui-sref="project-details.challenges") Create Estimates
+
+button.details-container(ng-if="vm.showCreateChallengesButton", ng-click="vm.openCreateChallenges()") Create Challenges
+
+button.details-container(ng-if="vm.showLaunchButton", ng-click="vm.launchProject()") Launch Project
+
+button.details-container(ng-if="vm.showMessageButton", ng-click="vm.navigateMessaging()") Message Client
+
+hr
+
+h3 Project Description
+
+p {{vm.work.brief}}
+
+h3 Similar Apps
+
+ul
+  li(ng-repeat="competitor in vm.work.competitorApps") {{ competitor }}
+
+h3 Description of Users
+
+p {{vm.work.usageDescription}}
+
+h3 Features
+
+ul
+  li(ng-repeat="feature in vm.work.features") {{feature.name}}: {{feature.description}}
+
